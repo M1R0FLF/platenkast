@@ -123,6 +123,34 @@ class Motor:
                                   uit_prijs, lambda: self.afbreken)
             prijs.schrijf_csv(rijen, uitslag["csvpad"])
 
+            # ---- de uitsnedes rechtop, nu de persing bekend is ----
+            # Moet hier en niet eerder: knip.rechtop moet raden zolang er niets
+            # van de plaat bekend is, en raadde 22 procent van de voorkanten
+            # verkeerd. Met de hoes van Discogs ernaast is het een meting.
+            if not self.afbreken:
+                import stand
+                self.zend("fase", naam="rechtzetten", totaal=len(platen))
+                gedraaid = [0]
+
+                def uit_stand(pid, slot, k, g, n):
+                    if pid == "voortgang":
+                        self.zend("rechtzetten", klaar=slot, totaal=k,
+                                  gedraaid=gedraaid[0])
+                    elif k:
+                        gedraaid[0] += 1
+
+                standuit = stand.loop(platen, self.hoezen, dc, False, uit_stand)
+                # De duimnagel van een gedraaide uitsnede staat er nog scheef
+                # bij, en duimnagels() slaat bestaande bestanden over. Dus weg
+                # ermee; de volgende stap maakt ze opnieuw.
+                duim = os.path.join(self.sitemap, "publiek", "duim")
+                for u in standuit:
+                    if not u["gedraaid"]:
+                        continue
+                    oud = os.path.join(duim, f"{u['id']}-{u['slot']}.jpg")
+                    if os.path.exists(oud):
+                        os.remove(oud)
+
             # ---- derde fase: duimnagels en collectie.json ----
             self.zend("fase", naam="samenstellen", totaal=len(rijen))
             self._exporteer(exporteer)

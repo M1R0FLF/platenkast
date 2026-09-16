@@ -1,0 +1,2252 @@
+[
+ {
+  "id": "160630",
+  "slot": 1,
+  "foto": "IMG20260913160630.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 226,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "160630",
+  "slot": 2,
+  "foto": "IMG_20260913_160652.jpg",
+  "kwartslagen": 0,
+  "graden": 3.5,
+  "punten": 412,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "160800",
+  "slot": 1,
+  "foto": "IMG20260913160800.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 400,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "160800",
+  "slot": 2,
+  "foto": "IMG20260913160815.jpg",
+  "kwartslagen": null,
+  "graden": 100.5,
+  "punten": 4,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "160841",
+  "slot": 1,
+  "foto": "IMG20260913160841.jpg",
+  "kwartslagen": 0,
+  "graden": 357.7,
+  "punten": 96,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "160841",
+  "slot": 2,
+  "foto": "IMG20260913160850.jpg",
+  "kwartslagen": 0,
+  "graden": 0.5,
+  "punten": 110,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "160904",
+  "slot": 1,
+  "foto": "IMG20260913160904.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 548,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "160904",
+  "slot": 2,
+  "foto": "IMG20260913160913.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 380,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161046",
+  "slot": 1,
+  "foto": "IMG20260913161046.jpg",
+  "kwartslagen": 0,
+  "graden": 358.9,
+  "punten": 219,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161046",
+  "slot": 2,
+  "foto": "IMG20260913161056.jpg",
+  "kwartslagen": 0,
+  "graden": 358.9,
+  "punten": 33,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161115",
+  "slot": 1,
+  "foto": "IMG20260913161115.jpg",
+  "kwartslagen": null,
+  "graden": 144.5,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "161115",
+  "slot": 2,
+  "foto": "IMG20260913161133.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 359,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "161142",
+  "slot": 1,
+  "foto": "IMG20260913161142.jpg",
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 168,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161142",
+  "slot": 2,
+  "foto": "IMG20260913161156.jpg",
+  "kwartslagen": null,
+  "graden": 169.1,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161142",
+  "slot": 3,
+  "foto": "IMG20260913161203.jpg",
+  "kwartslagen": null,
+  "graden": 137.8,
+  "punten": 4,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161218",
+  "slot": 1,
+  "foto": "IMG20260913161218.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 243,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161218",
+  "slot": 2,
+  "foto": "IMG20260913161226.jpg",
+  "kwartslagen": null,
+  "graden": 332.8,
+  "punten": 4,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161218",
+  "slot": 3,
+  "foto": "IMG20260913161238.jpg",
+  "kwartslagen": null,
+  "graden": 10.1,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161310",
+  "slot": 1,
+  "foto": "IMG20260913161310.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 491,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161310",
+  "slot": 2,
+  "foto": "IMG20260913161345.jpg",
+  "kwartslagen": 0,
+  "graden": 0.7,
+  "punten": 217,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161415",
+  "slot": 1,
+  "foto": "IMG20260913161415.jpg",
+  "kwartslagen": 0,
+  "graden": 359.1,
+  "punten": 405,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161415",
+  "slot": 2,
+  "foto": "IMG20260913161425.jpg",
+  "kwartslagen": 0,
+  "graden": 359.4,
+  "punten": 359,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161519",
+  "slot": 1,
+  "foto": "IMG20260913161519.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 586,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161519",
+  "slot": 2,
+  "foto": "IMG20260913161557.jpg",
+  "kwartslagen": null,
+  "graden": 124.4,
+  "punten": 4,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161519",
+  "slot": 3,
+  "foto": "IMG20260913161610.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 152,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161700",
+  "slot": 1,
+  "foto": "IMG20260913161700.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 373,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161700",
+  "slot": 2,
+  "foto": "IMG20260913161710.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 156,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161751",
+  "slot": 1,
+  "foto": "IMG20260913161751.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 86,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161751",
+  "slot": 2,
+  "foto": "IMG20260913161759.jpg",
+  "kwartslagen": 0,
+  "graden": 0.0,
+  "punten": 558,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161816",
+  "slot": 1,
+  "foto": "IMG20260913161816.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 50,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161816",
+  "slot": 2,
+  "foto": "IMG20260913161823.jpg",
+  "kwartslagen": null,
+  "graden": 176.7,
+  "punten": 9,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161839",
+  "slot": 1,
+  "foto": "IMG20260913161839.jpg",
+  "kwartslagen": 0,
+  "graden": 5.3,
+  "punten": 227,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161839",
+  "slot": 2,
+  "foto": "IMG20260913161846.jpg",
+  "kwartslagen": 0,
+  "graden": 359.5,
+  "punten": 222,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161839",
+  "slot": 3,
+  "foto": "IMG20260913161905.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161928",
+  "slot": 1,
+  "foto": "IMG20260913161928.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 144,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "161928",
+  "slot": 2,
+  "foto": "IMG20260913161940.jpg",
+  "kwartslagen": 0,
+  "graden": 359.2,
+  "punten": 340,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162011",
+  "slot": 1,
+  "foto": "IMG20260913162011.jpg",
+  "kwartslagen": 0,
+  "graden": 358.9,
+  "punten": 60,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162011",
+  "slot": 2,
+  "foto": "IMG20260913162019.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 379,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162033",
+  "slot": 1,
+  "foto": "IMG20260913162033.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 230,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162033",
+  "slot": 2,
+  "foto": "IMG20260913162038.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 186,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162056",
+  "slot": 1,
+  "foto": "IMG20260913162056.jpg",
+  "kwartslagen": 0,
+  "graden": 1.0,
+  "punten": 198,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162056",
+  "slot": 2,
+  "foto": "IMG20260913162103.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 226,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162120",
+  "slot": 1,
+  "foto": "IMG20260913162120.jpg",
+  "kwartslagen": 0,
+  "graden": 359.8,
+  "punten": 301,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162120",
+  "slot": 2,
+  "foto": "IMG20260913162126.jpg",
+  "kwartslagen": 0,
+  "graden": 358.8,
+  "punten": 161,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162120",
+  "slot": 3,
+  "foto": "IMG20260913162152.jpg",
+  "kwartslagen": null,
+  "graden": 174.6,
+  "punten": 6,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162304",
+  "slot": 1,
+  "foto": "IMG20260913162304.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 329,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162304",
+  "slot": 2,
+  "foto": "IMG20260913162310.jpg",
+  "kwartslagen": 0,
+  "graden": 9.9,
+  "punten": 294,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162345",
+  "slot": 1,
+  "foto": "IMG20260913162345.jpg",
+  "kwartslagen": 0,
+  "graden": 358.5,
+  "punten": 274,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162345",
+  "slot": 2,
+  "foto": "IMG20260913162355.jpg",
+  "kwartslagen": null,
+  "graden": 124.3,
+  "punten": 6,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162345",
+  "slot": 3,
+  "foto": "IMG20260913162410.jpg",
+  "kwartslagen": 0,
+  "graden": 353.9,
+  "punten": 131,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162431",
+  "slot": 1,
+  "foto": "IMG20260913162431.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 379,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162431",
+  "slot": 2,
+  "foto": "IMG20260913162438.jpg",
+  "kwartslagen": 0,
+  "graden": 359.2,
+  "punten": 77,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162456",
+  "slot": 1,
+  "foto": "IMG20260913162456.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 220,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162456",
+  "slot": 2,
+  "foto": "IMG20260913162502.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 118,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162532",
+  "slot": 1,
+  "foto": "IMG20260913162532.jpg",
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 379,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162532",
+  "slot": 2,
+  "foto": "IMG20260913162537.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 108,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162532",
+  "slot": 3,
+  "foto": "IMG20260913162602.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162532",
+  "slot": 4,
+  "foto": "IMG20260913162612.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162647",
+  "slot": 1,
+  "foto": "IMG20260913162647.jpg",
+  "kwartslagen": 0,
+  "graden": 359.8,
+  "punten": 288,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162647",
+  "slot": 2,
+  "foto": "IMG20260913162654.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 298,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162716",
+  "slot": 1,
+  "foto": "IMG20260913162716.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 540,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162716",
+  "slot": 2,
+  "foto": "IMG20260913162722.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 482,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162736",
+  "slot": 1,
+  "foto": "IMG20260913162736.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 137,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162736",
+  "slot": 2,
+  "foto": "IMG20260913162742.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162736",
+  "slot": 3,
+  "foto": "IMG20260913162754.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 36,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162817",
+  "slot": 1,
+  "foto": "IMG20260913162817.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 266,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162817",
+  "slot": 2,
+  "foto": "IMG20260913162823.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 148,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162817",
+  "slot": 3,
+  "foto": "IMG20260913162836.jpg",
+  "kwartslagen": null,
+  "graden": 179.4,
+  "punten": 9,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162901",
+  "slot": 1,
+  "foto": "IMG20260913162901.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 298,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162901",
+  "slot": 2,
+  "foto": "IMG20260913162909.jpg",
+  "kwartslagen": 0,
+  "graden": 0.0,
+  "punten": 188,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162901",
+  "slot": 3,
+  "foto": "IMG20260913162916.jpg",
+  "kwartslagen": null,
+  "graden": 163.3,
+  "punten": 4,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162933",
+  "slot": 1,
+  "foto": "IMG20260913162933.jpg",
+  "kwartslagen": 0,
+  "graden": 0.8,
+  "punten": 348,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162933",
+  "slot": 2,
+  "foto": "IMG20260913162940.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 147,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162956",
+  "slot": 1,
+  "foto": "IMG20260913162956.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 410,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "162956",
+  "slot": 2,
+  "foto": "IMG20260913163003.jpg",
+  "kwartslagen": null,
+  "graden": 283.2,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163018",
+  "slot": 1,
+  "foto": "IMG20260913163018.jpg",
+  "kwartslagen": null,
+  "graden": 302.6,
+  "punten": 4,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "163018",
+  "slot": 2,
+  "foto": "IMG20260913163032.jpg",
+  "kwartslagen": 0,
+  "graden": 359.8,
+  "punten": 117,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "163018",
+  "slot": 3,
+  "foto": "IMG20260913163038.jpg",
+  "kwartslagen": 0,
+  "graden": 358.7,
+  "punten": 371,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "163057",
+  "slot": 1,
+  "foto": "IMG20260913163057.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 281,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163057",
+  "slot": 2,
+  "foto": "IMG20260913163108.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 217,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163124",
+  "slot": 1,
+  "foto": "IMG20260913163124.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 442,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163124",
+  "slot": 2,
+  "foto": "IMG20260913163130.jpg",
+  "kwartslagen": 0,
+  "graden": 359.0,
+  "punten": 180,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163146",
+  "slot": 1,
+  "foto": "IMG20260913163146.jpg",
+  "kwartslagen": 0,
+  "graden": 0.7,
+  "punten": 417,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163146",
+  "slot": 2,
+  "foto": "IMG20260913163153.jpg",
+  "kwartslagen": 0,
+  "graden": 359.5,
+  "punten": 241,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163229",
+  "slot": 1,
+  "foto": "IMG20260913163229.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 597,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163229",
+  "slot": 2,
+  "foto": "IMG20260913163234.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 151,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163229",
+  "slot": 3,
+  "foto": "IMG20260913163245.jpg",
+  "kwartslagen": null,
+  "graden": 212.7,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163331",
+  "slot": 1,
+  "foto": "IMG20260913163331.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 589,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163331",
+  "slot": 2,
+  "foto": "IMG20260913163337.jpg",
+  "kwartslagen": null,
+  "graden": 8.5,
+  "punten": 6,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163353",
+  "slot": 1,
+  "foto": "IMG20260913163353.jpg",
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 314,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163353",
+  "slot": 2,
+  "foto": "IMG20260913163359.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 397,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163409",
+  "slot": 1,
+  "foto": "IMG20260913163409.jpg",
+  "kwartslagen": 0,
+  "graden": 4.3,
+  "punten": 276,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163409",
+  "slot": 2,
+  "foto": "IMG20260913163413.jpg",
+  "kwartslagen": null,
+  "graden": 68.1,
+  "punten": 4,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163424",
+  "slot": 1,
+  "foto": "IMG20260913163424.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 215,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163424",
+  "slot": 2,
+  "foto": "IMG20260913163429.jpg",
+  "kwartslagen": null,
+  "graden": 359.2,
+  "punten": 15,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163442",
+  "slot": 1,
+  "foto": "IMG20260913163442.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 391,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163442",
+  "slot": 2,
+  "foto": "IMG20260913163448.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 405,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163554",
+  "slot": 1,
+  "foto": "IMG20260913163554.jpg",
+  "kwartslagen": null,
+  "graden": 59.1,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "163554",
+  "slot": 2,
+  "foto": "IMG20260913163606.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 178,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "163554",
+  "slot": 3,
+  "foto": "IMG20260913163611.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 283,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "163622",
+  "slot": 1,
+  "foto": "IMG20260913163622.jpg",
+  "kwartslagen": 0,
+  "graden": 1.1,
+  "punten": 375,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163622",
+  "slot": 2,
+  "foto": "IMG20260913163626.jpg",
+  "kwartslagen": null,
+  "graden": 338.6,
+  "punten": 7,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163622",
+  "slot": 3,
+  "foto": "IMG20260913163634.jpg",
+  "kwartslagen": 0,
+  "graden": 2.2,
+  "punten": 160,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163646",
+  "slot": 1,
+  "foto": "IMG20260913163646.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 479,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163646",
+  "slot": 2,
+  "foto": "IMG20260913163651.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 488,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163646",
+  "slot": 3,
+  "foto": "IMG20260913163702.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163713",
+  "slot": 1,
+  "foto": "IMG20260913163713.jpg",
+  "kwartslagen": 0,
+  "graden": 0.5,
+  "punten": 286,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163713",
+  "slot": 2,
+  "foto": "IMG20260913163718.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 477,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163734",
+  "slot": 1,
+  "foto": "IMG20260913163734.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 169,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163734",
+  "slot": 2,
+  "foto": "IMG20260913163739.jpg",
+  "kwartslagen": 0,
+  "graden": 359.4,
+  "punten": 179,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163756",
+  "slot": 1,
+  "foto": "IMG20260913163756.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 320,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163756",
+  "slot": 2,
+  "foto": "IMG20260913163812.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 262,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163846",
+  "slot": 1,
+  "foto": "IMG20260913163846.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 181,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163846",
+  "slot": 2,
+  "foto": "IMG20260913163851.jpg",
+  "kwartslagen": 0,
+  "graden": 2.5,
+  "punten": 128,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163906",
+  "slot": 1,
+  "foto": "IMG20260913163906.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 371,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163906",
+  "slot": 2,
+  "foto": "IMG20260913163911.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 234,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163930",
+  "slot": 1,
+  "foto": "IMG20260913163930.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 77,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163930",
+  "slot": 2,
+  "foto": "IMG20260913163937.jpg",
+  "kwartslagen": 0,
+  "graden": 1.1,
+  "punten": 39,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163930",
+  "slot": 3,
+  "foto": "IMG20260913163945.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163958",
+  "slot": 1,
+  "foto": "IMG20260913163958.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 369,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "163958",
+  "slot": 2,
+  "foto": "IMG20260913164007.jpg",
+  "kwartslagen": 0,
+  "graden": 359.0,
+  "punten": 198,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164044",
+  "slot": 1,
+  "foto": "IMG20260913164044.jpg",
+  "kwartslagen": 0,
+  "graden": 359.1,
+  "punten": 265,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164044",
+  "slot": 2,
+  "foto": "IMG20260913164054.jpg",
+  "kwartslagen": 0,
+  "graden": 0.7,
+  "punten": 75,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164044",
+  "slot": 3,
+  "foto": "IMG20260913164102.jpg",
+  "kwartslagen": 0,
+  "graden": 358.5,
+  "punten": 35,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164117",
+  "slot": 1,
+  "foto": "IMG20260913164117.jpg",
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 417,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164117",
+  "slot": 2,
+  "foto": "IMG20260913164123.jpg",
+  "kwartslagen": null,
+  "graden": 336.0,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164117",
+  "slot": 3,
+  "foto": "IMG20260913164143.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 279,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164200",
+  "slot": 1,
+  "foto": "IMG20260913164200.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 228,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164200",
+  "slot": 2,
+  "foto": "IMG20260913164205.jpg",
+  "kwartslagen": null,
+  "graden": 198.0,
+  "punten": 7,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164219",
+  "slot": 1,
+  "foto": "IMG20260913164219.jpg",
+  "kwartslagen": 0,
+  "graden": 359.8,
+  "punten": 538,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164219",
+  "slot": 2,
+  "foto": "IMG20260913164225.jpg",
+  "kwartslagen": null,
+  "graden": 174.4,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164219",
+  "slot": 3,
+  "foto": "IMG20260913164246.jpg",
+  "kwartslagen": 0,
+  "graden": 0.7,
+  "punten": 86,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164219",
+  "slot": 4,
+  "foto": "IMG20260913164259.jpg",
+  "kwartslagen": null,
+  "graden": 19.4,
+  "punten": 4,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164331",
+  "slot": 1,
+  "foto": "IMG20260913164331.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 183,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164331",
+  "slot": 2,
+  "foto": "IMG20260913164336.jpg",
+  "kwartslagen": 0,
+  "graden": 358.5,
+  "punten": 160,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164352",
+  "slot": 1,
+  "foto": "IMG20260913164352.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 313,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164352",
+  "slot": 2,
+  "foto": "IMG20260913164358.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 274,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164408",
+  "slot": 1,
+  "foto": "IMG20260913164408.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 216,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164408",
+  "slot": 2,
+  "foto": "IMG20260913164431.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 136,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164445",
+  "slot": 1,
+  "foto": "IMG20260913164445.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 483,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164445",
+  "slot": 2,
+  "foto": "IMG20260913164450.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 488,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164516",
+  "slot": 1,
+  "foto": "IMG20260913164516.jpg",
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 538,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164516",
+  "slot": 2,
+  "foto": "IMG20260913164551.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 305,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164627",
+  "slot": 1,
+  "foto": "IMG20260913164627.jpg",
+  "kwartslagen": 0,
+  "graden": 359.4,
+  "punten": 417,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164627",
+  "slot": 2,
+  "foto": "IMG20260913164631.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 322,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164646",
+  "slot": 1,
+  "foto": "IMG20260913164646.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 67,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164646",
+  "slot": 2,
+  "foto": "IMG20260913164650.jpg",
+  "kwartslagen": 0,
+  "graden": 359.8,
+  "punten": 528,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164727",
+  "slot": 1,
+  "foto": "IMG20260913164727.jpg",
+  "kwartslagen": 0,
+  "graden": 0.5,
+  "punten": 374,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164727",
+  "slot": 2,
+  "foto": "IMG20260913164733.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 408,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164748",
+  "slot": 1,
+  "foto": "IMG20260913164748.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 218,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164748",
+  "slot": 2,
+  "foto": "IMG20260913164752.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 258,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164800",
+  "slot": 1,
+  "foto": "IMG20260913164800.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 69,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164800",
+  "slot": 2,
+  "foto": "IMG20260913164805.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 111,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164838",
+  "slot": 1,
+  "foto": "IMG20260913164838.jpg",
+  "kwartslagen": 0,
+  "graden": 7.0,
+  "punten": 25,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164838",
+  "slot": 2,
+  "foto": "IMG20260913164845.jpg",
+  "kwartslagen": null,
+  "graden": 2.7,
+  "punten": 22,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164923",
+  "slot": 1,
+  "foto": "IMG20260913164923.jpg",
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 340,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164923",
+  "slot": 2,
+  "foto": "IMG20260913164928.jpg",
+  "kwartslagen": 0,
+  "graden": 359.8,
+  "punten": 314,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164943",
+  "slot": 1,
+  "foto": "IMG20260913164943.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 584,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "164943",
+  "slot": 2,
+  "foto": "IMG20260913164949.jpg",
+  "kwartslagen": 0,
+  "graden": 0.0,
+  "punten": 380,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165003",
+  "slot": 1,
+  "foto": "IMG20260913165003.jpg",
+  "kwartslagen": 0,
+  "graden": 0.0,
+  "punten": 290,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165003",
+  "slot": 2,
+  "foto": "IMG20260913165006.jpg",
+  "kwartslagen": null,
+  "graden": 113.8,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165017",
+  "slot": 1,
+  "foto": "IMG20260913165017.jpg",
+  "kwartslagen": 0,
+  "graden": 0.0,
+  "punten": 213,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165017",
+  "slot": 2,
+  "foto": "IMG20260913165026.jpg",
+  "kwartslagen": 0,
+  "graden": 0.8,
+  "punten": 73,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165039",
+  "slot": 1,
+  "foto": "IMG20260913165039.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 386,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165039",
+  "slot": 2,
+  "foto": "IMG20260913165043.jpg",
+  "kwartslagen": null,
+  "graden": 287.6,
+  "punten": 8,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165108",
+  "slot": 1,
+  "foto": "IMG20260913165108.jpg",
+  "kwartslagen": 0,
+  "graden": 359.5,
+  "punten": 189,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165108",
+  "slot": 2,
+  "foto": "IMG20260913165113.jpg",
+  "kwartslagen": 0,
+  "graden": 0.5,
+  "punten": 63,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165153",
+  "slot": 1,
+  "foto": "IMG20260913165153.jpg",
+  "kwartslagen": 0,
+  "graden": 0.9,
+  "punten": 161,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165153",
+  "slot": 2,
+  "foto": "IMG20260913165158.jpg",
+  "kwartslagen": 0,
+  "graden": 359.5,
+  "punten": 105,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165216",
+  "slot": 1,
+  "foto": "IMG20260913165216.jpg",
+  "kwartslagen": 0,
+  "graden": 359.8,
+  "punten": 478,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165216",
+  "slot": 2,
+  "foto": "IMG20260913165225.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 519,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165310",
+  "slot": 1,
+  "foto": "IMG20260913165310.jpg",
+  "kwartslagen": null,
+  "graden": 335.3,
+  "punten": 43,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "165310",
+  "slot": 2,
+  "foto": "IMG20260913165319.jpg",
+  "kwartslagen": 0,
+  "graden": 357.2,
+  "punten": 79,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "165331",
+  "slot": 1,
+  "foto": "IMG20260913165331.jpg",
+  "kwartslagen": 0,
+  "graden": 357.1,
+  "punten": 48,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165331",
+  "slot": 2,
+  "foto": "IMG20260913165340.jpg",
+  "kwartslagen": null,
+  "graden": 8.8,
+  "punten": 17,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165756",
+  "slot": 1,
+  "foto": "IMG20260913165756.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 348,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165756",
+  "slot": 2,
+  "foto": "IMG20260913165803.jpg",
+  "kwartslagen": 0,
+  "graden": 0.0,
+  "punten": 267,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165852",
+  "slot": 1,
+  "foto": "IMG20260913165852.jpg",
+  "kwartslagen": 0,
+  "graden": 359.9,
+  "punten": 749,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165852",
+  "slot": 2,
+  "foto": "IMG20260913165857.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 723,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165910",
+  "slot": 1,
+  "foto": "IMG20260913165910.jpg",
+  "kwartslagen": null,
+  "graden": 56.6,
+  "punten": 6,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "165910",
+  "slot": 2,
+  "foto": "IMG20260913165915.jpg",
+  "kwartslagen": 0,
+  "graden": 0.5,
+  "punten": 36,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "165923",
+  "slot": 1,
+  "foto": "IMG20260913165923.jpg",
+  "kwartslagen": 0,
+  "graden": 1.8,
+  "punten": 98,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165923",
+  "slot": 2,
+  "foto": "IMG20260913165927.jpg",
+  "kwartslagen": null,
+  "graden": 91.3,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165937",
+  "slot": 1,
+  "foto": "IMG20260913165937.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 318,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165937",
+  "slot": 2,
+  "foto": "IMG20260913165941.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 300,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165949",
+  "slot": 1,
+  "foto": "IMG20260913165949.jpg",
+  "kwartslagen": 0,
+  "graden": 0.3,
+  "punten": 607,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "165949",
+  "slot": 2,
+  "foto": "IMG20260913165954.jpg",
+  "kwartslagen": 0,
+  "graden": 359.5,
+  "punten": 207,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170004",
+  "slot": 1,
+  "foto": "IMG20260913170004.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 206,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170004",
+  "slot": 2,
+  "foto": "IMG20260913170020.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 207,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170039",
+  "slot": 1,
+  "foto": "IMG20260913170039.jpg",
+  "kwartslagen": 0,
+  "graden": 0.5,
+  "punten": 474,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170039",
+  "slot": 2,
+  "foto": "IMG20260913170044.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 312,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170059",
+  "slot": 1,
+  "foto": "IMG20260913170059.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 567,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170059",
+  "slot": 2,
+  "foto": "IMG20260913170109.jpg",
+  "kwartslagen": 0,
+  "graden": 359.7,
+  "punten": 234,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170121",
+  "slot": 1,
+  "foto": "IMG20260913170121.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "170121",
+  "slot": 2,
+  "foto": "IMG20260913170128.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "170138",
+  "slot": 1,
+  "foto": "IMG20260913170138.jpg",
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 379,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170138",
+  "slot": 2,
+  "foto": "IMG20260913170143.jpg",
+  "kwartslagen": 0,
+  "graden": 0.6,
+  "punten": 354,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170151",
+  "slot": 1,
+  "foto": "IMG20260913170151.jpg",
+  "kwartslagen": 0,
+  "graden": 360.0,
+  "punten": 533,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170151",
+  "slot": 2,
+  "foto": "IMG20260913170154.jpg",
+  "kwartslagen": 0,
+  "graden": 359.5,
+  "punten": 227,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170207",
+  "slot": 1,
+  "foto": "IMG20260913170207.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 295,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170207",
+  "slot": 2,
+  "foto": "IMG20260913170215.jpg",
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 304,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170239",
+  "slot": 1,
+  "foto": "IMG20260913170239.jpg",
+  "kwartslagen": 0,
+  "graden": 359.6,
+  "punten": 295,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170239",
+  "slot": 2,
+  "foto": "IMG20260913170244.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 99,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170239",
+  "slot": 3,
+  "foto": "IMG20260913170300.jpg",
+  "kwartslagen": null,
+  "graden": 274.6,
+  "punten": 14,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170326",
+  "slot": 1,
+  "foto": "IMG20260913170326.jpg",
+  "kwartslagen": 0,
+  "graden": 359.1,
+  "punten": 415,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170326",
+  "slot": 2,
+  "foto": "IMG20260913170331.jpg",
+  "kwartslagen": null,
+  "graden": 1.5,
+  "punten": 10,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170326",
+  "slot": 3,
+  "foto": "IMG20260913170339.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170353",
+  "slot": 1,
+  "foto": "IMG20260913170353.jpg",
+  "kwartslagen": null,
+  "graden": 273.1,
+  "punten": 6,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "170353",
+  "slot": 2,
+  "foto": "IMG20260913170359.jpg",
+  "kwartslagen": 0,
+  "graden": 359.8,
+  "punten": 35,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "170417",
+  "slot": 1,
+  "foto": "IMG20260913170417.jpg",
+  "kwartslagen": null,
+  "graden": 79.2,
+  "punten": 5,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "170417",
+  "slot": 2,
+  "foto": "IMG20260913170430.jpg",
+  "kwartslagen": 0,
+  "graden": 359.4,
+  "punten": 276,
+  "gedraaid": false,
+  "voorkant_kwartslagen": null
+ },
+ {
+  "id": "170436",
+  "slot": 1,
+  "foto": "IMG20260913170436.jpg",
+  "kwartslagen": 0,
+  "graden": 358.8,
+  "punten": 205,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170436",
+  "slot": 2,
+  "foto": "IMG20260913170457.jpg",
+  "kwartslagen": null,
+  "graden": null,
+  "punten": 0,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170601",
+  "slot": 1,
+  "foto": "IMG20260913170601.jpg",
+  "kwartslagen": 0,
+  "graden": 0.5,
+  "punten": 404,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170601",
+  "slot": 2,
+  "foto": "IMG20260913170607.jpg",
+  "kwartslagen": 0,
+  "graden": 0.2,
+  "punten": 502,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170620",
+  "slot": 1,
+  "foto": "IMG20260913170620.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 426,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170620",
+  "slot": 2,
+  "foto": "IMG20260913170627.jpg",
+  "kwartslagen": 0,
+  "graden": 358.8,
+  "punten": 328,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170640",
+  "slot": 1,
+  "foto": "IMG20260913170640.jpg",
+  "kwartslagen": 0,
+  "graden": 359.3,
+  "punten": 469,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170640",
+  "slot": 2,
+  "foto": "IMG20260913170645.jpg",
+  "kwartslagen": null,
+  "graden": 106.5,
+  "punten": 26,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170640",
+  "slot": 3,
+  "foto": "IMG20260913170653.jpg",
+  "kwartslagen": 0,
+  "graden": 358.9,
+  "punten": 88,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170711",
+  "slot": 1,
+  "foto": "IMG20260913170711.jpg",
+  "kwartslagen": 0,
+  "graden": 359.5,
+  "punten": 95,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170711",
+  "slot": 2,
+  "foto": "IMG20260913170717.jpg",
+  "kwartslagen": 0,
+  "graden": 358.7,
+  "punten": 112,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170738",
+  "slot": 1,
+  "foto": "IMG20260913170738.jpg",
+  "kwartslagen": 0,
+  "graden": 0.1,
+  "punten": 259,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170738",
+  "slot": 2,
+  "foto": "IMG20260913170743.jpg",
+  "kwartslagen": 0,
+  "graden": 1.8,
+  "punten": 282,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ },
+ {
+  "id": "170738",
+  "slot": 3,
+  "foto": "IMG20260913170751.jpg",
+  "kwartslagen": null,
+  "graden": 20.9,
+  "punten": 7,
+  "gedraaid": false,
+  "voorkant_kwartslagen": 0
+ }
+]
