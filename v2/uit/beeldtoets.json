@@ -135,9 +135,9 @@
   "title": "Barbra Streisand's Greatest Hits",
   "bron": "hoesbeeld",
   "soort": "LP",
-  "punten": 39,
+  "punten": 41,
   "oordeel": "klopt",
-  "discogs_formaat": "1x Vinyl LP Compilation Stereo"
+  "discogs_formaat": "1x Vinyl LP Compilation"
  },
  {
   "id": "161839",
@@ -298,6 +298,16 @@
   "punten": 286,
   "oordeel": "klopt",
   "discogs_formaat": "2x Vinyl LP Compilation Stereo"
+ },
+ {
+  "id": "162933",
+  "artist": "Tom Jones",
+  "title": "A-Tom-Ic Jones",
+  "bron": "hoesbeeld",
+  "soort": "LP",
+  "punten": 347,
+  "oordeel": "klopt",
+  "discogs_formaat": "1x Vinyl LP Album"
  },
  {
   "id": "162956",

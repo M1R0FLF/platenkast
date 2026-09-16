@@ -131,6 +131,15 @@ function paneel(p) {
         rij("Laagste nu", m.laagste ? `${euro(m.laagste)} van ${m.te_koop} te koop` : null),
         rij("Verzamelaars", m.have ? `${m.have} hebben hem, ${m.want} zoeken hem` : null),
         rij("Waarom", (p.oordeel_reden || []).join("; ")),
+        // Het beeld is het enige bewijs dat NIET uit de OCR komt, dus dat hoort
+        // zichtbaar te zijn. 399 punten en 41 punten zijn allebei "herkend",
+        // maar het zijn niet dezelfde zekerheid.
+        rij("Hoes vergeleken", p.beeld_punten === null || p.beeld_punten === undefined
+          ? "geen hoesfoto op Discogs om mee te vergelijken"
+          : `${p.beeld_punten} samenvallende punten`
+            + (p.beeld_punten >= 100 ? " - dit is dezelfde hoes"
+               : p.beeld_punten >= 30 ? " - waarschijnlijk dezelfde hoes, maar niet ruim"
+               : " - zwak")),
         p.discogs ? rij("Discogs", el("a", { href: p.discogs, target: "_blank",
                                              rel: "noopener", tekst: "bekijk de persing" })) : null,
       ]),

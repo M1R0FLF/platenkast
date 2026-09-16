@@ -638,6 +638,16 @@ def beeld_punten(dc, rec, release_id, hoezendir, eigen=None):
     return top
 
 
+def _letters(catalogusnummer):
+    """De letterreeks voor het cijfer: 'SLK 16 532-P' -> 'SLK'.
+
+    Platenmaatschappijen gebruiken per land een eigen reeks, dus die letters
+    zeggen iets over de persing dat het cijfer erachter niet zegt.
+    """
+    m = re.match(r"\s*([A-Za-z]{2,4})", catalogusnummer or "")
+    return m.group(1).upper() if m else None
+
+
 def _ankers(rec, n=3):
     """De grootst gedrukte woorden van de voorkant: artiest of componist."""
     uit, gezien = [], set()
@@ -669,7 +679,7 @@ def _onderscheidend(rec, n=6):
     return uit[:n]
 
 
-def laatste_ronde(dc, rec, hoezendir, drempel=None, max_zoek=16):
+def laatste_ronde(dc, rec, hoezendir, drempel=None, max_zoek=20, per_vraag=15):
     """Breed zoeken met korte zoekopdrachten, en alleen het beeld mag tekenen.
 
     Draait alleen voor platen die anders op de handmatige lijst belanden, dus
@@ -696,13 +706,35 @@ def laatste_ronde(dc, rec, hoezendir, drempel=None, max_zoek=16):
         return None, "geen leesbare foto"
 
     ank, ond = _ankers(rec), _onderscheidend(rec)
-    vragen = [f"{a} {w}" for a in ank[:2] for w in ond[:5]]
-    vragen += [f"{ond[i]} {ond[j]}" for i in range(min(4, len(ond)))
+    # De grootste woorden van de voorkant ONDERLING eerst: dat is meestal
+    # artiest + label, en dat is wat een mens zou intikken. Bij "A-tom-ic Jones"
+    # leverde "JONES DECCA" de plaat op, terwijl de titel zelf onvindbaar was -
+    # die staat op de hoes als "A<punt>TOMIC" en daar geeft Discogs nul treffers op.
+    # Volgorde is hier geen smaak maar noodzaak: er is een plafond op het aantal
+    # zoekopdrachten, dus wat achteraan staat wordt afgekapt. De twee soorten die
+    # het in de praktijk wonnen staan daarom vooraan - anker x anker
+    # ("JONES DECCA") en de onderscheidende woorden onderling ("Magnificat
+    # Ouverture"). Toen de ankerparen erbij kwamen zonder deze herordening viel
+    # het Bach-paar buiten de boot en verdween die plaat weer.
+    # Elke vraag krijgt een eigen DIEPTE. Een ankerpaar is artiest + label en
+    # levert tientallen platen van diezelfde artiest op; de juiste staat daar
+    # zelden bovenaan, want de tekst zegt verder niets onderscheidends meer.
+    # "JONES DECCA" gaf vijftig Tom Jones-platen met "A-tom-ic Jones" ergens
+    # voorbij plek vijftien. Diep kijken mag daar, want de hoes beslist toch -
+    # bij de rest is het alleen tijd verspillen.
+    # Vijftig diep, niet dertig: bij "JONES DECCA" stond de Britse persing op
+    # plek 17 en de Duitse - de juiste - op plek 34. Stoppen bij dertig levert
+    # dus wel de goede PLAAT op maar de verkeerde PERSING, en dat is precies het
+    # verschil waar de prijs aan hangt.
+    vragen = [(f"{ank[i]} {ank[j]}", 50) for i in range(len(ank))
+              for j in range(i + 1, len(ank))]
+    vragen += [(f"{ond[i]} {ond[j]}", per_vraag) for i in range(min(4, len(ond)))
                for j in range(i + 1, min(4, len(ond)))]
+    vragen += [(f"{a} {w}", per_vraag) for a in ank[:2] for w in ond[:5]]
 
-    top, gezien = (0, None, None), set()
-    for q in vragen[:max_zoek]:
-        for r in dc.zoek(q=q, format="Vinyl")[:8]:
+    treffers, gezien = [], set()
+    for q, diepte in vragen[:max_zoek]:
+        for r in dc.zoek(q=q, format="Vinyl")[:diepte]:
             if r["id"] in gezien:
                 continue
             gezien.add(r["id"])
@@ -711,12 +743,47 @@ def laatste_ronde(dc, rec, hoezendir, drempel=None, max_zoek=16):
                 continue
             punten = max((beeld.gelijkenis(kf, beeld.kenmerken(hoes))
                           for kf in eigen), default=0)
-            if punten > top[0]:
-                top = (punten, r, q)
-        if top[0] >= drempel:
+            if punten >= drempel:
+                treffers.append((punten, r, q))
+        if treffers:
             break                      # gevonden is gevonden, stop met zoeken
-    if top[0] < drempel:
-        return None, f"ook breed zoeken leverde niets op (beste {top[0]} punten)"
+    if not treffers:
+        return None, "ook breed zoeken leverde niets op"
+
+    # Dezelfde hoes zit op elke persing van een plaat, dus het beeld wijst de
+    # PLAAT aan en niet de persing. Zonder deze voorkeur koos de brede ronde voor
+    # "A-tom-ic Jones" de Britse persing (SKL 4743, 345 punten) terwijl de
+    # achterkant Duits is - zelfde plaat, andere prijs.
+    gedrukt = ((rec.get("land_gedrukt") or rec.get("land") or "").lower().strip())
+
+    def rijmt(r):
+        rl = (r.get("country") or "").lower()
+        return bool(gedrukt and rl) and (gedrukt in rl or rl in gedrukt or "europe" in rl)
+
+    # Het beeld wijst de PLAAT aan, de letters van het catalogusnummer wijzen de
+    # PERSING aan. Op de hoes van "A-tom-ic Jones" staat geen land, maar wel
+    # SLK16483 en SLK16464 - de Duitse Decca-reeks. De Britse persing heet
+    # SKL 4743, dezelfde letters in een andere volgorde, en die won op punten
+    # (345 om 347) terwijl de achterkant Duits is.
+    voorvoegsels = {v for v in (_letters(c) for c in
+                                (rec.get("catno_kandidaten") or [])) if v}
+
+    def zelfde_reeks(r):
+        return bool(voorvoegsels) and _letters(r.get("catno")) in voorvoegsels
+
+    # En als het nummer van de persing LETTERLIJK op de hoes staat, is dat geen
+    # aanwijzing maar bewijs - dezelfde regel die op_beeld al hanteert. Bij
+    # Streisand staat S63151 op de achterkant; zonder deze voorkeur won een
+    # willekeurige andere Nederlandse persing op een paar beeldpunten verschil.
+    cijfers_hoes = re.sub(r"\D", "", _tekst_van(rec))
+
+    def nummer_op_hoes(r):
+        rc = re.sub(r"\D", "", kaal(r.get("catno")))
+        return len(rc) >= 4 and bool(cijfers_hoes) and rc in cijfers_hoes
+
+    treffers.sort(key=lambda t: (nummer_op_hoes(t[1]), rijmt(t[1]),
+                                 zelfde_reeks(t[1]), t[0]), reverse=True)
+    top = treffers[0]
 
     rel = dc.release(top[1]["id"])
     if not rel:

@@ -336,9 +336,9 @@
   "artist": "Barbra Streisand",
   "title": "Barbra Streisand's Greatest Hits",
   "label": "CBS",
-  "catno": "S 63921",
+  "catno": "63921",
   "barcode": null,
-  "country": "Europe",
+  "country": "Netherlands",
   "year": 1970,
   "soort": "LP",
   "lp_count": 1,
@@ -346,11 +346,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 11,
-  "notes": "herkend op hoesbeeld: 39 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'Barbra Broadcasting')",
+  "notes": "herkend op hoesbeeld: 41 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'Barbra Streisand's')",
   "staat_hoes": null,
   "bron": "hoesbeeld",
-  "release_id_auto": 10319907,
-  "beeld_punten": 39
+  "release_id_auto": 3053377,
+  "beeld_punten": 41
  },
  {
   "id": "161839",
@@ -761,6 +761,31 @@
   "beeld_punten": 286
  },
  {
+  "id": "162933",
+  "fotos": [
+   "IMG20260913162933.jpg",
+   "IMG20260913162940.jpg"
+  ],
+  "artist": "Tom Jones",
+  "title": "A-Tom-Ic Jones",
+  "label": "Decca",
+  "catno": "SLK 16 532-P",
+  "barcode": null,
+  "country": "Germany",
+  "year": 1966,
+  "soort": "LP",
+  "lp_count": 1,
+  "gatefold": false,
+  "a_kant": null,
+  "b_kant": null,
+  "aantal_nummers": 14,
+  "notes": "herkend op hoesbeeld: 347 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'JONES DECCA')",
+  "staat_hoes": null,
+  "bron": "hoesbeeld",
+  "release_id_auto": 3661894,
+  "beeld_punten": 347
+ },
+ {
   "id": "162956",
   "fotos": [
    "IMG20260913162956.jpg",
@@ -981,7 +1006,7 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 14,
-  "notes": "herkend op hoesbeeld: 276 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'PABLi PABLITO')",
+  "notes": "herkend op hoesbeeld: 276 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'PABLi PARAGUAYOS')",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 7932006,

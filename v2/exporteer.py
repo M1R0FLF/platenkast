@@ -97,13 +97,14 @@ def bouw(csvpad, jsonpad, groepenpad, handmatigpad):
 
     # het oordeel komt uit nauwkeurig.py, zodat de site precies hetzelfde
     # stempel toont als het rapport telt
-    oordelen = {}
+    oordelen, beeldpunten = {}, {}
     try:
         from nauwkeurig import beoordeel
         platen = json.load(open(jsonpad, encoding="utf-8"))
         groepen = {r["id"]: r for r in json.load(open(groepenpad, encoding="utf-8"))}
         for p in platen:
             oordelen[str(p["id"])] = beoordeel(p, groepen.get(p["id"], {}))
+            beeldpunten[str(p["id"])] = p.get("beeld_punten")
     except (OSError, ImportError, KeyError) as e:
         print(f"  (geen oordeel beschikbaar: {e})")
 
@@ -144,6 +145,10 @@ def bouw(csvpad, jsonpad, groepenpad, handmatigpad):
             "release_id": _getal(r.get("release_id")),
             "oordeel": niveau,
             "oordeel_reden": redenen,
+            # hoeveel punten de eigen foto samenviel met de hoes op Discogs.
+            # None = niet te toetsen (geen hoesfoto daar), en dat is iets anders
+            # dan nul.
+            "beeld_punten": beeldpunten.get(rid),
             "herkend_op": kies("gelezen_bron"),
             "advertentie": {"titel": kies("titel"), "tekst": kies("beschrijving")},
             "fotos": _lijst(r.get("fotos")),
