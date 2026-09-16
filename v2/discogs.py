@@ -115,11 +115,36 @@ class Discogs:
         return self.zoek(**kw)
 
     def release(self, rid):
+        # curr_abbr staat er omdat de documentatie zegt dat het werkt. Dat doet
+        # het niet: lowest_price komt er in dollars uit, met of zonder deze
+        # parameter en ongeacht de muntinstelling van de account. Gebruik
+        # markt() voor prijzen; deze endpoint is er voor de gegevens.
         return self.get(f"/releases/{rid}", curr_abbr="EUR")
 
+    def markt(self, rid):
+        """Aanbod en laagste prijs, en dan uit de JUISTE endpoint.
+
+        /releases/{id} geeft ook een lowest_price, maar die staat in dollars.
+        Gemeten over twaalf platen was hij stelselmatig 1,15x de waarde hier,
+        precies de koers USD/EUR; hetzelfde geldt voor /marketplace/fee, die
+        "USD" gewoon opschrijft. Deze endpoint zegt zelf in welke munt hij
+        rekent, en dat is de enige reden om hem te vertrouwen:
+
+            {"num_for_sale": 1,
+             "lowest_price": {"value": 39.0, "currency": "EUR"},
+             "blocked_from_sale": false}
+        """
+        return self.get(f"/marketplace/stats/{rid}")
+
     def suggestions(self, rid):
-        """Geeft 404 zonder ingevulde verkopersinstellingen, en Miro is
-        particulier. prijs.py rekent daarom met lowest_price."""
+        """De echte prijsgids (VG+/NM/VG), en de enige bron die zegt waarvoor
+        platen WEGGAAN in plaats van waarvoor ze te koop staan.
+
+        Geeft 404 "You must fill out your seller settings first" zolang de
+        verkopersinstellingen op discogs.com niet ingevuld zijn, want de gids
+        rekent in de listing-valuta van de verkoper en die weet hij dan niet.
+        Zolang dat zo is valt prijs.py terug op markt().
+        """
         return self.get(f"/marketplace/price_suggestions/{rid}")
 
     # v1 riep dit aan om de JSON-cache weg te schrijven; met SQLite is elke

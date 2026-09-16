@@ -38,8 +38,8 @@ export const kaal = s => (s || "").toString().toLowerCase()
 
 export const OORDEEL = {
   zeker: { tekst: "zeker", klasse: "goed", uitleg: "het catalogusnummer van deze persing staat op de hoes" },
-  aannemelijk: { tekst: "aannemelijk", klasse: "twijfel", uitleg: "titel of artiest klopt en niets spreekt het tegen" },
-  onbevestigd: { tekst: "onbevestigd", klasse: "", uitleg: "te weinig leesbare tekst om de persing te toetsen" },
+  aannemelijk: { tekst: "aannemelijk", klasse: "twijfel", uitleg: "titel, artiest of de hoes zelf klopt en niets spreekt het tegen" },
+  onbevestigd: { tekst: "onbevestigd", klasse: "", uitleg: "geen leesbare tekst en geen hoesfoto op Discogs om mee te vergelijken" },
   tegenspraak: { tekst: "tegenspraak", klasse: "fout", uitleg: "de hoes zegt iets anders dan de gekozen persing" },
   onbekend: { tekst: "onbekend", klasse: "", uitleg: "niet beoordeeld" },
 };

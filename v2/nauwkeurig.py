@@ -9,18 +9,22 @@ hoes zelf staat:
   catalogusnummer  staat het nummer van deze persing op de hoes?
   titel            komt de titel van de release terug in de OCR?
   land             spreekt de hoes het land tegen? ("PRINTED IN HOLLAND")
+  beeld            valt jouw foto samen met de hoesfoto op Discogs?
 
 Een plaat heet ZEKER als het catalogusnummer op de hoes staat. Dat nummer is
 uniek per persing, dus dat is geen aanwijzing maar bewijs. Zonder nummer maar
-met titel en zonder tegenspraak heet het AANNEMELIJK. Spreekt iets elkaar
-tegen, dan VERDACHT.
+met titel, artiest of een samenvallende hoes, en zonder tegenspraak, heet het
+AANNEMELIJK. Spreekt iets elkaar tegen, dan VERDACHT.
+
+Het beeld kan nooit ZEKER opleveren: dezelfde hoes zit op elke persing van
+dezelfde uitgave, dus het bewijst de plaat en niet de persing.
 
     py nauwkeurig.py
 """
 import json, os, re, sys, argparse, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from velden import kaal, LANDEN
-from match import bevat, DICHTBIJ
+from match import bevat, DICHTBIJ, BEELD_GOED
 
 
 EUROPEES = {"netherlands", "belgium", "germany", "west germany", "france", "uk",
@@ -93,10 +97,33 @@ def beoordeel(p, g):
         return "zeker", ["catalogusnummer staat op de hoes"]
     if titel or artiest:
         return "aannemelijk", ["titel of artiest klopt, niets spreekt tegen"]
+
+    # Staat er niets leesbaars op de hoes, dan is er nog steeds de hoes zelf.
+    # Dit stond hier niet omdat dit bestand ouder is dan de beeldtoets, en dat
+    # gaf een rare uitkomst: zeven platen heetten "onbevestigd" terwijl hun hoes
+    # op 219 tot 472 punten samenviel met die van de gekozen persing. Het zijn
+    # goedkope Nederlandse verzamelaars (de ADEH-reeks) met het nummer in
+    # microletters op een donkere rug - precies het geval waarin de tekst faalt
+    # en het plaatje niet.
+    #
+    # Het beeld is bovendien het enige bewijs dat NIET uit de OCR komt, en dus
+    # het enige dat de ABBA-val kon zien: een achterkant die vijf andere platen
+    # adverteert laat de tekstcontrole vrolijk kloppen.
+    #
+    # Geen "zeker": dezelfde hoes zit op elke persing van dezelfde uitgave, dus
+    # dit bewijst de PLAAT en niet de PERSING. Daarvoor heb je het
+    # catalogusnummer nodig.
+    punten = p.get("beeld_punten") or 0
+    if punten >= BEELD_GOED:
+        return "aannemelijk", [f"de hoes valt op {punten} punten samen met "
+                               "die van deze persing"]
+
     # Geen bewijs is niet hetzelfde als fout bewijs. Bij een donkere of slecht
     # leesbare hoes staat er simpelweg te weinig in de OCR om iets te kunnen
-    # zeggen. Die apart houden, anders lijkt het alsof ze mis zijn.
-    return "onbevestigd", ["te weinig leesbare tekst om te toetsen"]
+    # zeggen, en heeft Discogs geen hoesfoto om mee te vergelijken. Die apart
+    # houden, anders lijkt het alsof ze mis zijn.
+    return "onbevestigd", ["te weinig leesbare tekst, en geen hoes om mee te "
+                           "vergelijken"]
 
 
 def main():
@@ -124,9 +151,9 @@ def main():
     toetsbaar = goed + tel["tegenspraak"]
     print(f"{n} herkende platen\n")
     print(f"  ZEKER        {tel['zeker']:>3}  catalogusnummer staat op de hoes")
-    print(f"  AANNEMELIJK  {tel['aannemelijk']:>3}  titel of artiest klopt, niets spreekt tegen")
+    print(f"  AANNEMELIJK  {tel['aannemelijk']:>3}  titel, artiest of hoes klopt, niets spreekt tegen")
     print(f"  TEGENSPRAAK  {tel['tegenspraak']:>3}  de hoes zegt iets anders")
-    print(f"  ONBEVESTIGD  {tel['onbevestigd']:>3}  te weinig OCR om iets te kunnen zeggen")
+    print(f"  ONBEVESTIGD  {tel['onbevestigd']:>3}  geen leesbare tekst en geen hoes om te vergelijken")
     print(f"\n  nauwkeurigheid over wat te toetsen is: "
           f"{100*goed/max(toetsbaar,1):.0f}%  ({goed} van {toetsbaar})")
     print(f"  over alles                            : {100*goed/n:.0f}%  ({goed} van {n})")

@@ -148,8 +148,6 @@ def marktdata(dc, rid):
     out = {
         "release_id": rid,
         "discogs_url": f"https://www.discogs.com/release/{rid}",
-        "num_for_sale": rel.get("num_for_sale"),
-        "lowest_eur": rel.get("lowest_price"),
         "have": (rel.get("community") or {}).get("have"),
         "want": (rel.get("community") or {}).get("want"),
         "label_discogs": ", ".join(l["name"] for l in (rel.get("labels") or [])[:2]),
@@ -166,6 +164,21 @@ def marktdata(dc, rid):
         "tracklist": " | ".join(f"{t.get('position','')} {t['title']}".strip()
                                 for t in (rel.get("tracklist") or [])[:26]),
     }
+
+    # Aanbod en laagste prijs komen NIET uit de release. Die geeft
+    # lowest_price in dollars terug en noemt de munt niet, en deze kolom heeft
+    # er maandenlang dollars in gehad onder de naam lowest_eur - vijftien
+    # procent te hoog over de hele kast. /marketplace/stats zegt zelf welke
+    # munt het is.
+    stats = dc.markt(rid) or {}
+    laag = stats.get("lowest_price") or {}
+    out["num_for_sale"] = stats.get("num_for_sale")
+    out["lowest_valuta"] = laag.get("currency")
+    # Liever leeg dan weer verkeerd: staat er iets anders dan euro's, dan
+    # heeft advies() geen basis en zegt dat ook.
+    out["lowest_eur"] = (laag.get("value")
+                         if (laag.get("currency") or "").upper() == "EUR" else None)
+
     sug = dc.suggestions(rid)
     if sug:
         for k, veld in (("Near Mint (NM or M-)", "sug_nm"),
@@ -176,10 +189,21 @@ def marktdata(dc, rid):
     return out
 
 
+# Onder dit aanbod is "de goedkoopste" niet de onderkant van de markt maar de
+# hele markt. Twee, want bij twee exemplaren zegt de laagste van de twee nog
+# steeds niets over de spreiding.
+DUN_AANBOD = 2
+# Onder zoveel eigenaren is de verhouding want/have geen vraag maar ruis:
+# elf zoekers tegen negen bezitters zijn twee mensen, geen trend.
+GENOEG_BEZITTERS = 25
+
+
 def advies(p, soort="LP"):
     single = soort in ("single7", "EP")
     bodem = 3.0 if single else 5.0
     bundel_n, bundel_p = (80, 3.0) if single else (150, 4.0)
+    n = p.get("num_for_sale") or 0
+    dun = False
 
     # Twee soorten basis, met een heel andere betekenis.
     # sug_vgplus is een richtprijs voor een plaat in goede staat: daar ga je
@@ -190,20 +214,31 @@ def advies(p, soort="LP"):
     if p.get("sug_vgplus"):
         basis, factor = p["sug_vgplus"], 0.85
     elif p.get("lowest_eur"):
-        basis, factor = p["lowest_eur"], 1.25
+        # ... maar alleen als er een stapel IS. Die opslag van 25% bestaat
+        # omdat de goedkoopste van dertig het versleten exemplaar onderop is.
+        # Staat er een te koop, dan is de goedkoopste de hele wereldmarkt: een
+        # vraagprijs die niemand betaald heeft. Daar een kwart bovenop zetten
+        # is het omgekeerde van waar de regel voor bedoeld was. Zo werd Marv
+        # Johnson 64,50 terwijl er een exemplaar op aarde te koop stond.
+        dun = n <= DUN_AANBOD
+        basis, factor = p["lowest_eur"], 1.0 if dun else 1.25
     else:
-        return None, "geen marktdata - zelf bekijken"
+        return None, ("marktprijs in " + p["lowest_valuta"] + " - zelf bekijken"
+                      if p.get("lowest_valuta") else "geen marktdata - zelf bekijken")
 
-    n = p.get("num_for_sale") or 0
     want, have = p.get("want") or 0, p.get("have") or 1
     if n > bundel_n and basis < bundel_p:
         return None, "zeer courant, in een lot"
     prijs = basis * factor
-    if want / max(have, 1) > 0.15:
+    if have >= GENOEG_BEZITTERS and want / have > 0.15:
         prijs *= 1.15                          # relatief veel vraag
     prijs = max(prijs, bodem)
-    return round(prijs * 2) / 2, ("los verkopen" if prijs >= (5 if single else 8)
-                                  else "los of lot")
+    prijs = round(prijs * 2) / 2
+    if dun:
+        # Wel een getal, want je moet ergens beginnen, maar niet doen alsof het
+        # er een is waar de markt het over eens is.
+        return prijs, f"dun aanbod ({n} te koop) - prijs onzeker"
+    return prijs, ("los verkopen" if prijs >= (5 if single else 8) else "los of lot")
 
 
 # ------------------------------------------------- titel en advertentietekst --
@@ -245,6 +280,16 @@ def advertentie(m, p):
 
 # -------------------------------------------------------------------- main --
 
+# Hoog dit op zodra advies() of marktdata() anders gaat rekenen, anders blijft
+# de cache oude bedragen uitdelen die met de nieuwe regels niets te maken
+# hebben. Kost niets: de dure Discogs-aanroepen staan in cache/discogs.db en
+# blijven staan.
+#   1 -> 2  laagste prijs uit /marketplace/stats in plaats van uit de release,
+#           want die laatste gaf dollars; geen opslag bij dun aanbod; de
+#           vraagbonus telt pas vanaf GENOEG_BEZITTERS eigenaren.
+FORMULE = 2
+
+
 def prijzen(platen, dc, cachepad="lookup_cache.json", melden=None, stop=None):
     """Zoekt per plaat de persing op en rekent er een vraagprijs bij.
 
@@ -265,7 +310,8 @@ def prijzen(platen, dc, cachepad="lookup_cache.json", melden=None, stop=None):
         # beeldtoets vijf verkeerde persingen rechtzette en de CSV ze doodleuk
         # terugzette. Een andere persing is een andere opzoeking.
         rid = str(m.get("id") or (m.get("fotos") or [i])[0])
-        sleutel = rid + (f":{m['release_id_auto']}" if m.get("release_id_auto") else "")
+        sleutel = (f"v{FORMULE}:" + rid
+                   + (f":{m['release_id_auto']}" if m.get("release_id_auto") else ""))
         if sleutel in cache:
             rijen.append(cache[sleutel])
             zeg("prijs", klaar=i, totaal=len(platen), rij=cache[sleutel], uit_cache=True)

@@ -115,8 +115,10 @@ export function scherm(data) {
         }),
         el("p", { style: "color:var(--zachter);font-size:12px;margin:12px 0 0",
           tekst: "Zeker betekent dat het catalogusnummer van die persing letterlijk "
-               + "op de hoes staat. Onbevestigd is niet fout - het betekent dat er te "
-               + "weinig leesbare tekst was om het te kunnen nakijken." }),
+               + "op de hoes staat. Aannemelijk betekent dat de titel, de artiest of "
+               + "de hoes zelf klopt - de hoes kan nooit zeker opleveren, want dezelfde "
+               + "hoes zit op elke persing. Onbevestigd is niet fout: er was niets om "
+               + "mee na te kijken." }),
       ]),
     ]),
 
