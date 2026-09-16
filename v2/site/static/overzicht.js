@@ -39,7 +39,7 @@ export function scherm(data) {
       .map(p => [p, "de hoes spreekt de gekozen persing tegen"]),
     ...data.handmatig.map(h => [h, "niet herkend - zelf opzoeken"]),
     ...platen.filter(p => p.oordeel === "onbevestigd")
-      .map(p => [p, "te weinig leesbare tekst om te toetsen"]),
+      .map(p => [p, "geen leesbare tekst en geen hoes om mee te vergelijken"]),
   ];
 
   /* Een onherkende plaat heeft geen artiest en geen titel - dat is juist wat

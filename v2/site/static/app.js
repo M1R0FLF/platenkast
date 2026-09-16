@@ -30,13 +30,23 @@ function kerncijfers() {
     const e = x.eigen && x.eigen.prijs;
     return t + (e === undefined || e === null || e === "" ? (x.prijs || 0) : +e);
   }, 0);
-  const zeker = p.filter(x => x.oordeel === "zeker" || x.oordeel === "aannemelijk").length;
+  // Alleen ZEKER telt hier, en dat is geen slag om de arm maar de betekenis
+  // van het woord: zeker is "het catalogusnummer van deze persing staat op de
+  // hoes", en dat nummer is uniek per persing. Aannemelijk is een kloppende
+  // titel of een kloppende hoes, en allebei zitten ze op elke persing van
+  // dezelfde uitgave - die bevestigen de PLAAT, niet de persing. Ze meetellen
+  // gaf 100% op een kop die "persing bevestigd" zegt, en dat is een belofte
+  // die de gegevens niet waarmaken.
+  const zeker = p.filter(x => x.oordeel === "zeker").length;
+  const ook = p.filter(x => x.oordeel === "aannemelijk").length;
   return el("div", { class: "kerncijfers" }, [
     el("div", { class: "kerncijfer" }, [
       el("b", { tekst: getal(p.length) }), el("span", { tekst: "platen" })]),
     el("div", { class: "kerncijfer" }, [
       el("b", { tekst: euro(waarde) }), el("span", { tekst: "geschatte waarde" })]),
-    el("div", { class: "kerncijfer" }, [
+    el("div", { class: "kerncijfer",
+                title: `${zeker} met het catalogusnummer op de hoes, `
+                     + `${ook} aannemelijk (titel, artiest of hoes klopt)` }, [
       el("b", { tekst: p.length ? `${Math.round(100 * zeker / p.length)}%` : "-" }),
       el("span", { tekst: "persing bevestigd" })]),
   ]);
