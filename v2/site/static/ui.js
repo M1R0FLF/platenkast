@@ -1,0 +1,70 @@
+/* ui.js - de paar hulpjes die overal nodig zijn.
+ * Geen framework: er staan hooguit een paar honderd tegels op het scherm en
+ * dat kan het platte DOM prima aan. Wel innerHTML nergens met gegevens erin,
+ * want een plaattitel is invoer en geen opmaak. */
+
+export function el(soort, kenmerken = {}, kinderen = []) {
+  const n = document.createElement(soort);
+  for (const [k, v] of Object.entries(kenmerken)) {
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") n.className = v;
+    else if (k === "tekst") n.textContent = v;
+    else if (k === "html") n.innerHTML = v;                 // alleen voor iconen
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kind of [].concat(kinderen)) {
+    if (kind === null || kind === undefined || kind === false) continue;
+    n.append(kind.nodeType ? kind : document.createTextNode(kind));
+  }
+  return n;
+}
+
+export const euro = n =>
+  n === null || n === undefined || n === "" ? "-"
+    : new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR",
+        maximumFractionDigits: Number.isInteger(+n) ? 0 : 2 }).format(n);
+
+export const getal = n => new Intl.NumberFormat("nl-NL").format(n || 0);
+
+export function wacht(fn, ms = 160) {
+  let t;
+  return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+}
+
+/** Zoeken zonder accenten en hoofdletters: wie "cafe" typt wil "Café" vinden. */
+export const kaal = s => (s || "").toString().toLowerCase()
+  .normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+export const OORDEEL = {
+  zeker: { tekst: "zeker", klasse: "goed", uitleg: "het catalogusnummer van deze persing staat op de hoes" },
+  aannemelijk: { tekst: "aannemelijk", klasse: "twijfel", uitleg: "titel of artiest klopt en niets spreekt het tegen" },
+  onbevestigd: { tekst: "onbevestigd", klasse: "", uitleg: "te weinig leesbare tekst om de persing te toetsen" },
+  tegenspraak: { tekst: "tegenspraak", klasse: "fout", uitleg: "de hoes zegt iets anders dan de gekozen persing" },
+  onbekend: { tekst: "onbekend", klasse: "", uitleg: "niet beoordeeld" },
+};
+
+export const SOORT = { LP: "LP", single7: "single", maxi12: "maxi", EP: "EP" };
+
+export function toon(knoop) {
+  const m = document.querySelector("main");
+  m.replaceChildren(knoop);
+  m.scrollTop = 0;
+}
+
+/** Een staafje in een verdeling. Puur om te vergelijken, dus de schaal is
+ *  relatief aan de grootste - absolute aantallen staan er los naast. */
+export function staaf(naam, n, max, achtervoegsel = "") {
+  return el("div", { class: "staaf" }, [
+    el("span", { class: "naam", tekst: naam }),
+    el("span", { class: "spoor" }, [
+      el("i", { style: `width:${max ? Math.max(2, (n / max) * 100) : 0}%` }),
+    ]),
+    el("span", { class: "n", tekst: getal(n) + achtervoegsel }),
+  ]);
+}
+
+export const ICOON = {
+  zoek: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  plaat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="12" r="3.1"/><circle cx="12" cy="12" r="0.7" fill="currentColor"/></svg>',
+};

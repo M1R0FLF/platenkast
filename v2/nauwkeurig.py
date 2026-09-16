@@ -56,6 +56,49 @@ def land_uit_hoes(tekst):
     return None
 
 
+def beoordeel(p, g):
+    """Het oordeel over één plaat: (niveau, redenen).
+
+    Staat apart zodat de site hetzelfde stempel toont als dit rapport telt.
+    Toen dit nog binnen main() zat kon er maar één ding mee gebeuren, en een
+    tweede lezer zou de regels overschrijven en stilletjes gaan afwijken.
+    """
+    tekst = kaal(" ".join([g.get("ocr_achterkant") or "", g.get("ocr_voorkant") or "",
+                           g.get("ocr_hoekstrook") or ""]))
+    rauw = " ".join([g.get("ocr_achterkant") or "", g.get("ocr_voorkant") or "",
+                     g.get("ocr_hoekstrook") or ""])
+    cij_hoes = re.sub(r"\D", "", tekst)
+
+    cij_rel = re.sub(r"\D", "", p.get("catno") or "")
+    nummer = len(cij_rel) >= 4 and cij_rel in cij_hoes
+    titel = bevat(tekst, p.get("title") or "")
+    # de artiest telt ook als bewijs: op een verzamelhoes staat de titel
+    # soms alleen in sierletters die de OCR niet leest, maar de artiesten
+    # wel, en bij een single andersom
+    artiest = any(bevat(tekst, deel) for deel in
+                  (p.get("artist") or "").split(",")[:2] if len(deel.strip()) > 3)
+    hoesland = land_uit_hoes(rauw)
+    rl = (p.get("country") or "").lower()
+    tegenspraak = bool(hoesland and rl and not landen_rijmen(hoesland, rl))
+    ver = (p.get("country") or "").lower().strip() not in DICHTBIJ
+
+    redenen = []
+    if tegenspraak:
+        redenen.append(f"hoes zegt {hoesland}, persing is {p.get('country')}")
+    if ver and (p.get("country") or ""):
+        redenen.append(f"onwaarschijnlijk land: {p.get('country')}")
+    if redenen:
+        return "tegenspraak", redenen
+    if nummer:
+        return "zeker", ["catalogusnummer staat op de hoes"]
+    if titel or artiest:
+        return "aannemelijk", ["titel of artiest klopt, niets spreekt tegen"]
+    # Geen bewijs is niet hetzelfde als fout bewijs. Bij een donkere of slecht
+    # leesbare hoes staat er simpelweg te weinig in de OCR om iets te kunnen
+    # zeggen. Die apart houden, anders lijkt het alsof ze mis zijn.
+    return "onbevestigd", ["te weinig leesbare tekst om te toetsen"]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--platen", default="uit/platen.json")
@@ -69,44 +112,11 @@ def main():
     tel = collections.Counter()
     verdacht, onbevestigd = [], []
     for p in platen:
-        g = groepen.get(p["id"], {})
-        tekst = kaal(" ".join([g.get("ocr_achterkant") or "", g.get("ocr_voorkant") or "",
-                               g.get("ocr_hoekstrook") or ""]))
-        rauw = " ".join([g.get("ocr_achterkant") or "", g.get("ocr_voorkant") or "",
-                         g.get("ocr_hoekstrook") or ""])
-        cij_hoes = re.sub(r"\D", "", tekst)
-
-        cij_rel = re.sub(r"\D", "", p.get("catno") or "")
-        nummer = len(cij_rel) >= 4 and cij_rel in cij_hoes
-        titel = bevat(tekst, p.get("title") or "")
-        # de artiest telt ook als bewijs: op een verzamelhoes staat de titel
-        # soms alleen in sierletters die de OCR niet leest, maar de artiesten
-        # wel, en bij een single andersom
-        artiest = any(bevat(tekst, deel) for deel in
-                      (p.get("artist") or "").split(",")[:2] if len(deel.strip()) > 3)
-        hoesland = land_uit_hoes(rauw)
-        rl = (p.get("country") or "").lower()
-        tegenspraak = bool(hoesland and rl and not landen_rijmen(hoesland, rl))
-        ver = (p.get("country") or "").lower().strip() not in DICHTBIJ
-
-        redenen = []
-        if tegenspraak:
-            redenen.append(f"hoes zegt {hoesland}, persing is {p.get('country')}")
-        if ver and (p.get("country") or ""):
-            redenen.append(f"onwaarschijnlijk land: {p.get('country')}")
-        if redenen:
-            tel["tegenspraak"] += 1
+        niveau, redenen = beoordeel(p, groepen.get(p["id"], {}))
+        tel[niveau] += 1
+        if niveau == "tegenspraak":
             verdacht.append((p, redenen))
-        elif nummer:
-            tel["zeker"] += 1
-        elif titel or artiest:
-            tel["aannemelijk"] += 1
-        else:
-            # Geen bewijs is niet hetzelfde als fout bewijs. Bij een donkere of
-            # slecht leesbare hoes staat er simpelweg te weinig in de OCR om
-            # iets te kunnen zeggen. Die apart tellen, anders lijkt het alsof
-            # ze mis zijn.
-            tel["onbevestigd"] += 1
+        elif niveau == "onbevestigd":
             onbevestigd.append(p)
 
     n = len(platen)

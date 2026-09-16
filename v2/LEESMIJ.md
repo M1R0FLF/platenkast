@@ -1,16 +1,46 @@
-# Platenverkoop v2
+# Platenkast v2
 
-Van foto's van platenhoezen naar een CSV met Discogs-persing, marktprijs en
-advertentietekst.
+Je platen fotograferen, ze laten herkennen, en weten wat je hebt - welke
+persing, uit welk jaar, wat hij waard is. Wat je daarna verkoopt is aan jou.
 
 ```
-py run.py                      alles: uitsnijden, lezen, groeperen, opzoeken
+py kast.py                     de kast openen in je browser (dit is de gewone ingang)
+
+py run.py                      alleen de keten: uitsnijden, lezen, groeperen, opzoeken
 py prijs.py uit/platen.json uit/platen.csv
+py exporteer.py                keten -> site: collectie.json en duimnagels
 py verkooplijst.py             de korte lijst om mee te verkopen
 py contactvel.py               een tegel per plaat, met artiest en prijs
 py contactvel.py --alles       elke uitsnede, om het snijden te keuren
 py nauwkeurig.py               klopt de gekozen persing met wat op de hoes staat?
 ```
+
+Eenmalig: `pip install -r vereisten.txt`, en een gratis Discogs-token in
+`DISCOGS_TOKEN` als je prijzen wilt.
+
+## De site
+
+`site/` is een gewone statische site: geen bouwstap, geen npm, geen framework.
+Dezelfde bestanden draaien op twee plekken, en dat is met opzet:
+
+| | |
+|---|---|
+| `py kast.py` | serveert `site/` op 127.0.0.1 **plus** `/api/*`, dus daar werkt het tabblad Verwerken |
+| Vercel | serveert alleen `site/`; zonder `/api` verandert Verwerken vanzelf in de uitleg hoe je het lokaal draait |
+
+Het rekenwerk hoort lokaal en nergens anders. Een hoes uitsnijden en lezen kost
+negen seconden; tweehonderd foto's is een half uur rekenwerk, tegen een
+plafond van 800 seconden per aanroep bij Vercel en een rekening per GB-uur. En
+je foto's hoeven er niet heen.
+
+Je kast staat in IndexedDB in je eigen browser, in **twee gescheiden lagen**:
+
+- `collectie` - wat de keten uitrekende. Wordt vervangen bij elke nieuwe run.
+- `eigen` - jouw staat, prijs, notitie, verkocht-of-niet. Overleeft elke run.
+
+Die scheiding is de reden dat `opslag.js` bestaat. Zaten ze in één record, dan
+wist een tweede import stilletjes de conditie die je zelf had ingevuld, en dat
+merk je pas als het weg is.
 
 De foto's die klaar zijn om te uploaden staan in `hoezen/` - 225 stuks,
 uitgesneden, rechtgezet en op naam van de oorspronkelijke foto. Welke foto's bij
@@ -109,6 +139,14 @@ draden per proces, en:
 | `verkooplijst.py` | daaruit de korte lijst: elf kolommen, op artiest |
 | `nauwkeurig.py` | meet of de gekozen persing aantoonbaar klopt |
 | `contactvel.py` | alle uitsnedes op een vel om ze te keuren |
+| `exporteer.py` | keten -> site: collectie.json en duimnagels van 600 px |
+| `kast.py` | lokale server: de site plus de keten eronder |
+| `site/` | de site zelf, zonder bouwstap |
+
+`run.keten()` en `prijs.prijzen()` melden hun voortgang via een callback in
+plaats van te printen. Zo draait `kast.py` precies dezelfde keten als de
+opdrachtregel en maakt er een voortgangsbalk van, zonder dat er een tweede
+kopie bestaat die stilletjes gaat afwijken.
 
 `cache/` (SQLite + hoesafbeeldingen), `hoezen/` (uitgesneden, rechtop, klaar om
 te uploaden), `uit/` (platen.json, handmatig.json, platen.csv).

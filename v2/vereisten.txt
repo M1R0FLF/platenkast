@@ -1,0 +1,19 @@
+# pip install -r vereisten.txt
+#
+# Ondergrenzen, geen vastgepinde versies: dit draait op een gewone PC en niet
+# in een container, dus een nieuwere patchversie is hier prima.
+#
+# Twee dingen die je moet weten voor je gaat upgraden:
+#
+#   opencv-python 5 heeft cv2.CascadeClassifier VERWIJDERD. Geen enkel bestand
+#   hier gebruikt het nog, maar oude voorbeelden op internet wel.
+#
+#   rapidocr-onnxruntime zet zijn draden niet zelf vast en pakt standaard alle
+#   kernen per sessie, drie sessies per proces. Zie knip._een_draad_per_sessie:
+#   zonder die ingreep is meer werkers TRAGER in plaats van sneller.
+
+opencv-python>=5.0.0
+numpy>=2.0
+rapidocr-onnxruntime>=1.2.3
+onnxruntime>=1.17
+requests>=2.31

@@ -245,30 +245,24 @@ def advertentie(m, p):
 
 # -------------------------------------------------------------------- main --
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("invoer", nargs="?", default="platen.json")
-    ap.add_argument("uitvoer", nargs="?", default="platen.csv")
-    ap.add_argument("--cache", default="lookup_cache.json")
-    a = ap.parse_args()
+def prijzen(platen, dc, cachepad="lookup_cache.json", melden=None, stop=None):
+    """Zoekt per plaat de persing op en rekent er een vraagprijs bij.
 
-    if not os.path.exists(a.invoer):
-        sys.exit(f"{a.invoer} bestaat niet. Laat Claude Code eerst de foto's aflezen.")
-    platen = json.load(open(a.invoer, encoding="utf-8"))
-    if isinstance(platen, dict):
-        platen = platen.get("platen", [])
-
-    cache = json.load(open(a.cache, encoding="utf-8")) if os.path.exists(a.cache) else {}
-    dc = Discogs(os.environ.get("DISCOGS_TOKEN"))
-    if not dc.token:
-        print("Geen DISCOGS_TOKEN: geen richtprijs per conditie, en trager.\n")
+    Meldt onderweg, net als run.keten, zodat kast.py het bedrag kan laten
+    oplopen terwijl het nog bezig is in plaats van pas aan het eind.
+    """
+    zeg = melden or (lambda *x, **k: None)
+    stop = stop or (lambda: False)
+    cache = json.load(open(cachepad, encoding="utf-8")) if os.path.exists(cachepad) else {}
 
     rijen = []
     for i, m in enumerate(platen, 1):
+        if stop():
+            break
         sleutel = str(m.get("id") or (m.get("fotos") or [i])[0])
         if sleutel in cache:
             rijen.append(cache[sleutel])
-            print(f"[{i}/{len(platen)}] {sleutel} (uit cache)")
+            zeg("prijs", klaar=i, totaal=len(platen), rij=cache[sleutel], uit_cache=True)
             continue
 
         rij = {"id": sleutel, "fotos": ";".join(m.get("fotos") or [])}
@@ -288,20 +282,54 @@ def main():
 
         rijen.append(rij)
         cache[sleutel] = rij
-        json.dump(cache, open(a.cache, "w", encoding="utf-8"), ensure_ascii=False)
-        print(f"[{i}/{len(platen)}] {m.get('artist')} - {m.get('title')}  "
-              f"-> {rij.get('release_id')}  {rij.get('vraagprijs')}  "
-              f"({rij.get('advies')})")
+        json.dump(cache, open(cachepad, "w", encoding="utf-8"), ensure_ascii=False)
+        zeg("prijs", klaar=i, totaal=len(platen), rij=rij, uit_cache=False)
+    return rijen
 
+
+def schrijf_csv(rijen, pad):
     kop = ["id", "gelezen_soort", "gelezen_artist", "gelezen_title",
            "gelezen_catno", "release_id", "vraagprijs", "advies", "titel",
            "beschrijving", "num_for_sale", "lowest_eur", "sug_vgplus",
            "discogs_url", "alternatieven"]
     kolommen = kop + sorted({k for r in rijen for k in r} - set(kop))
-    with open(a.uitvoer, "w", newline="", encoding="utf-8-sig") as fh:
+    with open(pad, "w", newline="", encoding="utf-8-sig") as fh:
         w = csv.DictWriter(fh, fieldnames=kolommen, extrasaction="ignore")
         w.writeheader()
         w.writerows(rijen)
+    return pad
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("invoer", nargs="?", default="platen.json")
+    ap.add_argument("uitvoer", nargs="?", default="platen.csv")
+    ap.add_argument("--cache", default="lookup_cache.json")
+    a = ap.parse_args()
+
+    if not os.path.exists(a.invoer):
+        sys.exit(f"{a.invoer} bestaat niet. Laat Claude Code eerst de foto's aflezen.")
+    platen = json.load(open(a.invoer, encoding="utf-8"))
+    if isinstance(platen, dict):
+        platen = platen.get("platen", [])
+
+    dc = Discogs(os.environ.get("DISCOGS_TOKEN"))
+    if not dc.token:
+        print("Geen DISCOGS_TOKEN: geen richtprijs per conditie, en trager.\n")
+
+    def zeg(soort, **k):
+        if soort != "prijs":
+            return
+        r = k["rij"]
+        if k["uit_cache"]:
+            print(f"[{k['klaar']}/{k['totaal']}] {r['id']} (uit cache)")
+        else:
+            print(f"[{k['klaar']}/{k['totaal']}] {r.get('gelezen_artist')} - "
+                  f"{r.get('gelezen_title')}  -> {r.get('release_id')}  "
+                  f"{r.get('vraagprijs')}  ({r.get('advies')})")
+
+    rijen = prijzen(platen, dc, a.cache, zeg)
+    schrijf_csv(rijen, a.uitvoer)
     print(f"\n{a.uitvoer} geschreven ({len(rijen)} platen)")
 
 

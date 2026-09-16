@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "headers": [
+    {
+      "source": "/publiek/duim/(.*)",
+      "headers": [
+        { "key": "cache-control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+      ]
+    },
+    {
+      "source": "/publiek/collectie.json",
+      "headers": [
+        { "key": "cache-control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        { "key": "cache-control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
+  ]
+}

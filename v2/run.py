@@ -32,7 +32,7 @@ from discogs import Discogs
 KLAAR = object()
 
 
-def matcher(dc, vragen, uit, slot, hoezendir, hints, stil):
+def matcher(dc, vragen, uit, slot, hoezendir, hints, zeg):
     """Draait in een draad: haalt platen uit de rij en zoekt ze op."""
     while True:
         rec = vragen.get()
@@ -45,18 +45,14 @@ def matcher(dc, vragen, uit, slot, hoezendir, hints, stil):
             with slot:
                 if plaat:
                     uit["klaar"].append(plaat)
-                    if not stil:
-                        print(f"  [{len(uit['klaar']):>3}] {rec['id']}  "
-                              f"{plaat['bron']:<12} {(plaat['artist'] or '')[:28]} - "
-                              f"{(plaat['title'] or '')[:30]}", flush=True)
+                    zeg("herkend", plaat=plaat, n=len(uit["klaar"]))
                 else:
                     uit["rest"].append({**rec, "reden": reden})
-                    if not stil:
-                        print(f"        {rec['id']}  niet herkend: {reden[:60]}",
-                              flush=True)
+                    zeg("onherkend", id=rec["id"], reden=reden)
         except Exception as e:                       # nooit de keten breken
             with slot:
                 uit["rest"].append({**rec, "reden": f"fout: {e}"})
+                zeg("onherkend", id=rec["id"], reden=f"fout: {e}")
         finally:
             vragen.task_done()
 
@@ -99,6 +95,46 @@ def main():
                     help="snijd de hoezen opnieuw uit de originelen")
     ap.add_argument("--stil", action="store_true")
     a = ap.parse_args()
+    keten(a, printer(a.stil))
+
+
+def printer(stil):
+    """De meldingen zoals ze op de opdrachtregel horen te staan.
+
+    De keten meldt gebeurtenissen; wat ermee gebeurt staat hier. Zo kan kast.py
+    dezelfde keten draaien en er een voortgangsbalk van maken, zonder dat er een
+    tweede kopie van de keten bestaat die stilletjes gaat afwijken.
+    """
+    def zeg(soort, **k):
+        if soort == "melding":
+            print(k["tekst"])
+        elif soort == "begin":
+            print(f"{k['totaal']} foto's | {k['werkers']} lezers | {k['zoekers']} zoekers | "
+                  f"{k['gedaan']} platen al klaar | cache {k['cache']} aanroepen\n")
+        elif soort == "herkend" and not stil:
+            p = k["plaat"]
+            print(f"  [{k['n']:>3}] {p['id']}  {p['bron']:<12} "
+                  f"{(p['artist'] or '')[:28]} - {(p['title'] or '')[:30]}", flush=True)
+        elif soort == "onherkend" and not stil:
+            print(f"        {k['id']}  niet herkend: {k['reden'][:60]}", flush=True)
+        elif soort == "foto" and not stil and k["klaar"] % 25 == 0:
+            print(f"  ...{k['klaar']}/{k['totaal']} foto's gelezen, "
+                  f"{k['platen']} platen gevormd ({k['seconden']}s)", flush=True)
+        elif soort == "einde":
+            d = k["duur"]
+            print(f"\n{k['gelezen']} foto's -> {k['platen']} platen in {d//60}m{d%60:02d}s")
+            print(f"  {k['herkend']} herkend ({k['dekking']}%), "
+                  f"{k['onherkend']} met de hand -> {k['restpad']}")
+            print(f"  Discogs: {k['treffers']} uit de cache, {k['missers']} opgehaald")
+            print(f"\nNu:  py prijs.py {k['platenpad']} {k['csvpad']}")
+    return zeg
+
+
+def keten(a, melden=None, stop=None):
+    """De hele keten. `melden(soort, **velden)` krijgt de voortgang,
+    `stop()` mag True teruggeven om netjes af te breken."""
+    zeg = melden or (lambda *x, **k: None)
+    stop = stop or (lambda: False)
 
     os.makedirs(a.uit, exist_ok=True)
     os.makedirs(a.hoezen, exist_ok=True)
@@ -116,25 +152,25 @@ def main():
     if dc.aantal() == 0:
         n = dc.uit_json(os.path.join("..", "platen", "discogs_cache.json"))
         if n:
-            print(f"{n} bewaarde Discogs-antwoorden overgenomen uit v1")
+            zeg("melding", tekst=f"{n} bewaarde Discogs-antwoorden overgenomen uit v1")
     if not dc.token:
-        print("Geen DISCOGS_TOKEN: dit gaat ruim twee keer trager.\n")
+        zeg("melding", tekst="Geen DISCOGS_TOKEN: dit gaat ruim twee keer trager.")
 
     paden = foto.originelen(a.fotos)
     if a.max:
         paden = paden[:a.max]
     if not paden:
-        sys.exit(f"Geen foto's in {a.fotos}")
+        raise SystemExit(f"Geen foto's in {a.fotos}")
 
     werkers = a.werkers or min(12, os.cpu_count() or 1)
-    print(f"{len(paden)} foto's | {werkers} lezers | {a.zoekers} zoekers | "
-          f"{len(gedaan)} platen al klaar | cache {dc.aantal()} aanroepen\n")
+    zeg("begin", totaal=len(paden), werkers=werkers, zoekers=a.zoekers,
+        gedaan=len(gedaan), cache=dc.aantal(), map=os.path.abspath(a.fotos))
 
     uit = {"klaar": klaar, "rest": []}
     slot = threading.Lock()
     vragen = queue.Queue(maxsize=32)
     draden = [threading.Thread(target=matcher, daemon=True,
-                               args=(dc, vragen, uit, slot, a.hoezen, hints, a.stil))
+                               args=(dc, vragen, uit, slot, a.hoezen, hints, zeg))
               for _ in range(a.zoekers)]
     for d in draden:
         d.start()
@@ -154,19 +190,26 @@ def main():
             rec = maak_plaat(gr)
             groepen_uit.append(rec)
             if str(rec["id"]) in gedaan:
+                # al eerder herkend, dus geen werk meer - maar het telt wel mee
+                # als plaat, anders lijkt een tweede run er nul op te leveren
+                zeg("bekend", id=rec["id"])
                 continue
             vragen.put(rec)
 
+    afgebroken = False
     with mp.Pool(werkers, initializer=foto.motor) as pool:
         for res in pool.imap(foto.verwerk, taken):    # imap = op volgorde
             gelezen += 1
-            if res.get("fout"):
-                continue
-            verstuur(g.voeg_toe(res))
-            if not a.stil and gelezen % 25 == 0:
-                print(f"  ...{gelezen}/{len(paden)} foto's gelezen, "
-                      f"{platen} platen gevormd ({int(time.time()-t0)}s)", flush=True)
-        verstuur(g.rest())
+            if not res.get("fout"):
+                verstuur(g.voeg_toe(res))
+            zeg("foto", klaar=gelezen, totaal=len(paden), platen=platen,
+                seconden=int(time.time() - t0))
+            if stop():
+                afgebroken = True
+                pool.terminate()
+                break
+        if not afgebroken:
+            verstuur(g.rest())
 
     vragen.join()
     for _ in draden:
@@ -187,11 +230,15 @@ def main():
 
     duur = int(time.time() - t0)
     tot = platen or 1
-    print(f"\n{gelezen} foto's -> {platen} platen in {duur//60}m{duur%60:02d}s")
-    print(f"  {len(uit['klaar'])} herkend ({100*len(uit['klaar'])//tot}%), "
-          f"{len(uit['rest'])} met de hand -> {restpad}")
-    print(f"  Discogs: {dc.treffers} uit de cache, {dc.missers} opgehaald")
-    print(f"\nNu:  py prijs.py {platenpad} {os.path.join(a.uit, 'platen.csv')}")
+    csvpad = os.path.join(a.uit, "platen.csv")
+    zeg("einde", gelezen=gelezen, platen=platen, duur=duur,
+        herkend=len(uit["klaar"]), onherkend=len(uit["rest"]),
+        dekking=100 * len(uit["klaar"]) // tot, afgebroken=afgebroken,
+        treffers=dc.treffers, missers=dc.missers,
+        platenpad=platenpad, restpad=restpad, csvpad=csvpad)
+    return {"gelezen": gelezen, "platen": platen, "herkend": len(uit["klaar"]),
+            "onherkend": len(uit["rest"]), "duur": duur, "afgebroken": afgebroken,
+            "platenpad": platenpad, "csvpad": csvpad}
 
 
 if __name__ == "__main__":
