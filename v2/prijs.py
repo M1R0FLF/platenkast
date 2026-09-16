@@ -259,13 +259,19 @@ def prijzen(platen, dc, cachepad="lookup_cache.json", melden=None, stop=None):
     for i, m in enumerate(platen, 1):
         if stop():
             break
-        sleutel = str(m.get("id") or (m.get("fotos") or [i])[0])
+        # De persing hoort IN de sleutel. Stond hier alleen het plaat-id, dan
+        # bleef een plaat waarvan de keten een andere persing koos stilletjes de
+        # oude prijs en de oude titel houden - precies wat er gebeurde toen de
+        # beeldtoets vijf verkeerde persingen rechtzette en de CSV ze doodleuk
+        # terugzette. Een andere persing is een andere opzoeking.
+        rid = str(m.get("id") or (m.get("fotos") or [i])[0])
+        sleutel = rid + (f":{m['release_id_auto']}" if m.get("release_id_auto") else "")
         if sleutel in cache:
             rijen.append(cache[sleutel])
             zeg("prijs", klaar=i, totaal=len(platen), rij=cache[sleutel], uit_cache=True)
             continue
 
-        rij = {"id": sleutel, "fotos": ";".join(m.get("fotos") or [])}
+        rij = {"id": rid, "fotos": ";".join(m.get("fotos") or [])}
         rij.update({f"gelezen_{k}": v for k, v in m.items()
                     if k not in ("id", "fotos")})
         best, alts = match(dc, m)

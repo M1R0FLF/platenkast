@@ -570,9 +570,52 @@ def op_beeld(dc, rec, hoezendir, drempel=30, hint=None):
     if not rel:
         return None, "release niet op te halen"
     titels = [t["title"] for t in (rel.get("tracklist") or []) if t.get("title")]
-    return _plaat(rec, rel, titels,
-                  f"{top[1]} samenvallende punten met de afbeelding op Discogs "
-                  f"(gevonden via {top[2]})", "hoesbeeld"), None
+    plaat = _plaat(rec, rel, titels,
+                   f"{top[1]} samenvallende punten met de afbeelding op Discogs "
+                   f"(gevonden via {top[2]})", "hoesbeeld")
+    plaat["beeld_punten"] = top[1]      # ook hier vastleggen, niet alleen in de tekst
+    return plaat, None
+
+
+# Uit beeld.py, en opnieuw bevestigd over alle 97 herkende platen: de 92 juiste
+# haalden 35 tot 766 punten, de 5 foute hoogstens 8. Geen enkele plaat kwam
+# ertussen uit. Daarom mag onder de tien "tegenspraak" heten.
+BEELD_FOUT, BEELD_GOED = 10, 30
+
+
+def beeld_punten(dc, rec, release_id, hoezendir, eigen=None):
+    """Hoeveel punten valt onze eigen foto samen met DEZE release?
+
+    Dit is de enige toets in de hele keten die niet uit de OCR komt, en daarmee
+    de enige die een achterkant vol reclame kan tegenspreken. Op de ABBA-single
+    "Under Attack" staat "Extrait du double album 30cm <<The Singles>> - 406506":
+    titel en catalogusnummer van een andere plaat, vlak bij elkaar, precies waar
+    de tekststrategie op afgaat. Alleen de hoes zelf weet beter.
+
+    Geeft None als er niets te vergelijken viel; dat is geen tegenspraak.
+    """
+    if eigen is None:
+        eigen = []
+        for naam in (rec.get("fotos") or [])[:2]:
+            im = cv2.imread(os.path.join(hoezendir, os.path.basename(naam)))
+            if im is not None:
+                eigen.append(beeld.kenmerken(im))
+    if not eigen or not release_id:
+        return None
+    rel = dc.release(release_id) or {}
+    urls = [i.get("uri") or i.get("resource_url")
+            for i in (rel.get("images") or [])[:4]]
+    top = None
+    for u in [x for x in urls if x]:
+        hoes = beeld.haal(u)
+        if hoes is None:
+            continue
+        kh = beeld.kenmerken(hoes)
+        punten = max((beeld.gelijkenis(kf, kh) for kf in eigen), default=0)
+        top = punten if top is None else max(top, punten)
+        if top >= BEELD_GOED:
+            break                      # verder kijken verandert het oordeel niet
+    return top
 
 
 def _plaat(rec, rel, titels, waarom, hoe):
@@ -607,10 +650,37 @@ def _plaat(rec, rel, titels, waarom, hoe):
 
 
 def herken(dc, rec, hoezendir, hint=None):
-    """Alle strategieen op volgorde. Geeft (plaat, reden) terug."""
+    """Alle strategieen op volgorde, en de hoes heeft het laatste woord.
+
+    Het beeld was eerst strategie DRIE: het kwam pas aan de beurt als tekst
+    niets opleverde. Daardoor werd een plaat die op tekst door de verificatie
+    kwam nooit met zijn eigen hoes vergeleken - en juist die tekst is te
+    vertrouwen tot er reclame voor de rest van het fonds op de achterkant
+    staat. Vijf van de 97 gingen zo mis, waaronder twee promo-persingen en een
+    dubbel-LP waar een 7"-single in de hoes zat.
+
+    De toets kost 0,4 seconde per plaat (37s over de hele set, naast een run
+    van anderhalve minuut). Dat is te goedkoop om over na te denken.
+    """
     plaat, reden = op_tekst(dc, rec, hint)
     if plaat:
-        return plaat, None
+        punten = beeld_punten(dc, rec, plaat.get("release_id_auto"), hoezendir)
+        plaat["beeld_punten"] = punten
+        if punten is None or punten >= BEELD_FOUT:
+            # niets te vergelijken, of geen tegenspraak: de tekst blijft staan
+            if punten is not None and punten < BEELD_GOED:
+                plaat["notes"] += f"; hoes bevestigt dit niet hard ({punten} punten)"
+            return plaat, None
+        # De hoes spreekt de tekst tegen. Niet meteen opgeven: vaak staat de
+        # JUISTE plaat gewoon tussen de kandidaten, en die vindt de beeldronde.
+        via, reden2 = op_beeld(dc, rec, hoezendir, hint=hint)
+        if via:
+            via["notes"] += (f"; tekst wees naar {plaat.get('title')!r} "
+                             f"maar de hoes sprak dat tegen ({punten} punten)")
+            return via, None
+        return None, (f"tekst vond {plaat.get('title')!r} maar de hoes hoort daar "
+                      f"niet bij ({punten} punten); beeld: {reden2}")
+
     plaat, reden2 = op_beeld(dc, rec, hoezendir, hint=hint)
     if plaat:
         return plaat, None

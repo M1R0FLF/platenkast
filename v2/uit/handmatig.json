@@ -55,6 +55,32 @@
   "reden": "verificatie te zwak (0/14 tracks herkend); beeld: beeld komt niet overeen (beste 16 punten)"
  },
  {
+  "id": "170121",
+  "fotos": [
+   "IMG20260913170121.jpg",
+   "IMG20260913170128.jpg"
+  ],
+  "ocr_achterkant": "26.225\nMUSI-CO\nGENT\n5.31.01\nJONES\nWITHOUT\nLOVE\nA MAN WHO\nKNOWS\nTOO MUCH\nDECCA",
+  "ocr_voorkant": "TOM\nJONES\nWITHOUT\nLOVE\nA MAN WHO\nKNOWS\nTOO MUCH\nDECCA",
+  "ocr_hoekstrook": "00\nMUCH\nDECCA",
+  "koptekst": [
+   "WITHOUT",
+   "JONES",
+   "LOVE",
+   "TOM",
+   "A MAN WHO",
+   "TOO MUCH"
+  ],
+  "land": null,
+  "land_gedrukt": null,
+  "jaar": null,
+  "barcode": null,
+  "catno_kandidaten": [
+   "26.225"
+  ],
+  "reden": "tekst vond 'Without Love / A Man Who Knows Too Much' maar de hoes hoort daar niet bij (5 punten); beeld: beeld komt niet overeen (beste 5 punten)"
+ },
+ {
   "id": "170326",
   "fotos": [
    "IMG20260913170326.jpg",

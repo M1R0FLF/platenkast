@@ -157,8 +157,46 @@ vanzelf opnieuw gemaakt in plaats van stilletjes hergebruikt.
 
 ## Hoe een plaat herkend wordt
 
-Drie strategieen, van goedkoop naar duur. Alle drie zijn harde verificatie;
-komt er niets doorheen, dan gaat de plaat naar `uit/handmatig.json`.
+Drie strategieen, van goedkoop naar duur, en **de hoes heeft altijd het laatste
+woord**. Komt er niets doorheen, dan gaat de plaat naar `uit/handmatig.json`.
+
+### De hoes als veto
+
+Het beeld was eerst alleen strategie 3: het kwam pas aan de beurt als tekst
+niets opleverde. Een plaat die op tekst door de verificatie kwam werd dus nooit
+met zijn eigen hoesfoto vergeleken - en precies daar zat een gat.
+
+Op de achterkant van de ABBA-single "Under Attack" staat een advertentie voor
+de rest van het fonds, met deze regel erin:
+
+> Extrait du double album 30 cm «The Singles» - 406506
+
+Titel en catalogusnummer van een ANDERE plaat, netjes bij elkaar, en dus exact
+waar strategie 2 (titel + catalogusnummer) op afgaat. Resultaat: een dubbel-LP
+uit 1982, terwijl er een 7"-single in de hoes zit. Prijs 11,50 in plaats van 3.
+
+Dat was niet de enige. `beeldtoets.py` hield de maatlat langs alle 97 herkende
+platen en vond er **vijf** waarvan de hoes niet bij de persing paste - twee
+promo-persingen, twee singles die als LP waren aangezien, en deze.
+
+De scheiding is absoluut:
+
+    92 juiste persingen   35 tot 766 samenvallende punten
+     5 foute persingen     4 tot 8
+     daartussen            niets
+
+Daarom toetst `match.herken` nu elke tekstmatch aan het beeld. Spreekt de hoes
+het tegen (onder de tien punten), dan gaat de beeldronde alsnog zoeken - en die
+vond vier van de vijf alsnog goed. De vijfde ging eerlijk naar de handmatige
+lijst.
+
+Kosten: **0,39 seconde per plaat**, 37 seconden over de hele set, op een run
+van anderhalve minuut. Te goedkoop om over na te denken.
+
+Let op: dit is de enige toets die NIET uit de OCR komt. `nauwkeurig.py` toetst
+het catalogusnummer en de titel tegen de OCR, en kan een achterkant vol reclame
+per definitie niet betrappen - die leest immers dezelfde tekst. Beide getallen
+zijn nodig; ze meten niet hetzelfde.
 
 1. **tracklist** - genoeg tracktitels van de persing komen terug in de OCR
 2. **bevestiging** - titel EN label/catalogusnummer komen terug. Nodig omdat
