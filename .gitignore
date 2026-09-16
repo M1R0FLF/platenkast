@@ -1,0 +1,46 @@
+# Beeld blijft buiten git. fotos/ alleen al is ruim een gigabyte, en git is
+# daar slecht in: elke versie van een JPEG wordt opnieuw bewaard. Zet deze
+# mappen op OneDrive, een externe schijf of Git LFS.
+platen/fotos/
+platen/bijgeknipt/
+platen/kit/
+platen/handmatig/
+platen/reserve/
+platen/rechtop/
+platen/beeld_cache/
+
+# Wel meenemen, juist wel: ocr2_cache.json en discogs_cache.json. Dat is het
+# dure spul. De OCR kostte twintig minuten rekenen, de Discogs-cache uren
+# wachten op de API. Samen zo'n 8 MB, en daarmee hoeft een tweede PC niets
+# van dat werk over te doen.
+
+# --- v2 ---
+# Zelfde regel: code en kleine uitvoer gaan mee, beeld niet.
+# 485 MB uitsnedes, maakt run.py zo weer
+v2/hoezen/
+# 256 MB van Discogs gedownloade hoesafbeeldingen
+v2/cache/hoezen/
+# 8 MB, maakt contactvel.py zo weer
+v2/uit/contactvel-*.jpg
+
+# cache/ocr.db gaat WEL mee: 1,6 MB en het is acht minuten rekenen.
+# cache/discogs.db niet, en dat is geen keuze: 103 MB, en GitHub weigert
+# elk bestand boven de 100 MB. Zonder die cache duurt een verse run ongeveer
+# een kwartier extra, want dan moet alles opnieuw langs de API (60/min).
+v2/cache/discogs.db
+v2/cache/discogs.db-journal
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# lopende rommel
+VOORTGANG.txt
+automatch_voortgang.json
+platen/oud/experimenten/
+
+# nooit een sleutel in git
+.env
+*token*.txt
+!platen/tesseract_pad.txt
