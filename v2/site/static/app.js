@@ -10,10 +10,12 @@ import * as opslag from "./opslag.js";
 import * as kast from "./kast.js";
 import * as overzicht from "./overzicht.js";
 import * as verwerk from "./verwerk.js";
+import * as handmatig from "./handmatig.js";
 
 const TABS = [
   ["kast", "Kast"],
   ["verwerk", "Verwerken"],
+  ["handmatig", "Nog te doen"],
   ["overzicht", "Overzicht"],
 ];
 
@@ -54,7 +56,9 @@ function kop() {
       el("button", {
         "aria-current": String(tab === w),
         onclick: () => ga(w),
-        tekst: t,
+        // het aantal in de tab zelf, anders zie je nooit dat er iets ligt
+        tekst: w === "handmatig" && data.handmatig.length
+          ? `${t} (${data.handmatig.length})` : t,
       }))),
     menu(),
   ]);
@@ -182,6 +186,7 @@ function teken() {
   if (!data.platen.length && tab !== "verwerk") return welkom();
   if (tab === "kast") kast.scherm(data, kop);
   else if (tab === "overzicht") overzicht.scherm(data);
+  else if (tab === "handmatig") handmatig.scherm(data, herlaad);
   else verwerk.scherm(data, herlaad);
 }
 

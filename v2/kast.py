@@ -21,7 +21,7 @@ in een knop.
 Er wordt met opzet alleen naar 127.0.0.1 geluisterd. Dit is geen server voor
 anderen: het draait als jou, met toegang tot jouw schijf.
 """
-import os, sys, json, time, queue, threading, argparse, webbrowser
+import os, re, sys, json, time, queue, threading, argparse, webbrowser
 import multiprocessing as mp
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
@@ -160,6 +160,150 @@ class Motor:
         return doc
 
 
+def _release_id(tekst):
+    """Het nummer uit wat je plakt: een hele Discogs-URL mag, het kale getal ook.
+
+    discogs.com/release/34612549-ABBA-Under-Attack -> 34612549
+    [r34612549] (zo schrijft Discogs het zelf in fora)  -> 34612549
+    """
+    tekst = (tekst or "").strip()
+    m = re.search(r"/release/(\d+)", tekst) or re.search(r"\[r(\d+)\]", tekst)
+    if m:
+        return int(m.group(1))
+    return int(tekst) if tekst.isdigit() else None
+
+
+def kies_map(begin=None):
+    """Een echte mapkiezer van Windows zelf.
+
+    Een pad overtypen uit de verkenner is de onvriendelijkste stap die er was,
+    en de browser mag ons geen pad geven (alleen bestanden). Deze server draait
+    op jouw machine, dus die mag het wel vragen.
+    """
+    try:
+        import tkinter
+        from tkinter import filedialog
+    except ImportError:
+        return None, "tkinter ontbreekt in deze Python"
+    try:
+        wortel = tkinter.Tk()
+        wortel.withdraw()
+        wortel.attributes("-topmost", True)    # anders verdwijnt hij achter de browser
+        pad = filedialog.askdirectory(title="Map met foto's kiezen",
+                                      initialdir=begin or os.path.expanduser("~"))
+        wortel.destroy()
+        return (pad or None), None
+    except Exception as e:
+        return None, str(e)
+
+
+def bekijk_release(release_id, rec, hoezendir):
+    """Wat staat er op deze release, en lijkt de hoes erop?
+
+    Dit gaat VOOR het vastleggen, want een link plakken is even makkelijk fout
+    als goed. Bij het testen werd een verkeerd release-nummer klakkeloos
+    "Gorillaz - Plastic Beach" onder een Streisand-hoes, zonder een kik. De hele
+    keten is gebouwd op "liever niets dan het verkeerde"; dan mag de handmatige
+    ingang niet het enige gat in die regel zijn.
+
+    Het blijft jouw beslissing - je krijgt alleen te zien waar je ja op zegt.
+    """
+    import match
+    from discogs import Discogs
+    dc = Discogs(os.environ.get("DISCOGS_TOKEN"))
+    rel = dc.release(int(release_id))
+    if not rel:
+        raise ValueError(f"release {release_id} niet gevonden op Discogs")
+    punten = match.beeld_punten(dc, rec, rel["id"], hoezendir)
+    afbeelding = next((i.get("uri") for i in (rel.get("images") or []) if i.get("uri")), None)
+    return rel, {
+        "titel": rel.get("title"),
+        "artiest": ", ".join(a["name"] for a in (rel.get("artists") or []))[:120],
+        "jaar": rel.get("year"),
+        "land": rel.get("country"),
+        "catno": (rel.get("labels") or [{}])[0].get("catno"),
+        "formaat": "; ".join(f"{f.get('qty')}x {f.get('name')} "
+                             f"{' '.join(f.get('descriptions') or [])}".strip()
+                             for f in (rel.get("formats") or [])),
+        "afbeelding": afbeelding,
+        "beeld_punten": punten,
+        # None = niets te vergelijken. Dat is geen goedkeuring en ook geen afkeuring.
+        "hoes_klopt": None if punten is None else punten >= match.BEELD_FOUT,
+    }
+
+
+def voeg_handmatig_toe(release_id, rec, uitmap, hoezendir, rel=None):
+    """Een onherkende plaat alsnog vastleggen, op een release die JIJ aanwijst.
+
+    Dit is geen gok van de machine: het id komt van jou. Daarom mag dit langs de
+    automatische verificatie heen - die is er om te voorkomen dat de MACHINE
+    iets verzint, niet om jou tegen te spreken.
+    """
+    import match
+    from discogs import Discogs
+    dc = Discogs(os.environ.get("DISCOGS_TOKEN"))
+    rel = rel or dc.release(int(release_id))
+    if not rel:
+        raise ValueError(f"release {release_id} niet gevonden op Discogs")
+    titels = [t["title"] for t in (rel.get("tracklist") or []) if t.get("title")]
+    plaat = match._plaat(rec, rel, titels, "door jou aangewezen", "handmatig")
+    plaat["beeld_punten"] = match.beeld_punten(dc, rec, rel["id"], hoezendir)
+
+    platenpad = os.path.join(uitmap, "platen.json")
+    restpad = os.path.join(uitmap, "handmatig.json")
+    platen = json.load(open(platenpad, encoding="utf-8")) if os.path.exists(platenpad) else []
+    platen = [p for p in platen if str(p["id"]) != str(plaat["id"])] + [plaat]
+    platen.sort(key=lambda r: str(r["id"]))
+    json.dump(platen, open(platenpad, "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1)
+
+    rest = json.load(open(restpad, encoding="utf-8")) if os.path.exists(restpad) else []
+    rest = [r for r in rest if str(r["id"]) != str(plaat["id"])]
+    json.dump(rest, open(restpad, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    return plaat
+
+
+def _kan_publiceren(sitemap):
+    """Alleen aanbieden als er ook echt iets is om naar te publiceren: een
+    git-map MET een remote. Een knop die altijd faalt is erger dan geen knop."""
+    import subprocess
+    wortel = os.path.dirname(os.path.dirname(os.path.abspath(sitemap)))
+    try:
+        r = subprocess.run(["git", "remote"], cwd=wortel, capture_output=True,
+                           text=True, timeout=10)
+        return r.returncode == 0 and bool(r.stdout.strip())
+    except Exception:
+        return False
+
+
+def publiceer(sitemap):
+    """site/publiek naar GitHub duwen; Vercel bouwt daarna vanzelf opnieuw.
+
+    Alleen de gegevens van de site, niet de rest van de map: een run raakt ook
+    caches en uitvoerbestanden aan en die horen niet in een publicatie.
+    """
+    import subprocess
+    wortel = os.path.dirname(os.path.dirname(os.path.abspath(sitemap)))
+
+    def git(*args):
+        return subprocess.run(["git"] + list(args), cwd=wortel, capture_output=True,
+                              text=True, timeout=180)
+
+    if git("rev-parse", "--git-dir").returncode:
+        raise RuntimeError("dit is geen git-map, dus er is niets om naar te publiceren")
+    doel = os.path.relpath(os.path.join(sitemap, "publiek"), wortel).replace("\\", "/")
+    git("add", "--", doel)
+    if not git("diff", "--cached", "--quiet", "--", doel).returncode:
+        return "de website is al bij"
+    c = git("commit", "-m", f"Kast bijgewerkt: {time.strftime('%Y-%m-%d %H:%M')}")
+    if c.returncode:
+        raise RuntimeError(f"commit mislukt: {(c.stderr or c.stdout)[:300]}")
+    p = git("push")
+    if p.returncode:
+        raise RuntimeError(f"push mislukt: {(p.stderr or p.stdout)[:300]}")
+    return "gepubliceerd - Vercel zet het er binnen een minuut op"
+
+
 def _resterend(t0, klaar, totaal):
     """Een schatting die pas iets zegt als er genoeg gemeten is. De eerste
     foto's zijn traag (de modellen moeten nog laden), dus eerder schatten
@@ -179,6 +323,18 @@ class Beheerder(SimpleHTTPRequestHandler):
 
     def log_message(self, *a):
         pass                                   # de keten praat al genoeg
+
+    def end_headers(self):
+        """Lokaal niets bewaren behalve de duimnagels.
+
+        Zonder dit serveert de browser na een wijziging vrolijk de oude app.js
+        door - en dan zoek je een fout die allang weg is. Duimnagels mogen wel
+        blijven staan: die veranderen alleen als de foto verandert, en dan
+        krijgen ze toch een andere naam.
+        """
+        if not self.path.startswith("/publiek/duim/"):
+            self.send_header("cache-control", "no-store, must-revalidate")
+        super().end_headers()
 
     # ------------------------------------------------------------ helpers --
     def _json(self, code, lichaam):
@@ -200,7 +356,8 @@ class Beheerder(SimpleHTTPRequestHandler):
         if self.path.startswith("/api/status"):
             return self._json(200, {"versie": 1, "draait": m.draait,
                                     "fotomap": os.path.abspath(m.fotos),
-                                    "token": bool(os.environ.get("DISCOGS_TOKEN"))})
+                                    "token": bool(os.environ.get("DISCOGS_TOKEN")),
+                                    "kan_publiceren": _kan_publiceren(m.sitemap)})
         if self.path.startswith("/api/collectie"):
             pad = os.path.join(HIER, "site", "publiek", "collectie.json")
             if not os.path.exists(pad):
@@ -248,6 +405,50 @@ class Beheerder(SimpleHTTPRequestHandler):
         if self.path.startswith("/api/stop"):
             m.afbreken = True
             return self._json(200, {"ok": True})
+
+        if self.path.startswith("/api/kies-map"):
+            pad, fout = kies_map(m.fotos)
+            if fout:
+                return self._json(500, {"fout": fout})
+            return self._json(200, {"map": pad})
+
+        if self.path.startswith("/api/handmatig"):
+            if m.draait:
+                return self._json(409, {"fout": "er draait een run"})
+            try:
+                lichaam = self._lees_json()
+                rid = _release_id(lichaam.get("release") or "")
+                if not rid:
+                    raise ValueError("geen release-id gevonden in wat je plakte")
+                restpad = os.path.join(m.uitmap, "handmatig.json")
+                rest = json.load(open(restpad, encoding="utf-8"))
+                rec = next((r for r in rest if str(r["id"]) == str(lichaam.get("id"))), None)
+                if rec is None:
+                    raise ValueError("die plaat staat niet meer op de handmatige lijst")
+                rel, blik = bekijk_release(rid, rec, m.hoezen)
+                # Eerst laten zien wat je aanwijst. Pas bij de tweede aanroep,
+                # met bevestigd=true, gaat het de kast in.
+                if not lichaam.get("bevestigd"):
+                    return self._json(200, {"ok": False, "voorbeeld": blik})
+                plaat = voeg_handmatig_toe(rid, rec, m.uitmap, m.hoezen, rel)
+                import prijs, exporteer
+                from discogs import Discogs
+                platen = json.load(open(os.path.join(m.uitmap, "platen.json"),
+                                        encoding="utf-8"))
+                rijen = prijs.prijzen(platen, Discogs(os.environ.get("DISCOGS_TOKEN")),
+                                      os.path.join(HIER, "lookup_cache.json"))
+                prijs.schrijf_csv(rijen, os.path.join(m.uitmap, "platen.csv"))
+                doc = m._exporteer(exporteer)
+                return self._json(200, {"ok": True, "plaat": plaat, "collectie": doc})
+            except Exception as e:
+                return self._json(400, {"fout": f"{type(e).__name__}: {e}"})
+
+        if self.path.startswith("/api/publiceer"):
+            try:
+                return self._json(200, {"ok": True, "bericht": publiceer(m.sitemap)})
+            except Exception as e:
+                return self._json(400, {"fout": str(e)})
+
         return self._json(404, {"fout": "onbekend"})
 
 

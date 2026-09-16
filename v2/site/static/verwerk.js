@@ -71,6 +71,41 @@ function geenMotor() {
 
 /* -------------------------------------------------------------------- run -- */
 
+/** Naar de gepubliceerde site duwen.
+ *
+ *  Er is geen server die je kast ontvangt - dat was de afspraak: geen account,
+ *  geen kosten, je foto's blijven van jou. Wat er wel is: dit project staat in
+ *  git en Vercel bouwt bij elke push opnieuw. Dus "uploaden" is hier gewoon
+ *  site/publiek committen en pushen, en een minuut later staat het erop.
+ *
+ *  Met opzet een knop en geen automatische stap na elke run: publiceren zet je
+ *  platen en je foto's openbaar, en dat hoort een besluit te zijn.
+ */
+function publiceerknop(schrijf) {
+  const uitleg = el("span", { style: "color:var(--zachter);font-size:12px" });
+  const knop = el("button", {
+    class: "knop", tekst: "Publiceer naar de website",
+    onclick: async e => {
+      if (!confirm("De kast zoals hij nu is naar de website zetten?\n\n"
+                 + "Je platen, prijzen en hoesfoto's worden daarmee openbaar.")) return;
+      e.target.disabled = true;
+      uitleg.textContent = "bezig...";
+      try {
+        const r = await fetch(`${MOTOR}/publiceer`, { method: "POST" });
+        const b = await r.json();
+        uitleg.textContent = b.ok ? b.bericht : `mislukt: ${b.fout}`;
+        if (!b.ok) schrijf(`publiceren mislukt: ${b.fout}`, "nee");
+      } catch (err) {
+        uitleg.textContent = `mislukt: ${err.message}`;
+      } finally {
+        e.target.disabled = false;
+      }
+    },
+  });
+  return el("div", { class: "veldrij", style: "margin-top:14px;align-items:center" },
+            [knop, uitleg]);
+}
+
 function scherm_motor(status, herlaad) {
   const balk = el("i");
   const teller = {
@@ -93,6 +128,26 @@ function scherm_motor(status, herlaad) {
     type: "text", value: status.fotomap || "",
     placeholder: "volledig pad naar je map met foto's",
     style: "flex:1 1 320px",
+  });
+
+  // Een pad overtypen uit de verkenner was de onvriendelijkste stap die er
+  // was. De browser mag ons geen pad geven, maar de motor draait op deze
+  // machine en mag Windows wel om een mapkiezer vragen.
+  const kiezer = el("button", {
+    class: "knop", tekst: "Map kiezen...",
+    onclick: async e => {
+      e.target.disabled = true;
+      try {
+        const r = await fetch(`${MOTOR}/kies-map`, { method: "POST" });
+        const b = await r.json();
+        if (b.map) map.value = b.map;
+        else if (b.fout) schrijf(`mapkiezer werkte niet (${b.fout}) - typ het pad`, "nee");
+      } catch (err) {
+        schrijf(`mapkiezer niet bereikbaar: ${err.message}`, "nee");
+      } finally {
+        e.target.disabled = false;
+      }
+    },
   });
 
   let gevonden = 0, waarde = 0, zeker = 0;
@@ -198,9 +253,14 @@ function scherm_motor(status, herlaad) {
       el("p", { style: "color:var(--zacht);margin-top:0",
         tekst: "Voorkant, dan achterkant, per plaat. Wat al eerder gelezen is "
              + "wordt overgeslagen, dus een tweede keer draaien is goedkoop." }),
-      el("div", { class: "veldrij" }, [map, start, stop]),
+      el("div", { class: "veldrij" }, [map, kiezer, start, stop]),
       el("div", { style: "margin:16px 0 6px" }, [el("div", { class: "voortgang" }, [balk])]),
       stand,
+      status.token ? null : el("p", {
+        style: "color:var(--twijfel);font-size:13px;margin:8px 0 0",
+        tekst: "Geen DISCOGS_TOKEN gevonden: je krijgt geen prijzen en het gaat "
+             + "ruim twee keer trager." }),
+      status.kan_publiceren ? publiceerknop(schrijf) : null,
     ]),
     el("section", { class: "kaart" }, [
       el("div", { class: "kerncijfers", style: "margin-bottom:14px" }, [
