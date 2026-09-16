@@ -20,7 +20,8 @@ prijs en dat merkt niemand nog.
 import os, re, difflib, collections
 import cv2
 
-from velden import kaal, catno_varianten, woordtermen, tracktermen
+from velden import (kaal, catno_varianten, woordtermen, tracktermen,
+                    ontplak_woorden, WOORDRUIS)
 import beeld
 
 # Persingen die zelden de plaat in je hand zijn. Een lijst van verre landen
@@ -583,6 +584,23 @@ def op_beeld(dc, rec, hoezendir, drempel=30, hint=None):
 BEELD_FOUT, BEELD_GOED = 10, 30
 
 
+def kan_hoes_zijn(afbeelding):
+    """Kan dit plaatje een hoes zijn, of is het een foto van het LABEL?
+
+    Een platenhoes is ongeveer vierkant. Op de Belgische Decca-persing van Tom
+    Jones staan alleen twee liggende foto's van 600x400 - het plaatje zelf, niet
+    de hoes. Die vergelijken met een hoesfoto levert vijf punten op, en dat lijkt
+    op tegenspraak terwijl het gewoon een ander onderwerp is.
+
+    Bij een onbekend formaat niets uitsluiten: liever een keer voor niets
+    vergelijken dan een echte hoes overslaan.
+    """
+    if not (afbeelding.get("uri") or afbeelding.get("resource_url")):
+        return False
+    b, h = afbeelding.get("width") or 0, afbeelding.get("height") or 0
+    return True if not (b and h) else 0.75 <= b / h <= 1.4
+
+
 def beeld_punten(dc, rec, release_id, hoezendir, eigen=None):
     """Hoeveel punten valt onze eigen foto samen met DEZE release?
 
@@ -604,7 +622,9 @@ def beeld_punten(dc, rec, release_id, hoezendir, eigen=None):
         return None
     rel = dc.release(release_id) or {}
     urls = [i.get("uri") or i.get("resource_url")
-            for i in (rel.get("images") or [])[:4]]
+            for i in (rel.get("images") or [])[:4] if kan_hoes_zijn(i)]
+    if not urls:
+        return None          # geen hoes om mee te vergelijken; geen tegenspraak
     top = None
     for u in [x for x in urls if x]:
         hoes = beeld.haal(u)
@@ -618,15 +638,112 @@ def beeld_punten(dc, rec, release_id, hoezendir, eigen=None):
     return top
 
 
+def _ankers(rec, n=3):
+    """De grootst gedrukte woorden van de voorkant: artiest of componist."""
+    uit, gezien = [], set()
+    for regel in (rec.get("koptekst") or []):
+        for w in re.findall(r"[A-Za-z][A-Za-z'\-]{3,}", ontplak_woorden(regel)):
+            k = w.lower()
+            if k not in WOORDRUIS and k not in gezien:
+                gezien.add(k)
+                uit.append(w)
+    return uit[:n]
+
+
+def _onderscheidend(rec, n=6):
+    """Lange hoofdletterwoorden van de achterkant.
+
+    Niet de VAAKSTE woorden, met opzet. Op een klassieke hoes zijn dat de
+    sponsor, de stad en de gezongen tekst; wat de plaat identificeert - het
+    ensemble, de titel van het werk - staat er vaak maar een keer. Een eigennaam
+    begint met een hoofdletter en is meestal lang, en dat is hier een veel beter
+    signaal dan hoe vaak iets voorkomt.
+    """
+    tekst = ontplak_woorden(rec.get("ocr_achterkant") or "")
+    uit, gezien = [], set()
+    for w in re.findall(r"\b[A-Z][a-zA-Z'\-]{5,}", tekst):
+        k = w.lower()
+        if k not in WOORDRUIS and k not in gezien:
+            gezien.add(k)
+            uit.append(w)
+    return uit[:n]
+
+
+def laatste_ronde(dc, rec, hoezendir, drempel=None, max_zoek=16):
+    """Breed zoeken met korte zoekopdrachten, en alleen het beeld mag tekenen.
+
+    Draait alleen voor platen die anders op de handmatige lijst belanden, dus
+    de kosten zijn beperkt tot de paar procent die overblijft.
+
+    Twee woorden per zoekopdracht, niet zes: Discogs EN-t de termen, dus elk
+    extra woord is een kans dat er NUL treffers terugkomen - en nul treffers is
+    erger dan ruis, want dan is er niets meer voor de hoes om uit te kiezen.
+
+    De winnende combinatie is niet altijd "artiest + iets". Voor de
+    Bach-plaat was het "Magnificat Ouverture": twee WERKtitels, zonder de
+    componist. Daarom ook de onderscheidende woorden onderling gepaard.
+
+    Dit mag zo breed zoeken omdat accepteren alleen op het beeld kan. Een
+    scattergun levert geen fout antwoord op als de hoes moet tekenen.
+    """
+    drempel = BEELD_GOED if drempel is None else drempel
+    eigen = []
+    for naam in (rec.get("fotos") or [])[:2]:
+        im = cv2.imread(os.path.join(hoezendir, os.path.basename(naam)))
+        if im is not None:
+            eigen.append(beeld.kenmerken(im))
+    if not eigen:
+        return None, "geen leesbare foto"
+
+    ank, ond = _ankers(rec), _onderscheidend(rec)
+    vragen = [f"{a} {w}" for a in ank[:2] for w in ond[:5]]
+    vragen += [f"{ond[i]} {ond[j]}" for i in range(min(4, len(ond)))
+               for j in range(i + 1, min(4, len(ond)))]
+
+    top, gezien = (0, None, None), set()
+    for q in vragen[:max_zoek]:
+        for r in dc.zoek(q=q, format="Vinyl")[:8]:
+            if r["id"] in gezien:
+                continue
+            gezien.add(r["id"])
+            hoes = beeld.haal(r.get("cover_image") or r.get("thumb"))
+            if hoes is None:
+                continue
+            punten = max((beeld.gelijkenis(kf, beeld.kenmerken(hoes))
+                          for kf in eigen), default=0)
+            if punten > top[0]:
+                top = (punten, r, q)
+        if top[0] >= drempel:
+            break                      # gevonden is gevonden, stop met zoeken
+    if top[0] < drempel:
+        return None, f"ook breed zoeken leverde niets op (beste {top[0]} punten)"
+
+    rel = dc.release(top[1]["id"])
+    if not rel:
+        return None, "release niet op te halen"
+    titels = [t["title"] for t in (rel.get("tracklist") or []) if t.get("title")]
+    plaat = _plaat(rec, rel, titels,
+                   f"{top[0]} samenvallende punten met de afbeelding op Discogs "
+                   f"(breed gezocht via '{top[2]}')", "hoesbeeld")
+    plaat["beeld_punten"] = top[0]
+    return plaat, None
+
+
 def _plaat(rec, rel, titels, waarom, hoe):
     labels = rel.get("labels") or [{}]
     fmt = " ".join(d for f in (rel.get("formats") or [])
                    for d in ((f.get("descriptions") or []) + [f.get("name") or "",
                                                               f.get("text") or ""])).lower()
+    # Het aantal nummers is pas de laatste redding, niet het eerste bewijs: de
+    # Bach-plaat is een gewone LP met twee werken erop (Ouverture en Magnificat)
+    # en werd zo een single7, met de prijsbodem van een single. Zegt Discogs
+    # zelf "LP" of "Album", dan is dat het antwoord.
+    woorden = fmt.split()
     soort = ("maxi12" if "maxi" in fmt else
              "single7" if ('7"' in fmt or "45 rpm" in fmt) else
-             "EP" if "ep" in fmt.split() else
-             "LP" if len(titels) >= 5 else "single7")
+             "EP" if "ep" in woorden else
+             "LP" if ("lp" in woorden or "album" in fmt or len(titels) >= 5)
+             else "single7")
     return {
         "id": rec["id"],
         "fotos": rec.get("fotos") or [],
@@ -671,17 +788,32 @@ def herken(dc, rec, hoezendir, hint=None):
             if punten is not None and punten < BEELD_GOED:
                 plaat["notes"] += f"; hoes bevestigt dit niet hard ({punten} punten)"
             return plaat, None
-        # De hoes spreekt de tekst tegen. Niet meteen opgeven: vaak staat de
-        # JUISTE plaat gewoon tussen de kandidaten, en die vindt de beeldronde.
+
+        # Een lage score is nog geen tegenspraak. Op de Belgische Decca-persing
+        # van Tom Jones (26.225) staan op Discogs alleen twee liggende foto's van
+        # het PLAATJE, geen hoes - dan vergelijk je een platenhoes met een label
+        # en is vijf punten precies wat je verwacht. Afwezig bewijs is geen
+        # tegenbewijs, en die plaat werd zo ten onrechte weggegooid.
+        #
+        # Daarom pas afwijzen als het beeld iets ANDERS aanwijst: een release die
+        # zelf boven de drempel uitkomt. Dat is wat er bij de vier echte fouten
+        # gebeurde, en het is precies het bewijs dat hier ontbreekt.
         via, reden2 = op_beeld(dc, rec, hoezendir, hint=hint)
-        if via:
+        if via and via.get("release_id_auto") != plaat.get("release_id_auto"):
             via["notes"] += (f"; tekst wees naar {plaat.get('title')!r} "
-                             f"maar de hoes sprak dat tegen ({punten} punten)")
+                             f"maar de hoes wees een andere persing aan "
+                             f"({punten} punten voor die van de tekst)")
             return via, None
-        return None, (f"tekst vond {plaat.get('title')!r} maar de hoes hoort daar "
-                      f"niet bij ({punten} punten); beeld: {reden2}")
+        plaat["notes"] += (f"; hoes niet te vergelijken ({punten} punten, en het "
+                           f"beeld wees niets anders aan)")
+        return plaat, None
 
     plaat, reden2 = op_beeld(dc, rec, hoezendir, hint=hint)
     if plaat:
         return plaat, None
-    return None, f"{reden}; beeld: {reden2}"
+
+    # Laatste kans voor wat anders op de handmatige lijst belandt.
+    plaat, reden3 = laatste_ronde(dc, rec, hoezendir)
+    if plaat:
+        return plaat, None
+    return None, f"{reden}; beeld: {reden2}; breed: {reden3}"

@@ -130,6 +130,16 @@
   "discogs_formaat": "1x Vinyl LP Compilation"
  },
  {
+  "id": "161816",
+  "artist": "Barbra Streisand",
+  "title": "Barbra Streisand's Greatest Hits",
+  "bron": "hoesbeeld",
+  "soort": "LP",
+  "punten": 39,
+  "oordeel": "klopt",
+  "discogs_formaat": "1x Vinyl LP Compilation Stereo"
+ },
+ {
   "id": "161839",
   "artist": "Sam Cooke",
   "title": "The Man And His Music",
@@ -354,7 +364,7 @@
   "artist": "Joaquín Rodrigo, Orquesta Nacional De España, Ataúlfo Argenta, Rafael Frühbeck De Burgos, Narciso Yepes",
   "title": "Concierto De Aranjuez - Fantasia Para Un Gentilhombre",
   "bron": "tracklist",
-  "soort": "single7",
+  "soort": "LP",
   "punten": 589,
   "oordeel": "klopt",
   "discogs_formaat": "1x Vinyl LP Reissue Stereo"
@@ -373,7 +383,7 @@
   "id": "163409",
   "artist": "Pablito Y Sus Trovadores Paraguayos",
   "title": "Pablito Y Sus Trovadores Paraguayos",
-  "bron": "tracklist",
+  "bron": "hoesbeeld",
   "soort": "LP",
   "punten": 276,
   "oordeel": "klopt",
@@ -840,6 +850,15 @@
   "discogs_formaat": "1x Vinyl 7\" 45 RPM Single"
  },
  {
+  "id": "170121",
+  "artist": "Tom Jones",
+  "title": "Without Love / A Man Who Knows Too Much",
+  "bron": "tracklist",
+  "soort": "single7",
+  "punten": null,
+  "oordeel": "geen hoesfoto op discogs"
+ },
+ {
   "id": "170138",
   "artist": "Pino Massara",
   "title": "Margherita",
@@ -878,6 +897,16 @@
   "punten": 311,
   "oordeel": "klopt",
   "discogs_formaat": "1x Vinyl LP Album"
+ },
+ {
+  "id": "170326",
+  "artist": "Johann Sebastian Bach, Collegium Aureum, Tölzer Knabenchor",
+  "title": "Concert 6-10-77",
+  "bron": "hoesbeeld",
+  "soort": "LP",
+  "punten": 415,
+  "oordeel": "klopt",
+  "discogs_formaat": "1x Vinyl LP Stereo"
  },
  {
   "id": "170353",
@@ -953,7 +982,7 @@
   "id": "170738",
   "artist": "Various",
   "title": "Gouden Uren",
-  "bron": "hoesbeeld",
+  "bron": "tracklist",
   "soort": "LP",
   "punten": 260,
   "oordeel": "klopt",

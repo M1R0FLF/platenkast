@@ -35,12 +35,16 @@ ZEKER_FOUT, ZEKER_GOED = 10, 30
 
 
 def cover_urls(dc, release_id):
+    """Alleen afbeeldingen die een HOES kunnen zijn.
+
+    Zie match.kan_hoes_zijn: bij sommige persingen staan op Discogs alleen
+    liggende foto's van het plaatje. Die meetellen maakt van "niets te
+    vergelijken" ten onrechte "spreekt tegen".
+    """
+    from match import kan_hoes_zijn
     rel = dc.release(release_id) or {}
-    uit = []
-    for i in (rel.get("images") or [])[:4]:
-        u = i.get("uri") or i.get("resource_url")
-        if u:
-            uit.append(u)
+    uit = [i.get("uri") or i.get("resource_url")
+           for i in (rel.get("images") or [])[:4] if kan_hoes_zijn(i)]
     return uit, rel
 
 
@@ -59,7 +63,7 @@ def toets(dc, rec, hoezendir):
         return None, "geen release", {}
     urls, rel = cover_urls(dc, rid)
     if not urls:
-        return None, "geen afbeelding op discogs", {}
+        return None, "geen hoesfoto op discogs", {}
 
     top = 0
     for u in urls:

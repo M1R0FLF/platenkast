@@ -68,6 +68,22 @@ def ontplak(t):
     return PLAKKERS.sub(r"\1 ", t or "")
 
 
+# RapidOCR plakt alles binnen een tekstvak aaneen, en de grens is bijna altijd
+# een hoofdletter: "Johann SebastianBach", "DerTolzerKnabenchor",
+# "MagnificatD-durBWV243". Zonder dit haalt \w+ er "SebastianBach" en
+# "MagnificatD" uit - geen van beide is een woord waarmee je iets vindt, en juist
+# "Magnificat" was het woord dat de Bach-plaat op Discogs had gevonden.
+#
+# Alleen voor ZOEKTERMEN gebruiken, niet voor catalogusnummers: "SLK16483" heeft
+# geen kleine letter voor de hoofdletter en blijft dus heel, maar het risico is
+# het niet waard aan de kant waar een nummer exact moet blijven.
+KAMEELNAAD = re.compile(r"(?<=[a-z])(?=[A-Z])")
+
+
+def ontplak_woorden(t):
+    return KAMEELNAAD.sub(" ", ontplak(t))
+
+
 def land_gedrukt(t):
     """Het land dat de hoes EXPLICIET noemt: "PRINTED IN HOLLAND", "MADE IN
     FRANCE". Dat is geen aanwijzing maar een mededeling, en dus veel harder dan
@@ -144,9 +160,9 @@ def woordtermen(rec, aantal=6):
     plaat op plek een. Aaneengeplakte tekst is waardeloos als zoekterm, losse
     woorden niet.
     """
-    tekst = " ".join([rec.get("ocr_voorkant") or "", rec.get("ocr_achterkant") or "",
-                      rec.get("ocr_hoekstrook") or "",
-                      " ".join(rec.get("koptekst") or [])])
+    tekst = ontplak_woorden(" ".join([
+        rec.get("ocr_voorkant") or "", rec.get("ocr_achterkant") or "",
+        rec.get("ocr_hoekstrook") or "", " ".join(rec.get("koptekst") or [])]))
     telling = {}
     for w in re.findall(r"[A-Za-z]{3,14}", tekst):
         k = w.lower()
