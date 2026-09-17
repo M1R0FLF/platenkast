@@ -344,6 +344,41 @@ catalogusnummers werd hij wel herkend, maar als "Je M'appelle Barbra" - een
 advertentie op de achterkant. Fout is erger dan niets, dus die staat nu weer op
 de handmatige lijst.
 
+### Een verkeerde plaat in de collectie: 163930
+
+Gevonden door de drift-proef, maar het is geen drift - dit zat er al in.
+
+`163930` staat in `site/publiek/collectie.json` als **Ciao Italia**, EVA
+303.347, Europe 1988, met een advertentietekst van 26 tracktitels. De plaat in
+de hoes is **Ciao Italia '89**, Ariola 303.566, Nederland 1989.
+
+    tracktitels die daadwerkelijk op de hoes staan:
+        Ciao Italia 1988 (wat er nu in staat)    1 van de 28
+        Ciao Italia '89  (wat het moet zijn)    23 van de 29
+
+Hij kwam erdoor op `herkend_op: hoesbeeld`, 77 punten, oordeel "aannemelijk"
+wegens "titel of artiest klopt" - want *Ciao Italia* is het begin van *Ciao
+Italia '89*. **De beeldronde vangt dit niet**, en een hogere drempel helpt niet:
+de JUISTE plaat haalt 361 punten en de verkeerde 77. Twee delen van dezelfde
+compilatiereeks hebben nagenoeg dezelfde hoes, dus het beeld bevestigt hier de
+reeks en niet de plaat. Dat is een nieuw gat naast het bekende "het beeld
+bevestigt de plaat, niet de persing".
+
+De oorzaak zit in `velden.CATNO`. Op de hoes staan drie nummers:
+
+    21P303566        de LP        -> CATNO vindt NIETS
+    Q-2CD:353.566    de cd        -> 353.566
+    2MC:503.566      de cassette  -> 503.566
+
+Het patroon begint met `\b`, en tussen de `1` en de `P` van `21P303566` staat
+geen woordgrens. Dus het nummer van de plaat zelf is onzichtbaar terwijl dat
+van twee andere dragers netjes doorkomt, en `catno_kandidaten` werd
+`['353.566', '503.566', 'LA103', '24166']` - geen daarvan is deze plaat.
+
+Bewust nog niet gerepareerd: het patroon oprekken raakt alle honderd platen, en
+een ruimer catalogusnummerpatroon is in dit project al eerder averechts
+uitgepakt (zie Streisand hierboven). Dat hoort eerst gemeten.
+
 Open punten:
 
 - 31 hoezen kregen `rechtop: false`: geen tekst, dus kop en staart zijn niet te
