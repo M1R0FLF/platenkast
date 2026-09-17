@@ -8,6 +8,9 @@ py kast.py                     de kast openen in je browser (dit is de gewone in
 
 py run.py                      alleen de keten: uitsnijden, lezen, groeperen, opzoeken
 py prijs.py uit/platen.json uit/platen.csv
+py hergroep.py                 grenzen en persingen uit het BEELD (zie hieronder)
+py hersnij.py                  opnieuw snijden met de hoes op Discogs als mal
+py stand.py                    de uitsnedes rechtop
 py exporteer.py                keten -> site: collectie.json en duimnagels
 py verkooplijst.py             de korte lijst om mee te verkopen
 py contactvel.py               een tegel per plaat, met artiest en prijs
@@ -17,6 +20,35 @@ py nauwkeurig.py               klopt de gekozen persing met wat op de hoes staat
 
 Eenmalig: `pip install -r vereisten.txt`, en een gratis Discogs-token in
 `DISCOGS_TOKEN` als je prijzen wilt.
+
+## Twee rondes, en waarom
+
+De keten draait twee keer, en dat is geen omweg maar de kern.
+
+In de eerste ronde weet niemand nog welke plaat het is. `knip` moet de rand van
+de hoes ZOEKEN, `knip.rechtop` moet de draaiing RADEN en `groep` moet de grens
+tussen twee platen uit de tekst afleiden. Op een hoes vol drukwerk gaat dat
+goed. Op een fotohoes met drie woorden erop niet, en gemeten was dat geen
+uitzondering: 16 van de 90 voorkanten verkeerd gesneden, 22 procent verkeerd
+gedraaid, en hele reeksen in paren geknipt op plekken waar geen plaat begon.
+
+Na de eerste ronde staat de persing vast, en daarmee staat de hoes op Discogs.
+Dan hoeft er niets meer geraden te worden:
+
+| | wat het meet | waar het heen schrijft |
+|---|---|---|
+| `hergroep.py` | welke foto bij welke persing hoort | `uit/fotolabels.json`, `hints.json` |
+| `hersnij.py` | waar de rand van de hoes echt ligt | `uit/snijquads.json` |
+| `stand.py` | hoe de hoes gedraaid staat | de uitsnedes zelf |
+
+Die drie bestanden leest de tweede ronde terug. `run.py` neemt de grenzen over,
+`foto.py` gebruikt de opgemeten vierhoek in plaats van er een te zoeken, en
+`match.herken` slaat het zoeken over als de persing al bekend is. Gemeten
+scheelde dat laatste 18m07s en 647 Discogs-aanroepen tegen 3m22s en nul.
+
+ORB is rotatie-invariant, dus een scheve of half afgesneden uitsnede matcht nog
+steeds met de hoes op Discogs - en de homografie die eruit komt BEVAT de
+draaiing en de vier hoeken. Dat is geen schatting maar een meting.
 
 ## De site
 
@@ -137,7 +169,11 @@ draden per proces, en:
 | `discogs.py` | API, snelheidsrem en cache |
 | `prijs.py` | marktprijs en advertentietekst, schrijft de volledige CSV |
 | `verkooplijst.py` | daaruit de korte lijst: elf kolommen, op artiest |
+| `hergroep.py` | beeldbewijs -> harde grenzen voor het groeperen, en release-hints |
+| `hersnij.py` | opnieuw snijden met de hoes op Discogs als mal |
+| `stand.py` | de uitsnedes rechtop, met een tweede toets zonder Discogs |
 | `nauwkeurig.py` | meet of de gekozen persing aantoonbaar klopt |
+| `beeldtoets.py` | klopt de hoes bij de gekozen persing? |
 | `contactvel.py` | alle uitsnedes op een vel om ze te keuren |
 | `exporteer.py` | keten -> site: collectie.json en duimnagels van 600 px |
 | `kast.py` | lokale server: de site plus de keten eronder |

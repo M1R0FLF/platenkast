@@ -99,7 +99,25 @@ def _deugt(q, vorm_orig, verhouding):
     return abs(r - verhouding) / verhouding <= 0.18
 
 
-def quad_van(origineel, refs):
+def mallen(refs):
+    """Kenmerken en afmetingen van de hoezen, een keer per PERSING.
+
+    Stond dit in quad_van, dan werd voor elke foto van dezelfde plaat opnieuw
+    ORB over dezelfde drie Discogs-hoezen gehaald - drie keer het werk bij een
+    gatefold met drie foto's. De hoes verandert niet tussen twee foto's van
+    dezelfde plaat.
+    """
+    uit = []
+    for hoes in refs:
+        kh = beeld.kenmerken(hoes)
+        if kh[1] is None:
+            continue
+        hh, hw = beeld._klaar(hoes).shape[:2]
+        uit.append((kh, hw, hh))
+    return uit
+
+
+def quad_van(origineel, mal):
     """(vierhoek in originele pixels, punten, (breedte, hoogte) van de mal).
 
     De hoeken staan op volgorde van de HOES - linksboven, rechtsboven,
@@ -114,15 +132,10 @@ def quad_van(origineel, refs):
     schaal = vol.shape[1] / float(beeld._klaar(vol).shape[1])
 
     beste = (None, 0, None)
-    for hoes in refs:
-        kh = beeld.kenmerken(hoes)
-        if kh[1] is None:
-            continue
+    for kh, hw, hh in mal:
         H, n = _homografie(kf, kh)
         if H is None or n <= beste[1]:
             continue
-        hk = beeld._klaar(hoes)
-        hh, hw = hk.shape[:2]
         try:
             Hi = np.linalg.inv(H)
         except np.linalg.LinAlgError:
@@ -175,16 +188,16 @@ def main():
         rid = p.get("release_id_auto")
         if not rid:
             continue
-        refs = [x for x in (beeld.haal(u) for u in cover_urls(dc, rid)[0][:3])
-                if x is not None]
-        if not refs:
+        mal = mallen([x for x in (beeld.haal(u) for u in cover_urls(dc, rid)[0][:3])
+                      if x is not None])
+        if not mal:
             continue
         for naam in (p.get("fotos") or []):
             stam = os.path.splitext(os.path.basename(naam))[0]
             orig = origineel_van(stam, a.fotos)
             if orig is None:
                 continue
-            q, n, vorm = quad_van(orig, refs)
+            q, n, vorm = quad_van(orig, mal)
             if q is None or n < DREMPEL:
                 overgeslagen += 1
                 print(f"[{i:>3}] {stam:<26} {n:>4} pt  overgeslagen", flush=True)
