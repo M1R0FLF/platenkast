@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IJk - rekent de browser hetzelfde?</title>
+<style>
+  body { background:#0f0f11; color:#e8e6e3; font:15px/1.5 system-ui, sans-serif;
+         margin:0; padding:20px; max-width:760px; }
+  h1 { font-size:20px; margin:0 0 4px }
+  p.sub { color:#6e6d74; margin:0 0 20px }
+  table { border-collapse:collapse; width:100%; margin:14px 0 }
+  th,td { text-align:left; padding:7px 10px; border-bottom:1px solid #26262b; font-variant-numeric:tabular-nums }
+  th { color:#6e6d74; font-weight:500; font-size:13px }
+  .ok { color:#7fc08a } .nee { color:#d98080 } .bezig { color:#d8b46a }
+  #log { white-space:pre-wrap; font:12px/1.55 ui-monospace, monospace; color:#8b8a92;
+         background:#141417; border:1px solid #26262b; border-radius:8px; padding:12px; margin-top:16px }
+  b.groot { font-size:17px }
+</style>
+</head>
+<body>
+<h1>Rekent de browser hetzelfde als Python?</h1>
+<p class="sub">Dezelfde drie modellen, dezelfde invoer-tensors, uitvoer vergeleken.
+Dit is de enige vraag die het hele plan kan laten instorten.</p>
+
+<table>
+  <thead><tr><th>model</th><th>vorm</th><th>grootste afwijking</th><th>som Python</th><th>som browser</th><th></th></tr></thead>
+  <tbody id="rijen"></tbody>
+</table>
+<p id="eind"></p>
+<div id="log">bezig met laden...</div>
+
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.23.0/dist/ort.min.js"></script>
+<script>
+const logboek = document.getElementById("log");
+const zeg = t => { logboek.textContent += "\n" + t; console.log(t); };
+const rijen = document.getElementById("rijen");
+
+const MODEL = {
+  det: "modellen/ch_PP-OCRv3_det_infer.onnx",
+  rec: "modellen/ch_PP-OCRv3_rec_infer.onnx",
+  cls: "modellen/ch_ppocr_mobile_v2.0_cls_infer.onnx",
+};
+
+async function f32(pad) {
+  const r = await fetch(pad);
+  if (!r.ok) throw new Error(`${pad}: ${r.status}`);
+  return new Float32Array(await r.arrayBuffer());
+}
+
+function rij(naam, ...cellen) {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td>${naam}</td>` + cellen.map(c => `<td>${c}</td>`).join("");
+  rijen.append(tr);
+  return tr;
+}
+
+(async () => {
+  try {
+    logboek.textContent = "";
+    ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.23.0/dist/";
+    // Zoveel draden als de telefoon kernen heeft. Zonder cross-origin-isolatie
+    // valt dit vanzelf terug op 1 - dan klopt het antwoord nog steeds, het duurt
+    // alleen langer. Daarom meet deze pagina ook of isolatie aan staat.
+    ort.env.wasm.numThreads = self.crossOriginIsolated ? (navigator.hardwareConcurrency || 4) : 1;
+    ort.env.wasm.simd = true;
+
+    zeg(`browser      : ${navigator.userAgent.slice(0, 80)}`);
+    zeg(`kernen       : ${navigator.hardwareConcurrency || "?"}`);
+    zeg(`cross-origin geisoleerd : ${self.crossOriginIsolated}  -> ${ort.env.wasm.numThreads} WASM-draden`);
+    zeg(`SharedArrayBuffer       : ${typeof SharedArrayBuffer !== "undefined"}`);
+    zeg("");
+
+    const ijk = await (await fetch("ijk/ijk.json")).json();
+    let slechtste = 0, alles = true;
+
+    for (const naam of ["det", "rec", "cls"]) {
+      const m = ijk[naam];
+      const tr = rij(naam, m.in.join("x"), '<span class="bezig">bezig...</span>', "", "", "");
+      const cel = tr.children;
+
+      const t0 = performance.now();
+      const sessie = await ort.InferenceSession.create(MODEL[naam], {
+        executionProviders: ["wasm"], graphOptimizationLevel: "all",
+      });
+      const tLaad = performance.now() - t0;
+
+      const invoer = await f32(`ijk/${naam}_in.f32`);
+      const verwacht = await f32(`ijk/${naam}_uit.f32`);
+
+      const t1 = performance.now();
+      const naam_in = sessie.inputNames[0];
+      const uit = await sessie.run({ [naam_in]: new ort.Tensor("float32", invoer, m.in) });
+      const tReken = performance.now() - t1;
+      const gekregen = uit[sessie.outputNames[0]].data;
+
+      if (gekregen.length !== verwacht.length) {
+        cel[2].innerHTML = `<span class="nee">andere lengte: ${gekregen.length} vs ${verwacht.length}</span>`;
+        alles = false; continue;
+      }
+      let maxd = 0, som = 0;
+      for (let i = 0; i < gekregen.length; i++) {
+        const d = Math.abs(gekregen[i] - verwacht[i]);
+        if (d > maxd) maxd = d;
+        som += gekregen[i];
+      }
+      slechtste = Math.max(slechtste, maxd);
+      const goed = maxd < 1e-3;
+      alles = alles && goed;
+      cel[2].innerHTML = `<span class="${goed ? "ok" : "nee"}">${maxd.toExponential(2)}</span>`;
+      cel[3].textContent = m.som.toFixed(4);
+      cel[4].textContent = som.toFixed(4);
+      cel[5].textContent = `${tLaad.toFixed(0)}ms laden, ${tReken.toFixed(0)}ms rekenen`;
+      zeg(`${naam}: ${tLaad.toFixed(0)}ms laden, ${tReken.toFixed(0)}ms rekenen, `
+        + `grootste afwijking ${maxd.toExponential(3)}`);
+    }
+
+    document.getElementById("eind").innerHTML = alles
+      ? `<b class="groot ok">Gelijk.</b> Grootste afwijking over alle drie de modellen:
+         ${slechtste.toExponential(2)} - dat is afrondingsruis in float32, geen ander antwoord.
+         De keten kan naar de browser.`
+      : `<b class="groot nee">Niet gelijk.</b> Grootste afwijking ${slechtste.toExponential(2)}.
+         Dit plan moet terug naar de tekentafel.`;
+  } catch (e) {
+    zeg("\nFOUT: " + e.message);
+    document.getElementById("eind").innerHTML = `<b class="groot nee">Afgebroken:</b> ${e.message}`;
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

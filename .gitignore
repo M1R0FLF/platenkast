@@ -44,3 +44,9 @@ platen/oud/experimenten/
 .env
 *token*.txt
 !platen/tesseract_pad.txt
+
+# --- motor in de browser ---
+# IJk-tensors: 14 MB rauwe float32, puur om te meten of onnxruntime-web
+# hetzelfde rekent als onnxruntime in Python. Maakt v2/site/motor/ijk.html
+# samen met het scriptje in de opmerking daar zo weer.
+v2/site/motor/ijk/
