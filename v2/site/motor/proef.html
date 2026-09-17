@@ -43,6 +43,7 @@ onnxruntime-web. Als hier dezelfde tekst uitkomt als op de PC, klopt het plan.</
   <button class="knop" id="lees" disabled>Hoes kiezen...</button>
   <button class="knop" id="ijk" disabled>IJkhoes lezen</button>
   <button class="knop" id="matchknop" disabled>20 platen herkennen</button>
+  <button class="knop" id="driftknop" disabled>Drift-proef</button>
   <span id="stand" style="color:var(--zachter);margin-left:10px"></span>
 </div>
 
@@ -135,10 +136,12 @@ $("start").onclick = async () => {
       $("lees").disabled = false;
       $("ijk").disabled = false;
       $("matchknop").disabled = false;
+      $("driftknop").disabled = false;
     }
     if (b.soort === "gelezen") toonUitslag(b);
     if (b.soort === "velden")  toonVelden(b.uitslag);
     if (b.soort === "match")   toonMatch(b);
+    if (b.soort === "drift")   toonDrift(b);
   };
   py.postMessage({ soort: "start", wortel: hier, ctrl, invoer, uitvoer,
                    poort: lijn.port1 }, [lijn.port1]);
@@ -172,6 +175,56 @@ $("matchknop").onclick = async () => {
     + `Discogs-antwoorden meegeleverd (${(rauw.byteLength / 1e6).toFixed(1)} MB)`);
   py.postMessage({ soort: "match", bytes: rauw }, [rauw]);
 };
+
+let driftIjk = null;
+$("driftknop").onclick = async () => {
+  $("driftknop").disabled = true;
+  $("stand").textContent = "drift-proef...";
+  zeg("\ndrift-proef: de browser leest de hoezen zelf");
+  const rauw = await (await fetch("ijk/drift.json")).arrayBuffer();
+  driftIjk = JSON.parse(new TextDecoder().decode(rauw.slice(0)));
+  const namen = driftIjk.platen.flatMap(p => p.fotos.map(f => f.bestand));
+  zeg(`${driftIjk.platen.length} platen, ${namen.length} foto's ophalen`);
+  const fotos = [];
+  for (const n of namen) {
+    fotos.push([n, await (await fetch(`ijk/drift/${n}`)).arrayBuffer()]);
+  }
+  const mb = fotos.reduce((t, f) => t + f[1].byteLength, 0) / 1e6;
+  zeg(`${mb.toFixed(0)} MB foto's geladen - dit duurt een paar minuten`);
+  py.postMessage({ soort: "drift", ijk: rauw, fotos },
+                 [rauw, ...fotos.map(f => f[1])]);
+};
+
+function toonDrift(b) {
+  const u = b.uitslag;
+  const pc = new Map(driftIjk.verwacht.map(v => [String(v.id), v]));
+  let gelijk = 0; const anders = [];
+  for (const r of u.uit) {
+    const a = pc.get(String(r.id));
+    if (a && String(a.release) === String(r.release)) gelijk++;
+    else anders.push({ id: r.id, pc: a && a.release, browser: r.release,
+                       reden: r.reden, pcReden: a && a.reden });
+  }
+  const kaart = document.createElement("div");
+  kaart.className = "kaart";
+  kaart.innerHTML =
+    `<div style="margin-bottom:8px"><b class="${anders.length ? "nee" : "ok"}">`
+    + `${gelijk} van de ${u.uit.length} dezelfde persing</b>`
+    + ` — de browser las de hoezen zelf, ${u.seconden}s, `
+    + `<b class="${u.missers ? "nee" : "ok"}">${u.missers} over het netwerk</b></div>`
+    + (anders.length
+        ? `<table>${anders.map(x => `<tr><td>${x.id}</td><td class="nee">`
+            + `PC ${x.pc || "-"} (${x.pcReden || ""})<br>`
+            + `browser ${x.browser || "-"} (${x.reden || ""})</td></tr>`).join("")}</table>`
+        : "");
+  $("uitslag").after(kaart);
+  $("stand").innerHTML = anders.length
+    ? `<span class="nee">${anders.length} anders</span>`
+    : `<span class="ok">alle ${gelijk} gelijk</span>`;
+  $("driftknop").disabled = false;
+  zeg(`DRIFT: ${gelijk}/${u.uit.length} gelijk, ${u.seconden}s`);
+  anders.forEach(x => zeg(`  anders: ${x.id} PC=${x.pc} browser=${x.browser}`));
+}
 
 function toonMatch(b) {
   const u = b.uitslag;

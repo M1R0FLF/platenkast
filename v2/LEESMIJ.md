@@ -50,6 +50,85 @@ ORB is rotatie-invariant, dus een scheve of half afgesneden uitsnede matcht nog
 steeds met de hoes op Discogs - en de homografie die eruit komt BEVAT de
 draaiing en de vier hoeken. Dat is geen schatting maar een meting.
 
+## De keten in de browser
+
+De keten draait ook in de browser, op je telefoon, zonder PC. Niet als tweede
+implementatie maar als **dezelfde bestanden**: Pyodide is CPython 3.13 naar
+WASM en brengt numpy, OpenCV 4.11, scipy, pillow, regex, pyclipper en shapely
+mee. Dat is alles wat `knip`, `foto`, `groep`, `velden`, `match`, `beeld`,
+`discogs` en `prijs` importeren, en alles wat `rapidocr_onnxruntime` importeert.
+
+Op één na: `onnxruntime`. En dat is precies het stuk dat vervangen kan worden
+zonder de rest aan te raken, want de hele OCR hangt aan vier aanroepen op één
+object:
+
+| aanroep | waar |
+|---|---|
+| `motor()(img)` | `foto.py:51` |
+| `motor().text_detector(img)` | `knip.py:604` |
+| `motor().text_cls(regels)` | `knip.py:679` |
+| `motor().text_recognizer(regels)` | `stand.py:213` |
+
+Alle vier komen uit op `rapidocr_onnxruntime.utils.OrtInferSession`. Die is in
+de browser vervangen door `browser/ocr_brug.py`, en verder is er niets
+aangepast - niet in de keten, niet in rapidocr.
+
+    browser/            wat alleen in de browser bestaat (bron)
+    bundel.py           kopieert keten + browserkant + rapidocr -> site/motor/py/
+    site/motor/modellen/  de drie .onnx en de tekenset
+    site/static/motor/  py-werker.js (Pyodide) en ort-werker.js (de modellen)
+    site/motor/proef.html  de toetspagina: ijkhoes, match-proef, drift-proef
+
+### Waarom er twee workers zijn
+
+RapidOCR roept de inferentie **synchroon** aan; `onnxruntime-web` antwoordt met
+een Promise. Een `await` middenin `TextDetector.__call__` bestaat niet, en die
+functie herschrijven is precies wat we niet willen.
+
+Dus twee draden. De Pyodide-worker legt zijn tensor in gedeeld geheugen en gaat
+op `Atomics.wait` staan - hij blokkeert echt, geen bezige lus. De rekenwerker
+wordt wakker van het bericht, rekent, schrijft terug en tikt hem aan. Voor
+Python voelt het als een gewone functieaanroep die even duurt.
+
+Dat vraagt `SharedArrayBuffer`, en dus cross-origin-isolatie: `ISOLATIE` in
+`kast.py` en dezelfde twee koppen in `site/vercel.json`. **Die twee moeten
+gelijk blijven.** Het is geen prijs maar winst: dezelfde isolatie zet
+WASM-threads aan, en dat is 1,9x sneller gemeten.
+
+### Wat er gemeten is
+
+    onnxruntime-web tegen onnxruntime, zelfde invoer-tensors:
+        det 6,57e-5   rec 1,06e-5   cls 2,98e-7        afrondingsruis
+
+    een hoes van 3200x3200 lezen:
+        browser 4,8s      PC 8,7s
+        35 tekstvakken in beide, 28 van de 35 regels letter voor letter gelijk
+
+    match.herken, zelfde invoer en zelfde Discogs-antwoorden:
+        20 van de 20 dezelfde persing, 0 netwerkaanroepen
+
+De zeven regels die WEL verschillen, verschillen in een spatie of een teken:
+"Producedby Tony" tegen "Produced by Tony". Dat komt niet van de draden - met
+één draad komen er exact dezelfde zeven uit - maar van de WASM-build tegenover
+de x86-build, en dat is niet weg te stellen.
+
+Dat is geen detail dat je kunt wegwuiven: `velden.tracktermen` neemt **alleen
+regels met een spatie erin**, dus juist daar kan het doorwerken. Op een hoes met
+een leesbaar catalogusnummer maakt het niets uit - dat nummer is in beide gelijk
+- maar de moeilijke hoezen hebben dat nummer niet. `browser/ijkdrift.py` meet
+dat, en die meting hoort herhaald te worden als de modellen of de keten
+veranderen.
+
+### Wat het kost
+
+Pyodide start in 3,0s (6,4s met `requests` erbij) en haalt de eerste keer zo'n
+40 MB op: Pyodide 9, OpenCV 12, numpy 3, de modellen 14. Daarna uit de cache.
+
+Het herkennen zelf is in Pyodide ruim vier keer trager dan op de PC: 7,3s per
+plaat tegen 1,5s. Dat is pure Python in WASM, met geen numpy die het opvangt.
+Voor één plaat tegelijk is dat prima; voor tweehonderd in één keer niet, en dat
+hoort in het ontwerp van het scherm terug te komen.
+
 ## De site
 
 `site/` is een gewone statische site: geen bouwstap, geen npm, geen framework.

@@ -224,6 +224,54 @@ json.dumps({"uit": uit, "treffers": dc.treffers, "missers": dc.missers,
   zeg("match", { uitslag: JSON.parse(uit), ms: Math.round(performance.now() - t0) });
 }
 
+/** De drift-proef: dezelfde foto's, door de browser gelezen.
+ *
+ *  Roept ijkdrift.draai() aan - hetzelfde bestand dat de PC-kant draaide. Wat
+ *  hier anders uitkomt komt dus uit de OCR en niet uit twee versies van mijn
+ *  eigen proefcode.
+ */
+async function drift(b) {
+  pyodide.FS.writeFile("/drift.json", new Uint8Array(b.ijk));
+  pyodide.FS.mkdirTree("/werk/drift");
+  for (const [naam, bytes] of b.fotos) {
+    pyodide.FS.writeFile(`/werk/drift/${naam}`, new Uint8Array(bytes));
+  }
+  const t0 = performance.now();
+  const uit = await pyodide.runPythonAsync(`
+import json, os, time, sys
+sys.path.insert(0, "/keten")
+
+import pyodide_http
+pyodide_http.patch_all()
+
+import ijkdrift
+from discogs import Discogs
+
+_d = json.load(open("/drift.json", encoding="utf-8"))
+os.makedirs("/werk/cache", exist_ok=True)
+os.makedirs("/werk/geen_hoezen", exist_ok=True)
+
+dc = Discogs(None, cache="/werk/cache/drift.db")
+with dc.dblock:
+    dc.db.executemany("INSERT OR REPLACE INTO cache VALUES (?,?)",
+                      [(k, json.dumps(v, ensure_ascii=False))
+                       for k, v in _d["cache"].items()])
+    dc.db.commit()
+
+platen = [{"id": p["id"],
+           "fotos": [{"pad": "/werk/drift/" + f["bestand"],
+                      "naam": f["naam"], "bestand": f["bestand"]}
+                     for f in p["fotos"]]}
+          for p in _d["platen"]]
+
+t0 = time.time()
+uit = ijkdrift.draai(platen, dc, "/werk/geen_hoezen")
+json.dumps({"uit": uit, "missers": dc.missers,
+            "seconden": round(time.time() - t0, 1)})
+`);
+  zeg("drift", { uitslag: JSON.parse(uit), ms: Math.round(performance.now() - t0) });
+}
+
 self.onmessage = async ev => {
   const b = ev.data;
   try {
@@ -231,6 +279,7 @@ self.onmessage = async ev => {
     if (b.soort === "lees") return await lees(b);
     if (b.soort === "velden") return await velden(b);
     if (b.soort === "match")  return await match(b);
+    if (b.soort === "drift")  return await drift(b);
   } catch (e) {
     zeg("fout", { bericht: e && e.message ? e.message : String(e) });
   }
