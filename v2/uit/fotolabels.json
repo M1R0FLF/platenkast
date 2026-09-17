@@ -12,6 +12,14 @@
    "release": 6265083,
    "punten": 391
   },
+  "IMG20260913160841": {
+   "release": 1386866,
+   "punten": 211
+  },
+  "IMG20260913160850": {
+   "release": 1386866,
+   "punten": 119
+  },
   "IMG20260913160904": {
    "release": 1903233,
    "punten": 584
@@ -26,11 +34,11 @@
   },
   "IMG20260913161056": {
    "release": 5149189,
-   "punten": 50
+   "punten": 211
   },
   "IMG20260913161115": {
    "release": 5149189,
-   "punten": 138
+   "punten": 158
   },
   "IMG20260913161133": {
    "release": 908758,
@@ -71,6 +79,10 @@
   "IMG20260913161519": {
    "release": 489036,
    "punten": 676
+  },
+  "IMG20260913161557": {
+   "release": 489036,
+   "punten": 406
   },
   "IMG20260913161610": {
    "release": 489036,
@@ -144,6 +156,10 @@
    "release": 552918,
    "punten": 187
   },
+  "IMG20260913162152": {
+   "release": 552918,
+   "punten": 176
+  },
   "IMG20260913162304": {
    "release": 7498916,
    "punten": 520
@@ -155,6 +171,10 @@
   "IMG20260913162345": {
    "release": 9374494,
    "punten": 331
+  },
+  "IMG20260913162355": {
+   "release": 9374494,
+   "punten": 430
   },
   "IMG20260913162410": {
    "release": 9374494,
@@ -231,6 +251,10 @@
   "IMG20260913162956": {
    "release": 2614903,
    "punten": 421
+  },
+  "IMG20260913163003": {
+   "release": 2614903,
+   "punten": 453
   },
   "IMG20260913163018": {
    "release": 2614903,
@@ -404,6 +428,14 @@
    "release": 869619,
    "punten": 565
   },
+  "IMG20260913164225": {
+   "release": 869619,
+   "punten": 394
+  },
+  "IMG20260913164246": {
+   "release": 869619,
+   "punten": 499
+  },
   "IMG20260913164331": {
    "release": 25271869,
    "punten": 182
@@ -484,6 +516,10 @@
    "release": 11251255,
    "punten": 114
   },
+  "IMG20260913164845": {
+   "release": 6985104,
+   "punten": 41
+  },
   "IMG20260913164923": {
    "release": 1295509,
    "punten": 345
@@ -550,7 +586,7 @@
   },
   "IMG20260913165319": {
    "release": 10237667,
-   "punten": 79
+   "punten": 84
   },
   "IMG20260913165331": {
    "release": 5170520,
@@ -691,11 +727,21 @@
   "IMG20260913170717": {
    "release": 539634,
    "punten": 112
+  },
+  "IMG20260913170738": {
+   "release": 3924718,
+   "punten": 301
+  },
+  "IMG20260913170743": {
+   "release": 3924718,
+   "punten": 296
   }
  },
  "eisen": {
   "IMG_20260913_160652": "samen",
   "IMG20260913160800": "knip",
+  "IMG20260913160850": "samen",
+  "IMG20260913160904": "knip",
   "IMG20260913160913": "samen",
   "IMG20260913161046": "knip",
   "IMG20260913161056": "samen",
@@ -708,6 +754,7 @@
   "IMG20260913161415": "knip",
   "IMG20260913161425": "samen",
   "IMG20260913161519": "knip",
+  "IMG20260913161610": "samen",
   "IMG20260913161700": "knip",
   "IMG20260913161710": "samen",
   "IMG20260913161751": "knip",
@@ -723,8 +770,12 @@
   "IMG20260913162103": "samen",
   "IMG20260913162120": "knip",
   "IMG20260913162126": "samen",
+  "IMG20260913162152": "samen",
+  "IMG20260913162304": "knip",
   "IMG20260913162310": "samen",
   "IMG20260913162345": "knip",
+  "IMG20260913162355": "samen",
+  "IMG20260913162410": "samen",
   "IMG20260913162431": "knip",
   "IMG20260913162438": "samen",
   "IMG20260913162456": "knip",
@@ -739,6 +790,8 @@
   "IMG20260913162823": "samen",
   "IMG20260913162940": "samen",
   "IMG20260913162956": "knip",
+  "IMG20260913163003": "samen",
+  "IMG20260913163018": "samen",
   "IMG20260913163032": "knip",
   "IMG20260913163038": "samen",
   "IMG20260913163057": "knip",
@@ -770,6 +823,8 @@
   "IMG20260913164044": "knip",
   "IMG20260913164054": "samen",
   "IMG20260913164200": "knip",
+  "IMG20260913164225": "samen",
+  "IMG20260913164246": "samen",
   "IMG20260913164336": "samen",
   "IMG20260913164352": "knip",
   "IMG20260913164358": "samen",
@@ -788,6 +843,7 @@
   "IMG20260913164752": "samen",
   "IMG20260913164800": "knip",
   "IMG20260913164805": "samen",
+  "IMG20260913164923": "knip",
   "IMG20260913164928": "samen",
   "IMG20260913164943": "knip",
   "IMG20260913164949": "samen",
@@ -829,6 +885,49 @@
   "IMG20260913170645": "samen",
   "IMG20260913170653": "samen",
   "IMG20260913170711": "knip",
-  "IMG20260913170717": "samen"
+  "IMG20260913170717": "samen",
+  "IMG20260913170738": "knip",
+  "IMG20260913170743": "samen",
+  "IMG20260913160815": "liever_samen",
+  "IMG20260913161226": "liever_samen",
+  "IMG20260913161238": "liever_samen",
+  "IMG20260913161823": "liever_samen",
+  "IMG20260913161905": "liever_samen",
+  "IMG20260913162602": "liever_samen",
+  "IMG20260913162612": "liever_samen",
+  "IMG20260913162742": "liever_samen",
+  "IMG20260913162836": "liever_samen",
+  "IMG20260913162909": "liever_samen",
+  "IMG20260913162916": "liever_samen",
+  "IMG20260913163245": "liever_samen",
+  "IMG20260913163337": "liever_samen",
+  "IMG20260913163413": "liever_samen",
+  "IMG20260913163429": "liever_samen",
+  "IMG20260913163554": "liever_samen",
+  "IMG20260913163626": "liever_samen",
+  "IMG20260913163702": "liever_samen",
+  "IMG20260913163937": "liever_samen",
+  "IMG20260913163945": "liever_samen",
+  "IMG20260913164102": "liever_samen",
+  "IMG20260913164123": "liever_samen",
+  "IMG20260913164205": "liever_samen",
+  "IMG20260913164259": "liever_samen",
+  "IMG20260913164838": "liever_samen",
+  "IMG20260913165006": "liever_samen",
+  "IMG20260913165340": "liever_samen",
+  "IMG20260913165910": "liever_samen",
+  "IMG20260913165915": "liever_samen",
+  "IMG20260913165927": "liever_samen",
+  "IMG20260913170044": "liever_samen",
+  "IMG20260913170121": "liever_samen",
+  "IMG20260913170128": "liever_samen",
+  "IMG20260913170300": "liever_samen",
+  "IMG20260913170331": "liever_samen",
+  "IMG20260913170339": "liever_samen",
+  "IMG20260913170353": "liever_samen",
+  "IMG20260913170359": "liever_samen",
+  "IMG20260913170417": "liever_samen",
+  "IMG20260913170457": "liever_samen",
+  "IMG20260913170751": "liever_samen"
  }
 }

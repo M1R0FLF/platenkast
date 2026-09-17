@@ -34,17 +34,23 @@ from discogs import Discogs
 ZEKER_FOUT, ZEKER_GOED = 10, 30
 
 
-def cover_urls(dc, release_id):
+def cover_urls(dc, release_id, maxaantal=4):
     """Alleen afbeeldingen die een HOES kunnen zijn.
 
     Zie match.kan_hoes_zijn: bij sommige persingen staan op Discogs alleen
     liggende foto's van het plaatje. Die meetellen maakt van "niets te
     vergelijken" ten onrechte "spreekt tegen".
+
+    `maxaantal` staat laag omdat de eerste afbeelding vrijwel altijd de
+    voorkant is en elke extra een aanroep kost. Wie binnenwerk wil herkennen
+    moet hoger: op West Side Story staan 37 afbeeldingen en de binnenkant van
+    de gatefold is de vierde. Met de standaardgrens bleven drie van de vier
+    eigen foto's onherkend, en viel die plaat in tweeen uiteen.
     """
     from match import kan_hoes_zijn
     rel = dc.release(release_id) or {}
     uit = [i.get("uri") or i.get("resource_url")
-           for i in (rel.get("images") or [])[:4] if kan_hoes_zijn(i)]
+           for i in (rel.get("images") or [])[:maxaantal] if kan_hoes_zijn(i)]
     return uit, rel
 
 

@@ -12,7 +12,7 @@
  {
   "id": "160841",
   "release": 1386866,
-  "bron": "beeld na herknip: 211 punten"
+  "bron": "beeld: 211 punten"
  },
  {
   "id": "160904",
@@ -251,6 +251,11 @@
   "bron": "beeld: 379 punten"
  },
  {
+  "id": "163606",
+  "release": 7133335,
+  "bron": "beeld: 379 punten"
+ },
+ {
   "id": "163622",
   "release": 903950,
   "bron": "beeld: 471 punten"
@@ -319,7 +324,7 @@
  {
   "id": "164246",
   "release": 869619,
-  "bron": "beeld na herknip: 499 punten"
+  "bron": "beeld: 499 punten"
  },
  {
   "id": "164331",
@@ -425,7 +430,8 @@
   "artist": "Marv Johnson",
   "title": "I Miss You Baby (How I Miss You) ",
   "catno": "TMG 713",
-  "bron": "overgenomen uit de vorige ronde (auto)"
+  "bron": "beeld: 84 punten",
+  "release": 10237667
  },
  {
   "id": "165756",
@@ -537,6 +543,6 @@
  {
   "id": "170738",
   "release": 3924718,
-  "bron": "beeld na herknip: 301 punten"
+  "bron": "beeld: 301 punten"
  }
 ]

@@ -1041,7 +1041,8 @@
   "id": "163442",
   "fotos": [
    "IMG20260913163442.jpg",
-   "IMG20260913163448.jpg"
+   "IMG20260913163448.jpg",
+   "IMG20260913163554.jpg"
   ],
   "artist": "Julio Iglesias",
   "title": "Hey!",
@@ -1056,16 +1057,15 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 10,
-  "notes": "herkend op tracklist: 7 van 10 tracktitels teruggevonden (via 84304)",
+  "notes": "herkend op tracklist: 8 van 10 tracktitels teruggevonden (via 84304)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 13589837,
   "beeld_punten": 380
  },
  {
-  "id": "163554",
+  "id": "163606",
   "fotos": [
-   "IMG20260913163554.jpg",
    "IMG20260913163606.jpg",
    "IMG20260913163611.jpg"
   ],
@@ -1397,7 +1397,9 @@
   "id": "164219",
   "fotos": [
    "IMG20260913164219.jpg",
-   "IMG20260913164225.jpg"
+   "IMG20260913164225.jpg",
+   "IMG20260913164246.jpg",
+   "IMG20260913164259.jpg"
   ],
   "artist": "Leonard Bernstein, Kiri Te Kanawa, José Carreras, Tatiana Troyanos, Kurt Ollmann, Marilyn Horne",
   "title": "West Side Story",
@@ -1417,31 +1419,6 @@
   "bron": "bevestiging",
   "release_id_auto": 869619,
   "beeld_punten": 565
- },
- {
-  "id": "164246",
-  "fotos": [
-   "IMG20260913164246.jpg",
-   "IMG20260913164259.jpg"
-  ],
-  "artist": "Leonard Bernstein, Kiri Te Kanawa, José Carreras, Tatiana Troyanos, Kurt Ollmann, Marilyn Horne",
-  "title": "West Side Story",
-  "label": "Deutsche Grammophon",
-  "catno": "415 253-1",
-  "barcode": null,
-  "country": "Germany",
-  "year": 1985,
-  "soort": "LP",
-  "lp_count": 2,
-  "gatefold": true,
-  "a_kant": null,
-  "b_kant": null,
-  "aantal_nummers": 19,
-  "notes": "herkend op hoesbeeld: persing uit het beeld (499 samenvallende punten met de hoes op Discogs)",
-  "staat_hoes": null,
-  "bron": "hoesbeeld",
-  "release_id_auto": 869619,
-  "beeld_punten": 499
  },
  {
   "id": "164331",

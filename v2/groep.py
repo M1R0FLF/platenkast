@@ -97,6 +97,10 @@ def binding(a, b):
 # meer moet zich bewijzen. Deze waarden komen uit v1, waar ze 100 platen
 # opleverden en 21 van de 24 toen geverifieerde platen exact reproduceerden.
 PRIOR = {1: -6.0, 2: 1.0, 3: -0.2, 4: -2.0}
+# Ruim boven het verschil tussen een paar (+1,0) en een drietal (-0,2),
+# zodat een onherkenbare foto bij de vorige plaat blijft, en ruim onder
+# de 8,0 van een opengeklapte hoes, die zekerder is.
+LIEVER_SAMEN = 2.0
 NEUTRAAL = 1.0
 
 # Hoeveel foto's er in de buffer moeten liggen voor er geknipt wordt, en
@@ -131,12 +135,24 @@ def segmenteer(rijen, prior=None, neutraal=NEUTRAAL, maxgrootte=MAXGROOTTE,
     if n == 0:
         return []
     eis = [verplicht.get(r.get("naam")) for r in rijen]
+    # "liever_samen" is geen eis maar een voorkeur, en hij zit hier omdat een
+    # harde regel hier niet kan. De voorkant van een plaat matcht meestal met
+    # de hoes op Discogs; een foto die met NIETS matcht is doorgaans een
+    # achterkant of binnenwerk, en daar begint zelden een nieuwe plaat. Maar
+    # "zelden" is geen "nooit" - van sommige persingen heeft Discogs geen
+    # bruikbare afbeelding - dus het mag de afweging alleen buigen.
+    #
+    # Zonder dit viel West Side Story uit elkaar: vier foto's, alleen de
+    # voorkant herkenbaar, en PRIOR maakt er dan twee keurige paren van.
     band = [0.0] * (n + 1)
     for j in range(1, n):
         # een opengeklapte hoes is binnenwerk en hoort nooit bij een nieuwe
         # plaat: zonder deze regel werd de binnenkant van West Side Story een
         # losse plaat zonder tekst
-        band[j] = 8.0 if rijen[j]["breed"] else binding(rijen[j - 1], rijen[j]) - neutraal
+        band[j] = (8.0 if rijen[j]["breed"]
+                   else binding(rijen[j - 1], rijen[j]) - neutraal)
+        if eis[j] == "liever_samen":
+            band[j] += LIEVER_SAMEN
 
     NEG = float("-inf")
     best = [NEG] * (n + 1)

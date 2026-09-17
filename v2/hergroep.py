@@ -63,7 +63,9 @@ def labels(platen, hoezendir, dc, melden=None):
         if not rid or rid in ref:
             continue
         ks = []
-        for u in cover_urls(dc, rid)[0][:3]:
+        # Ruim kijken: binnenwerk van een gatefold staat verderop in de rij
+        # afbeeldingen, en juist die foto's zijn met tekst niet te plaatsen.
+        for u in cover_urls(dc, rid, maxaantal=10)[0][:8]:
             im = beeld.haal(u)
             if im is not None:
                 k = beeld.kenmerken(im)
@@ -112,6 +114,14 @@ def eisen(fotonamen, lab):
         if ta and tb and (tb - ta).total_seconds() > MAXGAT:
             continue          # zelfde persing, maar een los tweede exemplaar
         uit[fotonamen[i]] = "samen"
+
+    # Een foto die met geen enkele hoes matcht is bijna altijd een achterkant
+    # of binnenwerk. Daar begint zelden een plaat, dus liever niet knippen -
+    # maar het blijft een voorkeur, want van sommige persingen heeft Discogs
+    # geen bruikbare afbeelding en dan is de voorkant net zo goed labelloos.
+    for i in range(1, len(fotonamen)):
+        if fotonamen[i] not in lab and fotonamen[i] not in uit:
+            uit[fotonamen[i]] = "liever_samen"
 
     # Een reeks die langer wordt dan een plaat mag zijn is geen plaat maar
     # twee exemplaren van dezelfde persing. Dan liever niets eisen dan iets
