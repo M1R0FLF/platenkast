@@ -18,7 +18,7 @@ hoezen/ gewoon op zijn eigen schijf staan.
 
     py exporteer.py
 """
-import os, re, csv, json, argparse
+import os, re, csv, json, hashlib, argparse
 import cv2
 
 DUIM = 600          # lange zijde; twee keer een tegel van 300 voor scherpe schermen
@@ -58,6 +58,32 @@ def _tracks(v):
     return uit
 
 
+def _met_stempel(naam, pad):
+    """De duimnagel met een inhoudsstempel achter de naam.
+
+    De bestandsnaam van een duimnagel is altijd dezelfde (161816-1.jpg) maar de
+    inhoud verandert bij elke herknip of draaiing. Een browser die hem eenmaal
+    heeft bewaard vraagt er niet meer om, en dan kijk je naar de vorige versie
+    terwijl de nieuwe allang live staat. Precies dat gebeurde: drie keer op rij
+    zag Miro hoezen op hun kant staan die hier rechtop stonden.
+
+    De cache-header aanpassen helpt daar niet tegen. Wat al in de cache ligt
+    blijft daar liggen tot de OUDE max-age verlopen is; een nieuwe header geldt
+    pas voor het volgende antwoord. Dus moet de URL veranderen, en dan kan hij
+    ook meteen lang gecached worden - de site is er sneller van.
+
+    Het stempel gaat mee in collectie.json, en dat bestand mag zelf niet
+    gecached worden. De site plakt de waarde ongewijzigd achter publiek/duim/,
+    dus er hoeft in de JavaScript niets te veranderen.
+    """
+    try:
+        with open(pad, "rb") as fh:
+            h = hashlib.md5(fh.read()).hexdigest()[:8]
+    except OSError:
+        return naam
+    return f"{naam}?v={h}"
+
+
 def duimnagels(records, hoezendir, doeldir, opnieuw=False):
     """Schaalt elke hoesfoto terug naar DUIM pixels op de lange zijde.
 
@@ -72,10 +98,11 @@ def duimnagels(records, hoezendir, doeldir, opnieuw=False):
             bron = os.path.join(hoezendir, os.path.basename(naam))
             doelnaam = f"{rec['id']}-{i}.jpg"
             doel = os.path.join(doeldir, doelnaam)
-            rec.setdefault("duim", []).append(doelnaam)
             if os.path.exists(doel) and not opnieuw:
+                rec.setdefault("duim", []).append(_met_stempel(doelnaam, doel))
                 overgeslagen += 1
                 continue
+            rec.setdefault("duim", []).append(doelnaam)
             im = cv2.imread(bron)
             if im is None:
                 gemist.append(naam)
@@ -87,6 +114,7 @@ def duimnagels(records, hoezendir, doeldir, opnieuw=False):
                 im = cv2.resize(im, (round(w * f), round(h * f)),
                                 interpolation=cv2.INTER_AREA)
             cv2.imwrite(doel, im, [cv2.IMWRITE_JPEG_QUALITY, KWALITEIT])
+            rec["duim"][-1] = _met_stempel(doelnaam, doel)
             gemaakt += 1
     return gemaakt, overgeslagen, gemist
 
