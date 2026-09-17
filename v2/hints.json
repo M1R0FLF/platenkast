@@ -1,21 +1,378 @@
 [
  {
+  "id": "160630",
+  "release": 466488,
+  "bron": "beeld: 501 punten"
+ },
+ {
+  "id": "160800",
+  "release": 6265083,
+  "bron": "beeld: 391 punten"
+ },
+ {
+  "id": "160841",
+  "release": 1386866,
+  "bron": "beeld na herknip: 211 punten"
+ },
+ {
+  "id": "160904",
+  "release": 1903233,
+  "bron": "beeld: 584 punten"
+ },
+ {
+  "id": "161046",
+  "artist": "Bobby Vinton",
+  "title": "The Very Best Of Bobby Vinton",
+  "catno": "ADEH 99",
+  "bron": "beeld: 250 punten",
+  "release": 5149189
+ },
+ {
   "id": "161115",
   "artist": "Andre Hazes",
   "title": "Met Liefde",
   "catno": null
  },
  {
+  "id": "161133",
+  "release": 908758,
+  "bron": "beeld: 349 punten"
+ },
+ {
+  "id": "161156",
+  "release": 843017,
+  "bron": "beeld: 654 punten"
+ },
+ {
+  "id": "161218",
+  "release": 4724619,
+  "bron": "beeld: 515 punten"
+ },
+ {
+  "id": "161310",
+  "artist": "Lee Towers",
+  "title": "New York",
+  "catno": "204.867",
+  "bron": "beeld: 514 punten",
+  "release": 1029942
+ },
+ {
+  "id": "161415",
+  "release": 583091,
+  "bron": "beeld: 436 punten"
+ },
+ {
+  "id": "161519",
+  "artist": "Diana Ross",
+  "title": "Why Do Fools Fall In Love",
+  "catno": "1A 064-86441",
+  "bron": "beeld: 676 punten",
+  "release": 489036
+ },
+ {
+  "id": "161700",
+  "release": 2773281,
+  "bron": "beeld: 398 punten"
+ },
+ {
+  "id": "161751",
+  "release": 2364569,
+  "bron": "beeld: 651 punten"
+ },
+ {
+  "id": "161816",
+  "release": 3053377,
+  "bron": "beeld: 248 punten"
+ },
+ {
+  "id": "161839",
+  "release": 7856052,
+  "bron": "beeld: 207 punten"
+ },
+ {
   "id": "161928",
   "artist": "Shirley Bassey",
   "title": "Something",
-  "catno": "UAS 29100"
+  "catno": "UAS 29100",
+  "release": 11512170,
+  "bron": "beeld: 485 punten"
+ },
+ {
+  "id": "162011",
+  "release": 9082552,
+  "bron": "beeld: 415 punten"
+ },
+ {
+  "id": "162033",
+  "release": 850689,
+  "bron": "beeld: 230 punten"
+ },
+ {
+  "id": "162056",
+  "release": 18000364,
+  "bron": "beeld: 226 punten"
+ },
+ {
+  "id": "162120",
+  "release": 552918,
+  "bron": "beeld: 387 punten"
+ },
+ {
+  "id": "162304",
+  "release": 7498916,
+  "bron": "beeld: 520 punten"
+ },
+ {
+  "id": "162345",
+  "artist": "Gilbert O'Sullivan",
+  "title": "Himself",
+  "catno": "MAMA 501",
+  "bron": "beeld: 448 punten",
+  "release": 9374494
+ },
+ {
+  "id": "162431",
+  "release": 1942885,
+  "bron": "beeld: 411 punten"
+ },
+ {
+  "id": "162456",
+  "release": 2910327,
+  "bron": "beeld: 232 punten"
+ },
+ {
+  "id": "162532",
+  "release": 1557775,
+  "bron": "beeld: 396 punten"
+ },
+ {
+  "id": "162647",
+  "artist": "Lime (2)",
+  "title": "Your Love / Agent 406",
+  "catno": "2141 421",
+  "bron": "beeld: 357 punten",
+  "release": 1162070
+ },
+ {
+  "id": "162716",
+  "release": 222189,
+  "bron": "beeld: 528 punten"
+ },
+ {
+  "id": "162736",
+  "release": 8012748,
+  "bron": "beeld: 147 punten"
+ },
+ {
+  "id": "162817",
+  "release": 916443,
+  "bron": "beeld: 285 punten"
+ },
+ {
+  "id": "162901",
+  "artist": "Tom Jones",
+  "title": "20 Greatest Hits",
+  "catno": "TJD 1/1 & 1/2",
+  "bron": "beeld: 249 punten",
+  "release": 8960043
+ },
+ {
+  "id": "162933",
+  "artist": "Tom Jones",
+  "title": "Green, Green Grass Of Home",
+  "catno": "SLK 16 464-P",
+  "bron": "beeld: 411 punten",
+  "release": 3661894
+ },
+ {
+  "id": "162956",
+  "release": 2614903,
+  "bron": "beeld: 643 punten"
+ },
+ {
+  "id": "163032",
+  "release": 3720615,
+  "bron": "beeld: 434 punten"
+ },
+ {
+  "id": "163057",
+  "release": 403740,
+  "bron": "beeld: 313 punten"
+ },
+ {
+  "id": "163124",
+  "artist": "Tino Rossi",
+  "title": "La Vie Commence A 60 Ans.",
+  "catno": "2C 068 - 15.647",
+  "bron": "beeld: 484 punten",
+  "release": 2725343
+ },
+ {
+  "id": "163146",
+  "release": 732419,
+  "bron": "beeld: 434 punten"
+ },
+ {
+  "id": "163229",
+  "release": 3788224,
+  "bron": "beeld: 278 punten"
+ },
+ {
+  "id": "163331",
+  "release": 5407756,
+  "bron": "beeld: 605 punten"
+ },
+ {
+  "id": "163353",
+  "release": 1253473,
+  "bron": "beeld: 405 punten"
+ },
+ {
+  "id": "163409",
+  "release": 7932006,
+  "bron": "beeld: 307 punten"
+ },
+ {
+  "id": "163424",
+  "release": 5475331,
+  "bron": "beeld: 285 punten"
+ },
+ {
+  "id": "163442",
+  "artist": "Julio Iglesias",
+  "title": "Hey!",
+  "catno": "DIL-50302",
+  "bron": "beeld: 380 punten",
+  "release": 13589837
+ },
+ {
+  "id": "163554",
+  "release": 7133335,
+  "bron": "beeld: 379 punten"
+ },
+ {
+  "id": "163622",
+  "release": 903950,
+  "bron": "beeld: 471 punten"
+ },
+ {
+  "id": "163646",
+  "release": 8411037,
+  "bron": "beeld: 530 punten"
+ },
+ {
+  "id": "163713",
+  "release": 7756034,
+  "bron": "beeld: 491 punten"
+ },
+ {
+  "id": "163734",
+  "release": 10544023,
+  "bron": "beeld: 420 punten"
+ },
+ {
+  "id": "163756",
+  "release": 3254418,
+  "bron": "beeld: 388 punten"
+ },
+ {
+  "id": "163846",
+  "release": 1036200,
+  "bron": "beeld: 194 punten"
+ },
+ {
+  "id": "163906",
+  "release": 11995442,
+  "bron": "beeld: 370 punten"
+ },
+ {
+  "id": "163958",
+  "release": 1906340,
+  "bron": "beeld: 435 punten"
+ },
+ {
+  "id": "164044",
+  "artist": "Various",
+  "title": "Woman In Love Volume 2",
+  "catno": "ADEH 83",
+  "bron": "beeld: 265 punten",
+  "release": 1689144
  },
  {
   "id": "164117",
   "artist": null,
   "title": "Woman In Love",
-  "catno": null
+  "catno": null,
+  "release": 615067,
+  "bron": "beeld: 455 punten"
+ },
+ {
+  "id": "164200",
+  "release": 5446259,
+  "bron": "beeld: 248 punten"
+ },
+ {
+  "id": "164219",
+  "release": 869619,
+  "bron": "beeld: 565 punten"
+ },
+ {
+  "id": "164246",
+  "release": 869619,
+  "bron": "beeld na herknip: 499 punten"
+ },
+ {
+  "id": "164331",
+  "artist": "Mario Molino",
+  "title": "I Sogni Del Mare ",
+  "catno": "ARC 5124",
+  "bron": "beeld: 182 punten",
+  "release": 25271869
+ },
+ {
+  "id": "164352",
+  "release": 2578822,
+  "bron": "beeld: 309 punten"
+ },
+ {
+  "id": "164408",
+  "release": 18675868,
+  "bron": "beeld: 396 punten"
+ },
+ {
+  "id": "164445",
+  "release": 771594,
+  "bron": "beeld: 517 punten"
+ },
+ {
+  "id": "164516",
+  "release": 4282680,
+  "bron": "beeld: 579 punten"
+ },
+ {
+  "id": "164627",
+  "release": 1323515,
+  "bron": "beeld: 442 punten"
+ },
+ {
+  "id": "164646",
+  "release": 3334398,
+  "bron": "beeld: 534 punten"
+ },
+ {
+  "id": "164727",
+  "release": 2456550,
+  "bron": "beeld: 501 punten"
+ },
+ {
+  "id": "164748",
+  "release": 5780914,
+  "bron": "beeld: 254 punten"
+ },
+ {
+  "id": "164800",
+  "release": 11251255,
+  "bron": "beeld: 114 punten"
  },
  {
   "id": "164838",
@@ -24,87 +381,44 @@
   "catno": "17.335"
  },
  {
-  "id": "170121",
-  "artist": "Tom Jones",
-  "title": "Without Love",
-  "catno": "26.225"
+  "id": "164923",
+  "release": 1295509,
+  "bron": "beeld: 345 punten"
  },
  {
-  "id": "161046",
-  "artist": "Bobby Vinton",
-  "title": "The Very Best Of Bobby Vinton",
-  "catno": "ADEH 99",
-  "bron": "overgenomen uit de vorige ronde (claude)"
+  "id": "164943",
+  "release": 809997,
+  "bron": "beeld: 604 punten"
  },
  {
-  "id": "161310",
-  "artist": "Lee Towers",
-  "title": "New York",
-  "catno": "204.867",
-  "bron": "overgenomen uit de vorige ronde (claude)"
+  "id": "165003",
+  "release": 12736697,
+  "bron": "beeld: 558 punten"
  },
  {
-  "id": "161519",
-  "artist": "Diana Ross",
-  "title": "Why Do Fools Fall In Love",
-  "catno": "1A 064-86441",
-  "bron": "overgenomen uit de vorige ronde (auto)"
+  "id": "165017",
+  "release": 3527284,
+  "bron": "beeld: 321 punten"
  },
  {
-  "id": "162345",
-  "artist": "Gilbert O'Sullivan",
-  "title": "Himself",
-  "catno": "MAMA 501",
-  "bron": "overgenomen uit de vorige ronde (beeld)"
+  "id": "165039",
+  "release": 748538,
+  "bron": "beeld: 419 punten"
  },
  {
-  "id": "162647",
-  "artist": "Lime (2)",
-  "title": "Your Love / Agent 406",
-  "catno": "2141 421",
-  "bron": "overgenomen uit de vorige ronde (beeld)"
+  "id": "165108",
+  "release": 4035126,
+  "bron": "beeld: 221 punten"
  },
  {
-  "id": "162901",
-  "artist": "Tom Jones",
-  "title": "20 Greatest Hits",
-  "catno": "TJD 1/1 & 1/2",
-  "bron": "overgenomen uit de vorige ronde (auto)"
+  "id": "165153",
+  "release": 1622829,
+  "bron": "beeld: 167 punten"
  },
  {
-  "id": "162933",
-  "artist": "Tom Jones",
-  "title": "Green, Green Grass Of Home",
-  "catno": "SLK 16 464-P",
-  "bron": "overgenomen uit de vorige ronde (auto)"
- },
- {
-  "id": "163124",
-  "artist": "Tino Rossi",
-  "title": "La Vie Commence A 60 Ans.",
-  "catno": "2C 068 - 15.647",
-  "bron": "overgenomen uit de vorige ronde (claude)"
- },
- {
-  "id": "163442",
-  "artist": "Julio Iglesias",
-  "title": "Hey!",
-  "catno": "DIL-50302",
-  "bron": "overgenomen uit de vorige ronde (auto)"
- },
- {
-  "id": "164044",
-  "artist": "Various",
-  "title": "Woman In Love Volume 2",
-  "catno": "ADEH 83",
-  "bron": "overgenomen uit de vorige ronde (auto)"
- },
- {
-  "id": "164331",
-  "artist": "Mario Molino",
-  "title": "I Sogni Del Mare ",
-  "catno": "ARC 5124",
-  "bron": "overgenomen uit de vorige ronde (beeld)"
+  "id": "165216",
+  "release": 37711011,
+  "bron": "beeld: 555 punten"
  },
  {
   "id": "165310",
@@ -114,17 +428,115 @@
   "bron": "overgenomen uit de vorige ronde (auto)"
  },
  {
+  "id": "165756",
+  "release": 539484,
+  "bron": "beeld: 348 punten"
+ },
+ {
+  "id": "165852",
+  "release": 1004085,
+  "bron": "beeld: 784 punten"
+ },
+ {
+  "id": "165923",
+  "release": 450571,
+  "bron": "beeld: 98 punten"
+ },
+ {
+  "id": "165937",
+  "release": 1171792,
+  "bron": "beeld: 350 punten"
+ },
+ {
+  "id": "165949",
+  "release": 1261452,
+  "bron": "beeld: 633 punten"
+ },
+ {
+  "id": "170004",
+  "release": 718468,
+  "bron": "beeld: 523 punten"
+ },
+ {
+  "id": "170039",
+  "release": 416689,
+  "bron": "beeld: 233 punten"
+ },
+ {
+  "id": "170059",
+  "release": 6663513,
+  "bron": "beeld: 560 punten"
+ },
+ {
+  "id": "170121",
+  "artist": "Tom Jones",
+  "title": "Without Love",
+  "catno": "26.225"
+ },
+ {
   "id": "170138",
   "artist": "Pino Massara",
   "title": "Margherita",
   "catno": "600.146",
-  "bron": "overgenomen uit de vorige ronde (beeld)"
+  "bron": "beeld: 436 punten",
+  "release": 198458
+ },
+ {
+  "id": "170151",
+  "release": 3272477,
+  "bron": "beeld: 535 punten"
+ },
+ {
+  "id": "170207",
+  "release": 2378740,
+  "bron": "beeld: 329 punten"
+ },
+ {
+  "id": "170239",
+  "release": 5698637,
+  "bron": "beeld: 389 punten"
+ },
+ {
+  "id": "170326",
+  "release": 11742768,
+  "bron": "beeld: 466 punten"
+ },
+ {
+  "id": "170417",
+  "release": 4649324,
+  "bron": "beeld: 311 punten"
  },
  {
   "id": "170436",
   "artist": "Daniel Guichard",
   "title": "La Tendresse",
   "catno": "80486",
-  "bron": "overgenomen uit de vorige ronde (auto)"
+  "bron": "beeld: 181 punten",
+  "release": 7582896
+ },
+ {
+  "id": "170601",
+  "release": 8829186,
+  "bron": "beeld: 509 punten"
+ },
+ {
+  "id": "170620",
+  "release": 5037779,
+  "bron": "beeld: 464 punten"
+ },
+ {
+  "id": "170640",
+  "release": 11703825,
+  "bron": "beeld: 508 punten"
+ },
+ {
+  "id": "170711",
+  "release": 539634,
+  "bron": "beeld: 691 punten"
+ },
+ {
+  "id": "170738",
+  "release": 3924718,
+  "bron": "beeld na herknip: 301 punten"
  }
 ]

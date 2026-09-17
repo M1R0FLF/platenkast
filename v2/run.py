@@ -179,7 +179,20 @@ def keten(a, melden=None, stop=None):
     taken = [(p, a.hoezen, a.zijde, a.leespx, a.hercrop or a.herlees, ocrcache)
              for p in paden]
     t0, gelezen, platen = time.time(), 0, 0
-    g = Groepeerder()
+    # Harde grenzen uit het beeld, als hergroep.py ze al bepaald heeft. Die
+    # bestaan pas na een eerste ronde - het beeldbewijs komt van de hoezen op
+    # Discogs, en die zijn pas bekend als er iets herkend is. Een tweede ronde
+    # zet daarmee de grenzen recht die de tekst niet kon zien.
+    eisen = {}
+    labelpad = os.path.join(a.uit, "fotolabels.json")
+    if os.path.exists(labelpad):
+        try:
+            eisen = json.load(open(labelpad, encoding="utf-8")).get("eisen") or {}
+        except (OSError, ValueError):
+            eisen = {}
+    if eisen:
+        zeg("melding", tekst=f"{len(eisen)} grenzen uit het beeld overgenomen")
+    g = Groepeerder(verplicht=eisen)
 
     groepen_uit = []
 

@@ -22,7 +22,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 466488,
-  "beeld_punten": 412
+  "beeld_punten": 501
  },
  {
   "id": "160800",
@@ -47,7 +47,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 6265083,
-  "beeld_punten": 400
+  "beeld_punten": 391
  },
  {
   "id": "160841",
@@ -68,11 +68,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 11,
-  "notes": "herkend op hoesbeeld: 96 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: falling floor)",
+  "notes": "herkend op hoesbeeld: persing uit het beeld (211 samenvallende punten met de hoes op Discogs)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 1386866,
-  "beeld_punten": 96
+  "beeld_punten": 211
  },
  {
   "id": "160904",
@@ -97,13 +97,14 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1903233,
-  "beeld_punten": 548
+  "beeld_punten": 584
  },
  {
   "id": "161046",
   "fotos": [
    "IMG20260913161046.jpg",
-   "IMG20260913161056.jpg"
+   "IMG20260913161056.jpg",
+   "IMG20260913161115.jpg"
   ],
   "artist": "Bobby Vinton",
   "title": "The Very Best Of Bobby Vinton",
@@ -118,43 +119,17 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 18,
-  "notes": "herkend op tracklist: 15 van 18 tracktitels teruggevonden (via hint artiest+titel)",
+  "notes": "herkend op tracklist: 17 van 18 tracktitels teruggevonden (via hint artiest+titel)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5149189,
-  "beeld_punten": 219
+  "beeld_punten": 250
  },
  {
-  "id": "161115",
+  "id": "161133",
   "fotos": [
-   "IMG20260913161115.jpg",
-   "IMG20260913161133.jpg"
-  ],
-  "artist": "André Hazes",
-  "title": "Met Liefde",
-  "label": "EMI",
-  "catno": "1A 068-26853",
-  "barcode": null,
-  "country": "Netherlands",
-  "year": 1982,
-  "soort": "LP",
-  "lp_count": 1,
-  "gatefold": false,
-  "a_kant": null,
-  "b_kant": null,
-  "aantal_nummers": 12,
-  "notes": "herkend op hoesbeeld: 359 samenvallende punten met de afbeelding op Discogs (gevonden via hint artiest+titel)",
-  "staat_hoes": null,
-  "bron": "hoesbeeld",
-  "release_id_auto": 20196286,
-  "beeld_punten": 359
- },
- {
-  "id": "161142",
-  "fotos": [
-   "IMG20260913161142.jpg",
-   "IMG20260913161156.jpg",
-   "IMG20260913161203.jpg"
+   "IMG20260913161133.jpg",
+   "IMG20260913161142.jpg"
   ],
   "artist": "André Hazes",
   "title": "Met Liefde",
@@ -173,7 +148,32 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 908758,
-  "beeld_punten": 168
+  "beeld_punten": 349
+ },
+ {
+  "id": "161156",
+  "fotos": [
+   "IMG20260913161156.jpg",
+   "IMG20260913161203.jpg"
+  ],
+  "artist": "André Hazes",
+  "title": "'n Vriend",
+  "label": "EMI",
+  "catno": "1A 058-26612",
+  "barcode": null,
+  "country": "Netherlands",
+  "year": 1980,
+  "soort": "LP",
+  "lp_count": 1,
+  "gatefold": false,
+  "a_kant": null,
+  "b_kant": null,
+  "aantal_nummers": 10,
+  "notes": "herkend op tracklist: 9 van 10 tracktitels teruggevonden (via 1A058-26612)",
+  "staat_hoes": null,
+  "bron": "tracklist",
+  "release_id_auto": 843017,
+  "beeld_punten": 467
  },
  {
   "id": "161218",
@@ -199,7 +199,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 4724619,
-  "beeld_punten": 243
+  "beeld_punten": 515
  },
  {
   "id": "161310",
@@ -224,7 +224,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1029942,
-  "beeld_punten": 491
+  "beeld_punten": 514
  },
  {
   "id": "161415",
@@ -249,7 +249,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 583091,
-  "beeld_punten": 405
+  "beeld_punten": 436
  },
  {
   "id": "161519",
@@ -271,11 +271,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 9,
-  "notes": "herkend op tracklist: 8 van 9 tracktitels teruggevonden (via hint catno)",
+  "notes": "herkend op hoesbeeld: 676 samenvallende punten met de afbeelding op Discogs (gevonden via hint catno)",
   "staat_hoes": null,
-  "bron": "tracklist",
+  "bron": "hoesbeeld",
   "release_id_auto": 489036,
-  "beeld_punten": 586
+  "beeld_punten": 676
  },
  {
   "id": "161700",
@@ -300,7 +300,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2773281,
-  "beeld_punten": 373
+  "beeld_punten": 390
  },
  {
   "id": "161751",
@@ -321,7 +321,7 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 12,
-  "notes": "herkend op tracklist: 11 van 12 tracktitels teruggevonden (via tekstzoek: Soul8 That's)",
+  "notes": "herkend op tracklist: 11 van 12 tracktitels teruggevonden (via 2484053)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2364569,
@@ -346,11 +346,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 11,
-  "notes": "herkend op hoesbeeld: 41 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'Barbra Streisand's')",
+  "notes": "herkend op tracklist: 5 van 11 tracktitels teruggevonden (via tekstzoek: Barbra Streisand's Greatest Hits People)",
   "staat_hoes": null,
-  "bron": "hoesbeeld",
+  "bron": "tracklist",
   "release_id_auto": 3053377,
-  "beeld_punten": 41
+  "beeld_punten": 248
  },
  {
   "id": "161839",
@@ -372,11 +372,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 28,
-  "notes": "herkend op tracklist: 19 van 28 tracktitels teruggevonden (via PL87127)",
+  "notes": "herkend op tracklist: 20 van 28 tracktitels teruggevonden (via PL87127)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7856052,
-  "beeld_punten": 227
+  "beeld_punten": 207
  },
  {
   "id": "161928",
@@ -397,11 +397,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 12,
-  "notes": "herkend op hoesbeeld: 144 samenvallende punten met de afbeelding op Discogs (gevonden via hint catno)",
+  "notes": "herkend op hoesbeeld: 485 samenvallende punten met de afbeelding op Discogs (gevonden via hint catno)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 11512170,
-  "beeld_punten": 144
+  "beeld_punten": 485
  },
  {
   "id": "162011",
@@ -426,7 +426,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 9082552,
-  "beeld_punten": 60
+  "beeld_punten": 228
  },
  {
   "id": "162033",
@@ -476,7 +476,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 18000364,
-  "beeld_punten": 204
+  "beeld_punten": 214
  },
  {
   "id": "162120",
@@ -502,7 +502,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 552918,
-  "beeld_punten": 301
+  "beeld_punten": 387
  },
  {
   "id": "162304",
@@ -527,7 +527,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7498916,
-  "beeld_punten": 329
+  "beeld_punten": 520
  },
  {
   "id": "162345",
@@ -549,11 +549,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 14,
-  "notes": "herkend op tracklist: 10 van 14 tracktitels teruggevonden (via hint catno)",
+  "notes": "herkend op hoesbeeld: 331 samenvallende punten met de afbeelding op Discogs (gevonden via hint artiest+titel)",
   "staat_hoes": null,
-  "bron": "tracklist",
-  "release_id_auto": 808253,
-  "beeld_punten": 274
+  "bron": "hoesbeeld",
+  "release_id_auto": 9374494,
+  "beeld_punten": 331
  },
  {
   "id": "162431",
@@ -574,11 +574,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 12,
-  "notes": "herkend op tracklist: 11 van 12 tracktitels teruggevonden (via COPS1262)",
+  "notes": "herkend op tracklist: 12 van 12 tracktitels teruggevonden (via COPS1262)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1942885,
-  "beeld_punten": 379
+  "beeld_punten": 411
  },
  {
   "id": "162456",
@@ -603,7 +603,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2910327,
-  "beeld_punten": 220
+  "beeld_punten": 232
  },
  {
   "id": "162532",
@@ -630,7 +630,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1557775,
-  "beeld_punten": 379
+  "beeld_punten": 396
  },
  {
   "id": "162647",
@@ -651,11 +651,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 288 samenvallende punten met de afbeelding op Discogs (gevonden via hint catno)",
+  "notes": "herkend op hoesbeeld: 335 samenvallende punten met de afbeelding op Discogs (gevonden via hint catno)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 1162070,
-  "beeld_punten": 288
+  "beeld_punten": 335
  },
  {
   "id": "162716",
@@ -676,11 +676,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 9,
-  "notes": "herkend op tracklist: 8 van 9 tracktitels teruggevonden (via tekstzoek: ROCK YOUR BABY RCA)",
+  "notes": "herkend op tracklist: 9 van 9 tracktitels teruggevonden (via tekstzoek: ROCK YOUR BABY RCA)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 222189,
-  "beeld_punten": 519
+  "beeld_punten": 528
  },
  {
   "id": "162736",
@@ -706,7 +706,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 8012748,
-  "beeld_punten": 137
+  "beeld_punten": 130
  },
  {
   "id": "162817",
@@ -732,7 +732,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 916443,
-  "beeld_punten": 266
+  "beeld_punten": 285
  },
  {
   "id": "162901",
@@ -744,10 +744,10 @@
   "artist": "Tom Jones",
   "title": "20 Greatest Hits",
   "label": "Decca",
-  "catno": "TJD 1/1",
+  "catno": "BOX 730/31-",
   "barcode": null,
-  "country": "Italy",
-  "year": 1974,
+  "country": "Belgium",
+  "year": 1965,
   "soort": "LP",
   "lp_count": 2,
   "gatefold": false,
@@ -757,8 +757,8 @@
   "notes": "herkend op tracklist: 19 van 20 tracktitels teruggevonden (via hint artiest+titel)",
   "staat_hoes": null,
   "bron": "tracklist",
-  "release_id_auto": 12800463,
-  "beeld_punten": 286
+  "release_id_auto": 8960043,
+  "beeld_punten": 249
  },
  {
   "id": "162933",
@@ -779,17 +779,18 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 14,
-  "notes": "herkend op hoesbeeld: 347 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'JONES DECCA')",
+  "notes": "herkend op tracklist: 12 van 14 tracktitels teruggevonden (via SLK16532)",
   "staat_hoes": null,
-  "bron": "hoesbeeld",
+  "bron": "tracklist",
   "release_id_auto": 3661894,
-  "beeld_punten": 347
+  "beeld_punten": 411
  },
  {
   "id": "162956",
   "fotos": [
    "IMG20260913162956.jpg",
-   "IMG20260913163003.jpg"
+   "IMG20260913163003.jpg",
+   "IMG20260913163018.jpg"
   ],
   "artist": "Tom Jones",
   "title": "Help Yourself",
@@ -808,12 +809,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2614903,
-  "beeld_punten": 410
+  "beeld_punten": 421
  },
  {
-  "id": "163018",
+  "id": "163032",
   "fotos": [
-   "IMG20260913163018.jpg",
    "IMG20260913163032.jpg",
    "IMG20260913163038.jpg"
   ],
@@ -834,7 +834,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3720615,
-  "beeld_punten": 135
+  "beeld_punten": 120
  },
  {
   "id": "163057",
@@ -855,11 +855,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 14,
-  "notes": "herkend op tracklist: 13 van 14 tracktitels teruggevonden (via SLK16464)",
+  "notes": "herkend op tracklist: 14 van 14 tracktitels teruggevonden (via SLK16464)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 403740,
-  "beeld_punten": 281
+  "beeld_punten": 313
  },
  {
   "id": "163124",
@@ -884,7 +884,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2725343,
-  "beeld_punten": 427
+  "beeld_punten": 484
  },
  {
   "id": "163146",
@@ -905,11 +905,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 12,
-  "notes": "herkend op tracklist: 11 van 12 tracktitels teruggevonden (via 814525)",
+  "notes": "herkend op tracklist: 10 van 12 tracktitels teruggevonden (via 814525)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 732419,
-  "beeld_punten": 422
+  "beeld_punten": 434
  },
  {
   "id": "163229",
@@ -931,11 +931,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 32,
-  "notes": "herkend op tracklist: 29 van 32 tracktitels teruggevonden (via KTLP230-1)",
+  "notes": "herkend op tracklist: 30 van 32 tracktitels teruggevonden (via KTLP230-1)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3788224,
-  "beeld_punten": 597
+  "beeld_punten": 278
  },
  {
   "id": "163331",
@@ -960,7 +960,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5407756,
-  "beeld_punten": 589
+  "beeld_punten": 605
  },
  {
   "id": "163353",
@@ -985,7 +985,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1253473,
-  "beeld_punten": 336
+  "beeld_punten": 342
  },
  {
   "id": "163409",
@@ -1006,11 +1006,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 14,
-  "notes": "herkend op hoesbeeld: 276 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'PABLi PARAGUAYOS')",
+  "notes": "herkend op hoesbeeld: persing uit het beeld (307 samenvallende punten met de hoes op Discogs)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 7932006,
-  "beeld_punten": 276
+  "beeld_punten": 307
  },
  {
   "id": "163424",
@@ -1035,7 +1035,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5475331,
-  "beeld_punten": 215
+  "beeld_punten": 285
  },
  {
   "id": "163442",
@@ -1046,21 +1046,21 @@
   "artist": "Julio Iglesias",
   "title": "Hey!",
   "label": "CBS",
-  "catno": "CBS 84304",
+  "catno": "S 84304",
   "barcode": null,
-  "country": "Europe",
+  "country": "Spain",
   "year": 1980,
   "soort": "LP",
   "lp_count": 1,
-  "gatefold": true,
+  "gatefold": false,
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 10,
-  "notes": "herkend op hoesbeeld: 391 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: iglesias estudios)",
+  "notes": "herkend op tracklist: 7 van 10 tracktitels teruggevonden (via 84304)",
   "staat_hoes": null,
-  "bron": "hoesbeeld",
-  "release_id_auto": 934332,
-  "beeld_punten": 391
+  "bron": "tracklist",
+  "release_id_auto": 13589837,
+  "beeld_punten": 380
  },
  {
   "id": "163554",
@@ -1082,11 +1082,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 10,
-  "notes": "herkend op tracklist: 10 van 10 tracktitels teruggevonden (via 240749)",
+  "notes": "herkend op tracklist: 10 van 10 tracktitels teruggevonden (via 240 749)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7133335,
-  "beeld_punten": 178
+  "beeld_punten": 379
  },
  {
   "id": "163622",
@@ -1112,7 +1112,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 903950,
-  "beeld_punten": 375
+  "beeld_punten": 409
  },
  {
   "id": "163646",
@@ -1138,7 +1138,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 8411037,
-  "beeld_punten": 472
+  "beeld_punten": 488
  },
  {
   "id": "163713",
@@ -1159,11 +1159,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 12,
-  "notes": "herkend op tracklist: 11 van 12 tracktitels teruggevonden (via 2601791)",
+  "notes": "herkend op tracklist: 12 van 12 tracktitels teruggevonden (via 2601791)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7756034,
-  "beeld_punten": 289
+  "beeld_punten": 307
  },
  {
   "id": "163734",
@@ -1177,18 +1177,18 @@
   "catno": "ADE P22",
   "barcode": null,
   "country": "UK",
-  "year": 1976,
+  "year": 1964,
   "soort": "LP",
   "lp_count": 1,
   "gatefold": false,
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 20,
-  "notes": "herkend op tracklist: 20 van 20 tracktitels teruggevonden (via tekstzoek: HIS20GRE BACKSTAGE IM LONELY)",
+  "notes": "herkend op hoesbeeld: persing uit het beeld (420 samenvallende punten met de hoes op Discogs)",
   "staat_hoes": null,
-  "bron": "tracklist",
-  "release_id_auto": 705868,
-  "beeld_punten": 169
+  "bron": "hoesbeeld",
+  "release_id_auto": 10544023,
+  "beeld_punten": 420
  },
  {
   "id": "163756",
@@ -1199,9 +1199,9 @@
   "artist": "Engelbert Humperdinck",
   "title": "Träumen Mit Engelbert",
   "label": "Ariola",
-  "catno": "207 865",
-  "barcode": null,
-  "country": "Europe",
+  "catno": "13 333 0",
+  "barcode": "1007192078653",
+  "country": "Germany",
   "year": 1986,
   "soort": "LP",
   "lp_count": 1,
@@ -1212,8 +1212,8 @@
   "notes": "herkend op tracklist: 15 van 15 tracktitels teruggevonden (via tekstzoek: Engelbert Traumen)",
   "staat_hoes": null,
   "bron": "tracklist",
-  "release_id_auto": 691764,
-  "beeld_punten": 320
+  "release_id_auto": 3254418,
+  "beeld_punten": 388
  },
  {
   "id": "163846",
@@ -1222,23 +1222,23 @@
    "IMG20260913163851.jpg"
   ],
   "artist": "Change",
-  "title": "Change Of Heart",
-  "label": "WEA",
-  "catno": "240 439-1",
+  "title": "Change Of Heart (Special U.S Mix)",
+  "label": "Carrere",
+  "catno": "8.382",
   "barcode": null,
-  "country": "UK & Europe",
+  "country": "France",
   "year": 1984,
-  "soort": "LP",
+  "soort": "single7",
   "lp_count": 1,
   "gatefold": false,
   "a_kant": null,
   "b_kant": null,
-  "aantal_nummers": 8,
-  "notes": "herkend op hoesbeeld: 181 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: CHANGE HEART)",
+  "aantal_nummers": 2,
+  "notes": "herkend op hoesbeeld: 178 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: carrere change)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
-  "release_id_auto": 158404,
-  "beeld_punten": 181
+  "release_id_auto": 1036200,
+  "beeld_punten": 178
  },
  {
   "id": "163906",
@@ -1263,7 +1263,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 11995442,
-  "beeld_punten": 371
+  "beeld_punten": 370
  },
  {
   "id": "163930",
@@ -1310,11 +1310,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 10,
-  "notes": "herkend op hoesbeeld: 369 samenvallende punten met de afbeelding op Discogs (gevonden via 203.935)",
+  "notes": "herkend op hoesbeeld: 435 samenvallende punten met de afbeelding op Discogs (gevonden via 203.935)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 1906340,
-  "beeld_punten": 369
+  "beeld_punten": 435
  },
  {
   "id": "164044",
@@ -1340,7 +1340,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1689144,
-  "beeld_punten": 257
+  "beeld_punten": 265
  },
  {
   "id": "164117",
@@ -1366,7 +1366,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 615067,
-  "beeld_punten": 417
+  "beeld_punten": 455
  },
  {
   "id": "164200",
@@ -1387,19 +1387,17 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 12,
-  "notes": "herkend op tracklist: 10 van 12 tracktitels teruggevonden (via tekstzoek: cindy jigsaw)",
+  "notes": "herkend op hoesbeeld: persing uit het beeld (248 samenvallende punten met de hoes op Discogs)",
   "staat_hoes": null,
-  "bron": "tracklist",
+  "bron": "hoesbeeld",
   "release_id_auto": 5446259,
-  "beeld_punten": 228
+  "beeld_punten": 248
  },
  {
   "id": "164219",
   "fotos": [
    "IMG20260913164219.jpg",
-   "IMG20260913164225.jpg",
-   "IMG20260913164246.jpg",
-   "IMG20260913164259.jpg"
+   "IMG20260913164225.jpg"
   ],
   "artist": "Leonard Bernstein, Kiri Te Kanawa, José Carreras, Tatiana Troyanos, Kurt Ollmann, Marilyn Horne",
   "title": "West Side Story",
@@ -1418,7 +1416,32 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 869619,
-  "beeld_punten": 538
+  "beeld_punten": 565
+ },
+ {
+  "id": "164246",
+  "fotos": [
+   "IMG20260913164246.jpg",
+   "IMG20260913164259.jpg"
+  ],
+  "artist": "Leonard Bernstein, Kiri Te Kanawa, José Carreras, Tatiana Troyanos, Kurt Ollmann, Marilyn Horne",
+  "title": "West Side Story",
+  "label": "Deutsche Grammophon",
+  "catno": "415 253-1",
+  "barcode": null,
+  "country": "Germany",
+  "year": 1985,
+  "soort": "LP",
+  "lp_count": 2,
+  "gatefold": true,
+  "a_kant": null,
+  "b_kant": null,
+  "aantal_nummers": 19,
+  "notes": "herkend op hoesbeeld: persing uit het beeld (499 samenvallende punten met de hoes op Discogs)",
+  "staat_hoes": null,
+  "bron": "hoesbeeld",
+  "release_id_auto": 869619,
+  "beeld_punten": 499
  },
  {
   "id": "164331",
@@ -1443,7 +1466,7 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 25271869,
-  "beeld_punten": 160
+  "beeld_punten": 154
  },
  {
   "id": "164352",
@@ -1452,7 +1475,7 @@
    "IMG20260913164358.jpg"
   ],
   "artist": "Hervé Vilard",
-  "title": "Elle Etait Belle / Dans Le Vent",
+  "title": "Elle Etait Belle",
   "label": "Trema",
   "catno": "49 058",
   "barcode": null,
@@ -1467,7 +1490,7 @@
   "notes": "herkend op tracklist: 2 van 2 tracktitels teruggevonden (via 49058)",
   "staat_hoes": null,
   "bron": "tracklist",
-  "release_id_auto": 17221021,
+  "release_id_auto": 2578822,
   "beeld_punten": 309
  },
  {
@@ -1477,7 +1500,7 @@
    "IMG20260913164431.jpg"
   ],
   "artist": "Frank Michael",
-  "title": "Je Ne Peux Vivre Sans Toi / Viens, Partons Petite Fille",
+  "title": "Je Ne Peux Vivre Sans Toi",
   "label": "RCA Victor",
   "catno": "74-16247",
   "barcode": null,
@@ -1489,11 +1512,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op bevestiging: titel en label/catalogusnummer teruggevonden (via tekstzoek: MICHAEL petite fille)",
+  "notes": "herkend op bevestiging: titel en label/catalogusnummer teruggevonden (via tekstzoek: MICHAEL viens partons)",
   "staat_hoes": null,
   "bron": "bevestiging",
-  "release_id_auto": 1296278,
-  "beeld_punten": 216
+  "release_id_auto": 18675868,
+  "beeld_punten": 396
  },
  {
   "id": "164445",
@@ -1514,11 +1537,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op bevestiging: titel en label/catalogusnummer teruggevonden (via tekstzoek: ybpb joie)",
+  "notes": "herkend op bevestiging: titel en label/catalogusnummer teruggevonden (via tekstzoek: vraiment vivre)",
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 771594,
-  "beeld_punten": 483
+  "beeld_punten": 517
  },
  {
   "id": "164516",
@@ -1539,11 +1562,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op tracklist: 1 van 2 tracktitels teruggevonden (via 884636)",
+  "notes": "herkend op bevestiging: titel en label/catalogusnummer teruggevonden (via 884636)",
   "staat_hoes": null,
-  "bron": "tracklist",
+  "bron": "bevestiging",
   "release_id_auto": 4282680,
-  "beeld_punten": 538
+  "beeld_punten": 579
  },
  {
   "id": "164627",
@@ -1568,7 +1591,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1323515,
-  "beeld_punten": 417
+  "beeld_punten": 442
  },
  {
   "id": "164646",
@@ -1593,7 +1616,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3334398,
-  "beeld_punten": 261
+  "beeld_punten": 507
  },
  {
   "id": "164727",
@@ -1618,7 +1641,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2456550,
-  "beeld_punten": 374
+  "beeld_punten": 380
  },
  {
   "id": "164748",
@@ -1714,11 +1737,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op tracklist: 1 van 2 tracktitels teruggevonden (via 61.751)",
+  "notes": "herkend op tracklist: 2 van 2 tracktitels teruggevonden (via 61.751)",
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1295509,
-  "beeld_punten": 333
+  "beeld_punten": 345
  },
  {
   "id": "164943",
@@ -1739,11 +1762,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 614 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: charles aznavour seul)",
+  "notes": "herkend op hoesbeeld: 619 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: charles aznavour me voila)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 809997,
-  "beeld_punten": 614
+  "beeld_punten": 619
  },
  {
   "id": "165003",
@@ -1757,18 +1780,18 @@
   "catno": "CSL 2318",
   "barcode": null,
   "country": "Spain",
-  "year": 1968,
+  "year": 1969,
   "soort": "single7",
   "lp_count": 1,
   "gatefold": false,
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 290 samenvallende punten met de afbeelding op Discogs (gevonden via CSL2318); tekst wees naar 'Alguien Cantó' maar de hoes wees een andere persing aan (8 punten voor die van de tekst)",
+  "notes": "herkend op hoesbeeld: 546 samenvallende punten met de afbeelding op Discogs (gevonden via CSL2318); tekst wees naar 'Alguien Cantó' maar de hoes wees een andere persing aan (8 punten voor die van de tekst)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
-  "release_id_auto": 14540611,
-  "beeld_punten": 290
+  "release_id_auto": 12736697,
+  "beeld_punten": 546
  },
  {
   "id": "165017",
@@ -1793,7 +1816,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3527284,
-  "beeld_punten": 213
+  "beeld_punten": 321
  },
  {
   "id": "165039",
@@ -1814,11 +1837,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 406 samenvallende punten met de afbeelding op Discogs (gevonden via 45.VB.140.310)",
+  "notes": "herkend op tracklist: 1 van 2 tracktitels teruggevonden (via 45.VB.140.310)",
   "staat_hoes": null,
-  "bron": "hoesbeeld",
+  "bron": "tracklist",
   "release_id_auto": 748538,
-  "beeld_punten": 406
+  "beeld_punten": 419
  },
  {
   "id": "165108",
@@ -1843,7 +1866,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 4035126,
-  "beeld_punten": 189
+  "beeld_punten": 221
  },
  {
   "id": "165153",
@@ -1868,7 +1891,7 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 1622829,
-  "beeld_punten": 161
+  "beeld_punten": 167
  },
  {
   "id": "165216",
@@ -1889,11 +1912,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 543 samenvallende punten met de afbeelding op Discogs (gevonden via PY.12124)",
+  "notes": "herkend op hoesbeeld: 569 samenvallende punten met de afbeelding op Discogs (gevonden via PY.12124)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 37711011,
-  "beeld_punten": 543
+  "beeld_punten": 569
  },
  {
   "id": "165310",
@@ -1964,9 +1987,9 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 348 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: BARBRA STREISAND WOMAN IN LOVE)",
+  "notes": "herkend op tracklist: 2 van 2 tracktitels teruggevonden (via tekstzoek: BARBRA STREISAND WOMAN IN LOVE)",
   "staat_hoes": null,
-  "bron": "hoesbeeld",
+  "bron": "tracklist",
   "release_id_auto": 539484,
   "beeld_punten": 348
  },
@@ -1989,11 +2012,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op bevestiging: titel en label/catalogusnummer teruggevonden (via 142.004)",
+  "notes": "herkend op bevestiging: titel, label en catalogusnummer teruggevonden (via 142.004)",
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 1004085,
-  "beeld_punten": 745
+  "beeld_punten": 784
  },
  {
   "id": "165910",
@@ -2064,11 +2087,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op tracklist: 2 van 2 tracktitels teruggevonden (via tekstzoek: ALAIN BARRIERE UN POETE)",
+  "notes": "herkend op bevestiging: titel en label/catalogusnummer teruggevonden (via tekstzoek: ALAIN BARRIERE UN POETE)",
   "staat_hoes": null,
-  "bron": "tracklist",
+  "bron": "bevestiging",
   "release_id_auto": 1171792,
-  "beeld_punten": 318
+  "beeld_punten": 350
  },
  {
   "id": "165949",
@@ -2093,7 +2116,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1261452,
-  "beeld_punten": 616
+  "beeld_punten": 633
  },
  {
   "id": "170004",
@@ -2118,7 +2141,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 718468,
-  "beeld_punten": 206
+  "beeld_punten": 523
  },
  {
   "id": "170039",
@@ -2131,7 +2154,7 @@
   "label": "Polydor",
   "catno": "2002 113",
   "barcode": null,
-  "country": "Netherlands",
+  "country": "Germany",
   "year": 1981,
   "soort": "single7",
   "lp_count": 1,
@@ -2139,11 +2162,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 429 samenvallende punten met de afbeelding op Discogs (gevonden via 2002113); tekst wees naar 'Should I Laugh Or Cry' maar de hoes wees een andere persing aan (4 punten voor die van de tekst)",
+  "notes": "herkend op tracklist: 2 van 2 tracktitels teruggevonden (via 200 2113)",
   "staat_hoes": null,
-  "bron": "hoesbeeld",
-  "release_id_auto": 1098743,
-  "beeld_punten": 429
+  "bron": "tracklist",
+  "release_id_auto": 416689,
+  "beeld_punten": 228
  },
  {
   "id": "170059",
@@ -2164,10 +2187,10 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 560 samenvallende punten met de afbeelding op Discogs (gevonden via 101718); tekst wees naar 'The Singles - The First Ten Years' maar de hoes wees een andere persing aan (7 punten voor die van de tekst)",
+  "notes": "herkend op tracklist: 2 van 2 tracktitels teruggevonden (via 101718)",
   "staat_hoes": null,
-  "bron": "hoesbeeld",
-  "release_id_auto": 34612549,
+  "bron": "tracklist",
+  "release_id_auto": 6663513,
   "beeld_punten": 560
  },
  {
@@ -2214,11 +2237,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 379 samenvallende punten met de afbeelding op Discogs (gevonden via hint artiest+titel)",
+  "notes": "herkend op hoesbeeld: 436 samenvallende punten met de afbeelding op Discogs (gevonden via hint artiest+titel)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 198458,
-  "beeld_punten": 379
+  "beeld_punten": 436
  },
  {
   "id": "170151",
@@ -2239,11 +2262,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 523 samenvallende punten met de afbeelding op Discogs (gevonden via 2058 492)",
+  "notes": "herkend op hoesbeeld: 512 samenvallende punten met de afbeelding op Discogs (gevonden via 2058 492)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 3272477,
-  "beeld_punten": 523
+  "beeld_punten": 512
  },
  {
   "id": "170207",
@@ -2264,11 +2287,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 304 samenvallende punten met de afbeelding op Discogs (gevonden via PB69009); tekst wees naar 'After Eight' maar de hoes wees een andere persing aan (6 punten voor die van de tekst)",
+  "notes": "herkend op hoesbeeld: 329 samenvallende punten met de afbeelding op Discogs (gevonden via PB69009); tekst wees naar 'After Eight' maar de hoes wees een andere persing aan (7 punten voor die van de tekst)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 2378740,
-  "beeld_punten": 304
+  "beeld_punten": 329
  },
  {
   "id": "170239",
@@ -2294,7 +2317,7 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 5698637,
-  "beeld_punten": 311
+  "beeld_punten": 389
  },
  {
   "id": "170326",
@@ -2316,11 +2339,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 2,
-  "notes": "herkend op hoesbeeld: 399 samenvallende punten met de afbeelding op Discogs (breed gezocht via 'Ouverture Magnificat')",
+  "notes": "herkend op hoesbeeld: persing uit het beeld (466 samenvallende punten met de hoes op Discogs)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 11742768,
-  "beeld_punten": 399
+  "beeld_punten": 466
  },
  {
   "id": "170353",
@@ -2356,21 +2379,21 @@
   "artist": "Daniel Guichard",
   "title": "La Tendresse",
   "label": "Barclay",
-  "catno": "80486",
+  "catno": "90 070",
   "barcode": null,
   "country": "France",
-  "year": 1973,
+  "year": 1975,
   "soort": "LP",
   "lp_count": 1,
   "gatefold": false,
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 12,
-  "notes": "herkend op hoesbeeld: 269 samenvallende punten met de afbeelding op Discogs (gevonden via 80486)",
+  "notes": "herkend op hoesbeeld: 289 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: daniel tendresse)",
   "staat_hoes": null,
   "bron": "hoesbeeld",
-  "release_id_auto": 24898283,
-  "beeld_punten": 269
+  "release_id_auto": 4649324,
+  "beeld_punten": 289
  },
  {
   "id": "170436",
@@ -2395,7 +2418,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7582896,
-  "beeld_punten": 195
+  "beeld_punten": 181
  },
  {
   "id": "170601",
@@ -2420,7 +2443,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 8829186,
-  "beeld_punten": 404
+  "beeld_punten": 427
  },
  {
   "id": "170620",
@@ -2445,7 +2468,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5037779,
-  "beeld_punten": 426
+  "beeld_punten": 464
  },
  {
   "id": "170640",
@@ -2455,11 +2478,11 @@
    "IMG20260913170653.jpg"
   ],
   "artist": "Michel Sardou",
-  "title": "20 Chansons D'or",
+  "title": "20 Chansons D'Or",
   "label": "Trema",
-  "catno": "310082/83",
+  "catno": "310082",
   "barcode": null,
-  "country": "France",
+  "country": "Netherlands",
   "year": 1980,
   "soort": "LP",
   "lp_count": 2,
@@ -2467,11 +2490,11 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 20,
-  "notes": "herkend op hoesbeeld: 469 samenvallende punten met de afbeelding op Discogs (gevonden via tekstzoek: chansons sardou)",
+  "notes": "herkend op tracklist: 20 van 20 tracktitels teruggevonden (via tekstzoek: Sardou CHANSONS D'OR)",
   "staat_hoes": null,
-  "bron": "hoesbeeld",
-  "release_id_auto": 2793322,
-  "beeld_punten": 469
+  "bron": "tracklist",
+  "release_id_auto": 11703825,
+  "beeld_punten": 508
  },
  {
   "id": "170711",
@@ -2496,7 +2519,7 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 539634,
-  "beeld_punten": 95
+  "beeld_punten": 691
  },
  {
   "id": "170738",
@@ -2518,10 +2541,10 @@
   "a_kant": null,
   "b_kant": null,
   "aantal_nummers": 32,
-  "notes": "herkend op tracklist: 27 van 32 tracktitels teruggevonden (via tekstzoek: Uren Michel Legrand Michael Mill Company)",
+  "notes": "herkend op hoesbeeld: persing uit het beeld (301 samenvallende punten met de hoes op Discogs)",
   "staat_hoes": null,
-  "bron": "tracklist",
+  "bron": "hoesbeeld",
   "release_id_auto": 3924718,
-  "beeld_punten": 260
+  "beeld_punten": 301
  }
 ]

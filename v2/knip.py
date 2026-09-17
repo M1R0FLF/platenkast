@@ -47,7 +47,10 @@ VERHOUDINGEN = (1.0, 2.0, 0.5)    # vierkante hoes, gatefold liggend of staand
 # Ophogen zodra het snijden of rechtzetten verandert. foto.py zet dit nummer in
 # de OCR-sleutel en in een stempel naast de uitsnedes, zodat een verbetering
 # niet stilletjes over oude uitsnedes heen leest.
-VERSIE = 2
+# 2 -> 3: hersnij.py legt de rand nu vast tegen de hoes op Discogs en foto.py
+#         gebruikt die vierhoek. De OCR moet daarom opnieuw, want die is van de
+#         oude, deels verkeerd uitgesneden en verkeerd gedraaide hoezen.
+VERSIE = 3
 
 # Werkbreedte waarop gezocht wordt. Stond op 900 en dat was zonde: de zware
 # stappen (morfologie op vijf maskers, grabcut, bilateraal filter) schalen met

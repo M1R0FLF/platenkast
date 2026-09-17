@@ -39,6 +39,7 @@ import cv2
 
 cv2.setNumThreads(1)
 
+import json as _json_mod
 import knip
 from knip import autolevel, motor
 
@@ -126,6 +127,34 @@ def verwerk(taak):
     return uit
 
 
+_MALLEN = None
+
+
+def _op_mal(pad, naam, zijde):
+    """De uitsnede volgens de vierhoek die hersnij.py opmat, of None.
+
+    Wordt een keer per proces ingelezen: _verwerk draait in een pool, dus
+    zonder die cache leest elke foto het bestand opnieuw.
+    """
+    global _MALLEN
+    if _MALLEN is None:
+        try:
+            with open(os.path.join("uit", "snijquads.json"), encoding="utf-8") as fh:
+                _MALLEN = _json_mod.load(fh)
+        except (OSError, ValueError):
+            _MALLEN = {}
+    mal = _MALLEN.get(naam)
+    if not mal:
+        return None
+    try:
+        import hersnij
+        import numpy as np
+        return hersnij.snijd_met(pad, np.asarray(mal["quad"], "float32"),
+                                 mal["verhouding"], zijde)
+    except Exception:
+        return None
+
+
 def _verwerk(pad, hoezendir, zijde, leespx, opnieuw):
     naam = os.path.splitext(os.path.basename(pad))[0]
     doel = os.path.join(hoezendir, naam + ".jpg")
@@ -148,16 +177,24 @@ def _verwerk(pad, hoezendir, zijde, leespx, opnieuw):
         ruw = cv2.imread(pad)
         if ruw is None:
             return {"naam": naam, "fout": "onleesbaar"}
-        hoes, cijfer, bron = knip.snijd(ruw, zijde)
-        if hoes is None:
-            # Uitsnijden mislukt: de hele foto gebruiken is beter dan niets.
-            # In v1 ging dat via redden.py als aparte stap achteraf.
-            hoes, gesneden = ruw, False
+        # Is deze foto al tegen de hoes op Discogs opgemeten, dan ligt de rand
+        # vast en hoeft hij niet gezocht te worden: knip ZOEKT de rand, dit
+        # WEET hem. Zie hersnij.py. Rechtzetten hoeft dan ook niet, want de
+        # homografie waar de vierhoek uit komt bevat de draaiing al.
+        hoes = _op_mal(pad, naam, zijde)
+        if hoes is not None:
+            gesneden, cijfer, bron, stand, zeker = True, None, "discogs", "0", True
         else:
-            gesneden = True
-        # Rechtzetten vóór het lezen en vóór het bewaren, zodat de OCR en de
-        # foto voor de advertentie allebei van dezelfde rechte hoes komen.
-        hoes, stand, waarom, zeker = knip.rechtop(hoes)
+            hoes, cijfer, bron = knip.snijd(ruw, zijde)
+            if hoes is None:
+                # Uitsnijden mislukt: de hele foto gebruiken is beter dan niets.
+                # In v1 ging dat via redden.py als aparte stap achteraf.
+                hoes, gesneden = ruw, False
+            else:
+                gesneden = True
+            # Rechtzetten vóór het lezen en vóór het bewaren, zodat de OCR en de
+            # foto voor de advertentie allebei van dezelfde rechte hoes komen.
+            hoes, stand, waarom, zeker = knip.rechtop(hoes)
         hoes = autolevel(hoes)
         os.makedirs(hoezendir, exist_ok=True)
         cv2.imwrite(doel, hoes, [cv2.IMWRITE_JPEG_QUALITY, 92])

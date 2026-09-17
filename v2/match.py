@@ -833,6 +833,34 @@ def _plaat(rec, rel, titels, waarom, hoe):
     }
 
 
+def op_release(dc, rec, release_id, hoezendir):
+    """De persing is al bekend; alleen nog nameten of de hoes klopt.
+
+    Dit bestaat omdat zoeken duur en soms kansloos is. "Gouden Uren" staat in
+    sierletters op de hoes en de OCR maakt er "louden Vten" van; daarmee valt
+    niets te vinden, en laatste_ronde brandt er veertig zoekopdrachten op stuk
+    - veertig seconden, want Discogs laat er zestig per minuut door. Het beeld
+    wist het antwoord al: 259 samenvallende punten met precies deze persing.
+
+    Twee aanroepen in plaats van veertig, en allebei meestal uit de cache.
+    """
+    rel = dc.release(release_id)
+    if not rel:
+        return None, "release niet op te halen"
+    punten = beeld_punten(dc, rec, release_id, hoezendir)
+    # None betekent "geen hoesfoto om mee te vergelijken" en dat is iets anders
+    # dan tegenspraak - zie kan_hoes_zijn. Alleen echte tegenspraak telt.
+    if punten is not None and punten < BEELD_GOED:
+        return None, f"hint spreekt het beeld tegen ({punten} punten)"
+    titels = [t["title"] for t in (rel.get("tracklist") or []) if t.get("title")]
+    plaat = _plaat(rec, rel, titels,
+                   f"persing uit het beeld ({punten} samenvallende punten "
+                   f"met de hoes op Discogs)" if punten is not None
+                   else "persing uit het beeld", "hoesbeeld")
+    plaat["beeld_punten"] = punten
+    return plaat, None
+
+
 def herken(dc, rec, hoezendir, hint=None):
     """Alle strategieen op volgorde, en de hoes heeft het laatste woord.
 
@@ -845,6 +873,12 @@ def herken(dc, rec, hoezendir, hint=None):
 
     De toets kost 0,4 seconde per plaat (37s over de hele set, naast een run
     van anderhalve minuut). Dat is te goedkoop om over na te denken.
+
+    Staat er een release in de hint, dan hoeft er niets gezocht te worden. Die
+    komt uit hergroep.py, waar de foto op honderden punten samenviel met de
+    hoes op Discogs, en dat is harder bewijs dan welke zoekopdracht dan ook.
+    Hij wordt hier nog wel nagemeten: een hint is een aanwijzing en geen bevel,
+    en het kost een enkele aanroep om er zekerheid van te maken.
     """
     plaat, reden = op_tekst(dc, rec, hint)
     if plaat:
@@ -878,6 +912,21 @@ def herken(dc, rec, hoezendir, hint=None):
     plaat, reden2 = op_beeld(dc, rec, hoezendir, hint=hint)
     if plaat:
         return plaat, None
+
+    # Pas hier de hint, en met opzet niet eerder. De hint wijst een RELEASE aan
+    # waarvan de hoes samenviel, en dezelfde hoes zit op elke persing van die
+    # uitgave - het beeld kan persingen dus niet uit elkaar houden. op_tekst
+    # kan dat wel: dat weegt het land dat op de hoes gedrukt staat en het
+    # catalogusnummer mee. Stond de hint vooraan, dan sloeg hij die afweging
+    # over, en dat deed hij ook: dertien platen wisselden van persing, met ABBA
+    # van Nederland naar Duitsland op hetzelfde nummer 2002 113.
+    #
+    # Hier kost hij niets en redt hij wel: het scheelt de brede ronde, die
+    # veertig zoekopdrachten van een seconde verstookt op OCR-brokstukken.
+    if hint and hint.get("release"):
+        plaat, reden4 = op_release(dc, rec, hint["release"], hoezendir)
+        if plaat:
+            return plaat, None
 
     # Laatste kans voor wat anders op de handmatige lijst belandt.
     plaat, reden3 = laatste_ronde(dc, rec, hoezendir)

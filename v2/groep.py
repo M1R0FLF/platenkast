@@ -104,7 +104,8 @@ NEUTRAAL = 1.0
 VENSTER, STAART = 16, 5
 
 
-def segmenteer(rijen, prior=None, neutraal=NEUTRAAL, maxgrootte=MAXGROOTTE):
+def segmenteer(rijen, prior=None, neutraal=NEUTRAAL, maxgrootte=MAXGROOTTE,
+               verplicht=None):
     """Knipt een reeks foto's optimaal op met dynamisch programmeren.
 
     Gulzig knippen kiest steeds het sterkste paar van dat moment en kan een
@@ -112,11 +113,24 @@ def segmenteer(rijen, prior=None, neutraal=NEUTRAAL, maxgrootte=MAXGROOTTE):
     100 platen gelijk aan deze aanpak. Hier wordt de som over de hele reeks
     gemaximaliseerd, zodat het vermoeden 'een plaat is een paar' en het
     tekstbewijs tegen elkaar afgewogen worden.
+
+    `verplicht` zet harde grenzen: {fotonaam: "knip"|"samen"} betekent dat er
+    VOOR die foto wel of juist niet geknipt mag worden. Die komen uit het beeld
+    (zie hergroep.py) en dat is bewijs van een andere soort dan de tekst - een
+    donkere fotohoes levert geen trigrammen maar wel vierhonderd ORB-punten.
+
+    Zonder die grenzen valt dit terug op "alles is een paar" zodra er geen
+    tekst is, want PRIOR beloont een paar en alle bindingen zijn dan even
+    zwak. Precies dat gebeurde bij Bobby Vinton en Andre Hazes: zeven foto's
+    achter elkaar zonder bruikbare tekst werden 2+2+3 in plaats van 3+2+2, en
+    dus schoof elke grens een foto op.
     """
     prior = prior or PRIOR
+    verplicht = verplicht or {}
     n = len(rijen)
     if n == 0:
         return []
+    eis = [verplicht.get(r.get("naam")) for r in rijen]
     band = [0.0] * (n + 1)
     for j in range(1, n):
         # een opengeklapte hoes is binnenwerk en hoort nooit bij een nieuwe
@@ -132,6 +146,12 @@ def segmenteer(rijen, prior=None, neutraal=NEUTRAAL, maxgrootte=MAXGROOTTE):
         for L in range(1, min(maxgrootte, b) + 1):
             a = b - L
             if best[a] == NEG:
+                continue
+            # een groep mag nooit over een verplichte knip heen lopen, en mag
+            # nooit beginnen waar het beeld zegt dat het dezelfde plaat is
+            if any(eis[j] == "knip" for j in range(a + 1, b)):
+                continue
+            if a > 0 and eis[a] == "samen":
                 continue
             s = best[a] + prior.get(L, -3.0) + sum(band[j] for j in range(a + 1, b))
             if s > best[b]:
@@ -155,8 +175,9 @@ class Groepeerder:
     omdat daar nog binnenwerk bij kan komen.
     """
 
-    def __init__(self, venster=VENSTER, staart=STAART):
+    def __init__(self, venster=VENSTER, staart=STAART, verplicht=None):
         self.venster, self.staart = venster, staart
+        self.verplicht = verplicht or {}
         self.buffer = []
 
     def voeg_toe(self, foto):
@@ -172,7 +193,7 @@ class Groepeerder:
     def _knip(self, bewaar_staart):
         if not self.buffer:
             return []
-        groepen = segmenteer(self.buffer)
+        groepen = segmenteer(self.buffer, verplicht=self.verplicht)
         if not bewaar_staart:
             uit = [[self.buffer[i] for i in g] for g in groepen]
             self.buffer = []
