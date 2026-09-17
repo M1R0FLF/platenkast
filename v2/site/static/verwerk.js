@@ -83,10 +83,16 @@ function procent(b, aantalFotos) {
   switch (b.stap) {
     case "foto":      return (b.n - 1) * perFoto;
     case "hoes":      return b.n * perFoto;
-    case "zoeken":    return 70;
-    case "gevonden":  return 90;
+    case "zoeken":    return 55;
+    case "gevonden":  return 65;
+    // Ronde twee is geen naspel: opnieuw snijden en opnieuw lezen kost ongeveer
+    // net zoveel als de eerste leesronde, dus het mag ook een derde van de balk.
+    case "hermeten":       return 68;
+    case "hermeten-foto":  return 68 + (b.n / Math.max(b.totaal, 1)) * 22;
+    case "hermeten-mislukt": return 90;
+    case "herlezen":  return 92;
     case "onherkend": return 100;
-    case "prijs":     return 95;
+    case "prijs":     return 96;
     case "klaar":     return 100;
     default:          return 0;
   }
@@ -100,6 +106,15 @@ function stapTekst(b) {
       ? `persing zoeken op ${b.catno.join(", ")}`
       : "persing zoeken";
     case "gevonden":  return `${b.artiest || "?"} — ${b.titel || "?"}`;
+    // Ronde twee: nu de persing bekend is wordt de hoes opnieuw gesneden met
+    // de afbeelding op Discogs als mal. Dat is de stap die de uitkomst op elk
+    // apparaat gelijk maakt, dus hij verdient een eigen regel.
+    case "hermeten":       return "hoes opnieuw opmeten tegen Discogs";
+    case "hermeten-foto":  return `foto ${b.n} opnieuw gesneden — ${b.punten} punten samen`;
+    case "hermeten-mislukt": return "opmeten lukte niet; eerste snede blijft staan";
+    case "herlezen":  return b.land
+      ? `opnieuw gelezen — gedrukt in ${b.land}`
+      : "opnieuw gelezen";
     case "prijs":     return "marktprijs opzoeken";
     case "klaar":     return "klaar";
     case "onherkend": return b.reden || "niet herkend";
@@ -272,6 +287,10 @@ async function bewaarUitslag(rij, uit) {
   await opslag.vulAan({ platen: [plaat] });
   await opslag.wijzig(rij.id, {
     staat: "klaar", plaat, hoezen, reden: null, tijden: k.tijden,
+    // Wat de machine op de hoes GELEZEN heeft, bewaard naast wat ze ervan
+    // concludeerde. Een paar kilobyte, en het is het enige waarmee je later
+    // kunt nagaan waarom er een bepaalde persing uitkwam.
+    rec: k.rec || null,
   });
 }
 

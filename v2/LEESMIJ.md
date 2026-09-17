@@ -344,7 +344,64 @@ catalogusnummers werd hij wel herkend, maar als "Je M'appelle Barbra" - een
 advertentie op de achterkant. Fout is erger dan niets, dus die staat nu weer op
 de handmatige lijst.
 
-### OPEN EN BLOKKEREND: de browser koos een andere persing
+### Waarom de browser ook ronde twee draait
+
+De browser deed eerst alleen ronde een, en de PC beide. Dat is geen klein
+verschil maar precies het verschil dat hierboven beschreven staat: in ronde een
+ZOEKT `knip` de rand en RAADT `knip.rechtop` de draaiing.
+
+Gemeten op de ijkplaat (Gloria Gaynor, IMG20260913160630):
+
+    ronde 1, browser   stand geraden   698 tekens   land: None   -> UK-persing
+    ronde 1, PC        stand geraden   698 tekens   land: None   -> DE-persing
+    ronde 2, beide     stand GEMETEN                land: Germany
+
+Beide kanten lazen in ronde een `land: None`, want "Printed in Germany" viel
+buiten de geraden uitsnede. Het verschil tussen UK en DE kwam neer op **twee
+tekens** OCR-verschil - `Cover Design:DFK/DavidKrieger` tegen
+`DFK/David Krieger` - die via `velden.tracktermen` een andere zoekopdracht naar
+Discogs stuurden. Op deze plaat zijn dat credits en geen tracktitels, want de
+echte tracktitels zijn aaneengeplakt en vallen af op de spatie-eis.
+
+`plaat.ronde_twee` doet nu wat `hersnij.py` op de PC doet: de hoes op Discogs
+als mal, ORB meet de vierhoek op, de homografie bevat de draaiing. Meten in
+plaats van raden, en een meting geeft op elke machine hetzelfde antwoord.
+
+    ORB-punten op de ijkplaat: 257 en 307, ruim boven hersnij.DREMPEL (60)
+
+Kosten: ongeveer 70 seconden extra per plaat in de browser. Dat is de prijs van
+een uitsnede die niet geraden is.
+
+### Wat overblijft: de cache is ouder dan Discogs
+
+Nadat ronde twee erin zat gaven browser en PC nog steeds iets anders. Dat bleek
+NIET aan het platform te liggen:
+
+    PC, verse Discogs-cache   ->  13684749
+    browser                   ->  13684749      gelijk
+    PC, cache van september   ->  466488
+
+`cache/discogs.db` bewaart zoekresultaten, en Discogs krijgt er persingen bij.
+13684749 bestond nog niet (of kwam niet terug) toen die cache gevuld werd. Twee
+machines geven dus hetzelfde antwoord als ze op hetzelfde moment vragen - en
+verschillende antwoorden als de een uit een oude cache leest.
+
+Dat is geen bug om weg te maken: een verse vraag aan Discogs hoort te winnen
+van een oud antwoord. Maar het betekent wel dat "de PC zei X" geen ijkpunt is
+zonder de datum erbij.
+
+### Nog open: 27 platen hebben een tweelingpersing
+
+Gemeten over de honderd: **51** platen hebben een andere persing met HETZELFDE
+catalogusnummer, en bij **27** daarvan staat er geen land op de hoes. Voor die
+27 is het catalogusnummer dus geen uniek kenmerk, terwijl het oordeel "zeker"
+precies dat belooft ("het catalogusnummer van deze persing staat op de hoes, en
+dat nummer is uniek per persing").
+
+Ronde twee helpt hier: die leest het land vaker wél, zoals op de ijkplaat. Maar
+waar het land ook na ronde twee ontbreekt, hoort "zeker" niet te vallen.
+
+### OPGELOST (was blokkerend): de browser koos een andere persing
 
 Het verwerkscherm werkt end-to-end, maar op de ijkplaat kiest de browser een
 ANDERE persing dan de PC. Dat is precies wat dit project niet mag.

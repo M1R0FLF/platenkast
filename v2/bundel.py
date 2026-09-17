@@ -47,6 +47,10 @@ KETEN = [
     "prijs.py",     # marktprijs en advertentietekst
     "nauwkeurig.py",  # het oordeel: zeker, aannemelijk, onbevestigd
     "exporteer.py",   # naar_plaat: een rij -> een plaat zoals de site hem kent
+    # Ronde twee. Zonder deze twee raadt de browser de rand en de draaiing, en
+    # dan is de uitsnede - en dus de tekst - een andere dan op de pc.
+    "beeldtoets.py",  # cover_urls: welke afbeeldingen een hoes kunnen zijn
+    "hersnij.py",     # de hoes op Discogs als mal, en de vierhoek opmeten
 ]
 
 

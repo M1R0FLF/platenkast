@@ -51,6 +51,111 @@ def _schoon(naam):
     return "".join(c for c in naam if c.isalnum() or c in "._-")[:80] or "foto.jpg"
 
 
+def ronde_twee(fotopaden, plaat, rec, dc, hoezendir, zijde, leespx, zeg):
+    """Opnieuw snijden met de hoes op Discogs als mal, en opnieuw lezen.
+
+    Waarom dit er moet zijn
+    -----------------------
+    In ronde een weet niemand nog welke plaat het is, dus `knip` ZOEKT de rand
+    en `knip.rechtop` RAADT de draaiing. Gemeten op de PC: 16 van de 90
+    voorkanten verkeerd gesneden, 22 procent verkeerd gedraaid. Dat is precies
+    waarom de keten op de PC twee keer draait.
+
+    Zonder deze ronde deed de browser alleen ronde een, en de PC beide - en dan
+    vergelijk je twee verschillende dingen. Gemeten op de ijkplaat: de browser
+    koos de Britse persing en de PC de Duitse, met een verschil van twee tekens
+    in de OCR als enige oorzaak. Allebei hadden ze `land: None`, want "Printed
+    in Germany" stond wel op de hoes maar viel buiten de geraden uitsnede.
+
+    Nu de persing bekend is hoeft er niets meer geraden te worden: de hoes op
+    Discogs is de mal, ORB meet de vierhoek op, en de homografie die eruit komt
+    BEVAT de draaiing. Dat is geen schatting maar een meting - en een meting
+    geeft op elke machine hetzelfde antwoord.
+
+    Geeft (plaat, rec, gelezen) terug, of None als er niets te meten viel. Dat
+    laatste is geen fout: bij een hoes zonder afbeelding op Discogs, of te
+    weinig samenvallende punten, blijft ronde een gewoon staan.
+    """
+    import cv2, hersnij, beeld, match
+    from beeldtoets import cover_urls
+    from groep import maak_plaat
+
+    rid = plaat.get("release_id_auto")
+    if not rid:
+        return None
+
+    zeg("hermeten", release=rid)
+    try:
+        urls = cover_urls(dc, rid)[0][:3]
+        mal = hersnij.mallen([h for h in (beeld.haal(u) for u in urls) if h is not None])
+    except Exception:
+        return None
+    if not mal:
+        return None
+
+    import foto
+    from knip import autolevel
+
+    gelezen = []
+    for i, (pad, naam) in enumerate(fotopaden):
+        try:
+            q, n, vorm = hersnij.quad_van(pad, mal)
+        except Exception:
+            q, n, vorm = None, 0, None
+        # Dezelfde drempel als hersnij.py zelf hanteert. Eronder is de meting
+        # niet betrouwbaar genoeg, en dan is ronde een beter dan een slechte
+        # meting - een gatefold-binnenwerk staat nu eenmaal niet op Discogs.
+        if q is None or n < hersnij.DREMPEL:
+            zeg("hermeten-mislukt", n=i + 1, punten=int(n))
+            return None
+
+        verhouding = vorm[0] / float(vorm[1])
+        beeldje = hersnij.snijd_met(pad, q, verhouding, zijde)
+        if beeldje is None:
+            return None
+        hoes = autolevel(beeldje)
+
+        doel = os.path.join(hoezendir, naam)
+        cv2.imwrite(doel, hoes, [cv2.IMWRITE_JPEG_QUALITY, 92])
+        zeg("hermeten-foto", n=i + 1, totaal=len(fotopaden), punten=int(n))
+
+        # Net als in ronde een terugschalen voor het lezen. De winst van deze
+        # ronde zit in de UITSNEDE - juiste rand, juiste draaiing - en niet in
+        # de resolutie; een tensor van een hoes van 2400 px is 60 MB en dat
+        # past niet met marge in de brug, laat staan in een telefoon.
+        f = leespx / max(hoes.shape[:2])
+        lees = hoes if f >= 1 else cv2.resize(
+            hoes, (int(hoes.shape[1] * f), int(hoes.shape[0] * f)),
+            interpolation=cv2.INTER_AREA)
+        vakken = foto._vakken(lees)
+        gelezen.append({"naam": os.path.splitext(naam)[0], "bestand": naam,
+                        "pad": doel, "vakken": vakken,
+                        # "gemeten" en niet "0": de draaiing zit in de
+                        # homografie, dus er is niets geraden.
+                        "stand": "gemeten",
+                        "t": "\n".join(v["t"] for v in vakken), "h": ""})
+
+    if not gelezen:
+        return None
+
+    rec2 = maak_plaat(gelezen)
+    zeg("herlezen", land=rec2.get("land_gedrukt"),
+        catno=(rec2.get("catno_kandidaten") or [])[:3])
+
+    # De gevonden persing gaat als HINT mee, niet als antwoord: hij is met de
+    # oude, geraden uitsnede gekozen. `match.herken` meet hem alsnog na, en kan
+    # hem dus ook verwerpen. De vorm is die van hints.json, want dat is wat
+    # `kandidaten` en `herken` verwachten - een kaal getal geeft
+    # `'int' object has no attribute 'get'`.
+    plaat2, reden2 = match.herken(
+        dc, rec2, hoezendir,
+        hint={"id": rec2.get("id"), "release": rid,
+              "bron": "ronde twee: opnieuw gesneden met de hoes als mal"})
+    if not plaat2:
+        return None
+    return plaat2, rec2, gelezen
+
+
 def verwerk(fotopaden, dc, werkmap="/werk", zijde=2400, leespx=1800,
             prijzen=True, melden=None, herkomst=""):
     """Foto's van EEN plaat -> een rij die de kast in kan.
@@ -97,7 +202,8 @@ def verwerk(fotopaden, dc, werkmap="/werk", zijde=2400, leespx=1800,
         # rechtop ziet verschijnen terwijl de volgende foto nog moet.
         zeg("hoes", n=i + 1, totaal=len(fotopaden), bestand=r["bestand"],
             regels=len(r.get("vakken") or []), gesneden=bool(r.get("gesneden")),
-            rechtop=bool(r.get("rechtop")), seconden=round(time.time() - t0, 1))
+            rechtop=bool(r.get("rechtop")), stand=str(r.get("stand")),
+            tekens=len(r.get("t") or ""), seconden=round(time.time() - t0, 1))
     t_lezen = time.time() - t0
 
     rec = maak_plaat(gelezen)
@@ -117,7 +223,12 @@ def verwerk(fotopaden, dc, werkmap="/werk", zijde=2400, leespx=1800,
             hoezen.append({"bestand": r["bestand"],
                            "bytes": open(p, "rb").read(),
                            "gesneden": r.get("gesneden"),
-                           "rechtop": r.get("rechtop")})
+                           "rechtop": r.get("rechtop"),
+                           # De stand hoort mee naar buiten: als de browser de
+                           # hoes anders draait dan de pc, leest hij hem ook
+                           # anders, en dan verschilt alles verderop.
+                           "stand": r.get("stand"),
+                           "tekens": len(r.get("t") or "")})
 
     uit = {"ok": bool(plaat), "reden": reden, "rec": rec, "hoezen": hoezen,
            "tijden": {"lezen": round(t_lezen, 1), "zoeken": round(t_zoeken, 1)}}
@@ -127,6 +238,18 @@ def verwerk(fotopaden, dc, werkmap="/werk", zijde=2400, leespx=1800,
 
     zeg("gevonden", artiest=plaat.get("artist"), titel=plaat.get("title"),
         release=plaat.get("release_id_auto"), seconden=round(t_zoeken, 1))
+
+    # ---- ronde twee ----------------------------------------------------
+    tweede = ronde_twee(fotopaden, plaat, rec, dc, hoezendir, zijde, leespx, zeg)
+    if tweede:
+        plaat, rec, gelezen = tweede
+        uit["rec"] = rec
+        uit["ronde2"] = True
+        hoezen = [{"bestand": r["bestand"], "bytes": open(r["pad"], "rb").read(),
+                   "gesneden": True, "rechtop": True, "stand": r.get("stand"),
+                   "tekens": len(r.get("t") or "")}
+                  for r in gelezen if r.get("pad") and os.path.exists(r["pad"])]
+        uit["hoezen"] = hoezen
 
     uit["plaat"] = plaat
 

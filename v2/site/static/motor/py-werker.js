@@ -350,7 +350,9 @@ _u = _plaat.verwerk(_paden, _dc, "/werk", leespx=int(_leespx),
 _hoezen = _u.pop("hoezen", [])
 json.dumps({"kern": _u, "hoezen": [{"bestand": h["bestand"],
                                     "gesneden": h["gesneden"],
-                                    "rechtop": h["rechtop"]} for h in _hoezen]},
+                                    "rechtop": h["rechtop"],
+                                    "stand": h.get("stand"),
+                                    "tekens": h.get("tekens")} for h in _hoezen]},
            default=str)
 `);
   const doc = JSON.parse(uit);
