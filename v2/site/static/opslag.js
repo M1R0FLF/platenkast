@@ -68,6 +68,7 @@ export async function laad() {
     naam: (meta && meta.waarde && meta.waarde.naam) || "Mijn platenkast",
     bijgewerkt: (meta && meta.waarde && meta.waarde.bijgewerkt) || null,
     basis: (meta && meta.waarde && meta.waarde.basis) || "",
+    gebouwd: (meta && meta.waarde && meta.waarde.gebouwd) || "",
   };
 }
 
@@ -91,6 +92,7 @@ export async function zetCollectie(doc, basis = "") {
       naam: doc.naam || "Mijn platenkast",
       handmatig: doc.handmatig || [],
       bijgewerkt: new Date().toISOString(),
+      gebouwd: doc.gebouwd || "",
       basis,
     },
   }));

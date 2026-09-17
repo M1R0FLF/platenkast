@@ -176,6 +176,35 @@ async function laadMeegeleverd() {
   }
 }
 
+/* De uitgerekende laag is wegwerpbaar; wat jij intikt staat in `eigen` en
+ * blijft staan. Dus zodra de gepubliceerde collectie een ander stempel draagt
+ * dan wat hier ligt, wordt de laag vervangen.
+ *
+ * Zonder dit haalde de site collectie.json precies EEN keer op - bij de eerste
+ * klik op "Voorbeeldkast laden" - en daarna nooit meer. Miro keek dagenlang
+ * naar de eerste versie die zijn browser ooit binnenkreeg: oude uitsnedes,
+ * oude groepering, 614 euro en Met Liefde twee keer, terwijl de server allang
+ * iets anders serveerde. Dat leek op verkeerd gedraaide hoezen en was het niet.
+ *
+ * Alleen voor een kast die van de site zelf komt. Heb je een eigen bestand
+ * ingeladen, dan blijft dat van jou. */
+const EIGEN_BASIS = ["meegeleverd", "handmatig aangevuld", ""];
+
+async function ververs() {
+  try {
+    const d = await opslag.laad();
+    if (!d.platen.length || !EIGEN_BASIS.includes(d.basis)) return false;
+    const r = await fetch("publiek/collectie.json", { cache: "no-cache" });
+    if (!r.ok) return false;
+    const doc = await r.json();
+    if (!doc.gebouwd || doc.gebouwd === d.gebouwd) return false;
+    await opslag.zetCollectie(doc, "meegeleverd");
+    return true;
+  } catch (e) {
+    return false;           // offline is geen reden om de kast te legen
+  }
+}
+
 /* ------------------------------------------------------------------ router -- */
 
 /** `hertekenScherm=false` ververst alleen de cijfers in de kop.
@@ -212,4 +241,6 @@ window.addEventListener("hashchange", () => {
   if (w !== tab) ga(w);
 });
 
-herlaad();
+herlaad().then(async () => {
+  if (await ververs()) await herlaad();
+});

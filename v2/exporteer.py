@@ -231,6 +231,12 @@ def main():
         telling[p["oordeel"]] = telling.get(p["oordeel"], 0) + 1
     doc = {
         "versie": 1,
+        # Stempel over de INHOUD. De site bewaart de collectie in IndexedDB en
+        # haalt collectie.json daarna nooit meer op; zonder een stempel om mee
+        # te vergelijken blijft hij tot in lengte van dagen de eerste versie
+        # tonen die hij ooit binnenkreeg - met de oude uitsnedes, de oude
+        # groepering en het oude bedrag.
+        "gebouwd": None,
         "naam": "Mijn platenkast",
         "platen": platen,
         "handmatig": handmatig,
@@ -242,6 +248,9 @@ def main():
             "oordeel": telling,
         },
     }
+    doc["gebouwd"] = hashlib.md5(
+        json.dumps([doc["platen"], doc["handmatig"]], ensure_ascii=False,
+                   sort_keys=True).encode("utf-8")).hexdigest()[:12]
     os.makedirs(a.uit, exist_ok=True)
     pad = os.path.join(a.uit, "collectie.json")
     with open(pad, "w", encoding="utf-8") as fh:
