@@ -6,6 +6,8 @@
   "kwartslagen": 0,
   "graden": 0.4,
   "punten": 419,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -16,6 +18,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 501,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -26,6 +30,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 391,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -33,9 +39,11 @@
   "id": "160800",
   "slot": 2,
   "foto": "IMG20260913160815.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 100.5,
   "punten": 4,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (684 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -46,6 +54,8 @@
   "kwartslagen": 0,
   "graden": 358.6,
   "punten": 211,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -56,6 +66,8 @@
   "kwartslagen": 0,
   "graden": 359.0,
   "punten": 119,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -66,6 +78,8 @@
   "kwartslagen": 0,
   "graden": 1.0,
   "punten": 584,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -76,6 +90,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 439,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -86,6 +102,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 250,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -96,6 +114,8 @@
   "kwartslagen": 0,
   "graden": 0.4,
   "punten": 50,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -103,10 +123,12 @@
   "id": "161046",
   "slot": 3,
   "foto": "IMG20260913161115.jpg",
-  "kwartslagen": 3,
-  "graden": 268.7,
-  "punten": 138,
-  "gedraaid": true,
+  "kwartslagen": 0,
+  "graden": 0.4,
+  "punten": 127,
+  "hoe": "discogs",
+  "reden": null,
+  "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
  {
@@ -116,6 +138,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 349,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -126,6 +150,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 174,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -136,6 +162,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 467,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -146,6 +174,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 654,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -156,6 +186,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 515,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -163,9 +195,11 @@
   "id": "161218",
   "slot": 2,
   "foto": "IMG20260913161226.jpg",
-  "kwartslagen": null,
-  "graden": 332.8,
-  "punten": 4,
+  "kwartslagen": 0,
+  "graden": 359.5,
+  "punten": 5,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (264 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -173,9 +207,11 @@
   "id": "161218",
   "slot": 3,
   "foto": "IMG20260913161238.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 10.1,
   "punten": 5,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (37 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -186,6 +222,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 514,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -196,6 +234,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 221,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -206,6 +246,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 436,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -216,6 +258,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 421,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -226,6 +270,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 676,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -233,9 +279,11 @@
   "id": "161519",
   "slot": 2,
   "foto": "IMG20260913161557.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 124.4,
   "punten": 4,
+  "hoe": "tekst",
+  "reden": "0.91 liggend; staat goed (79 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -246,6 +294,8 @@
   "kwartslagen": 0,
   "graden": 358.4,
   "punten": 618,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -256,6 +306,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 390,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -266,6 +318,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 398,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -276,6 +330,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 86,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -286,6 +342,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 651,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -296,6 +354,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 248,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -303,9 +363,11 @@
   "id": "161816",
   "slot": 2,
   "foto": "IMG20260913161823.jpg",
-  "kwartslagen": null,
-  "graden": 176.7,
+  "kwartslagen": 0,
+  "graden": 338.5,
   "punten": 9,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (346 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -316,6 +378,8 @@
   "kwartslagen": 0,
   "graden": 359.6,
   "punten": 207,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -326,6 +390,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 204,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -333,9 +399,11 @@
   "id": "161839",
   "slot": 3,
   "foto": "IMG20260913161905.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (410 tegen 93)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -346,6 +414,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 485,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -356,6 +426,8 @@
   "kwartslagen": 0,
   "graden": 358.7,
   "punten": 357,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -366,6 +438,8 @@
   "kwartslagen": 0,
   "graden": 1.3,
   "punten": 228,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -376,6 +450,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 415,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -386,6 +462,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 230,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -396,6 +474,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 216,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -406,6 +486,8 @@
   "kwartslagen": 0,
   "graden": 0.7,
   "punten": 214,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -416,6 +498,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 226,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -426,6 +510,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 387,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -436,6 +522,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 187,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -443,9 +531,11 @@
   "id": "162120",
   "slot": 3,
   "foto": "IMG20260913162152.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 174.6,
   "punten": 6,
+  "hoe": "tekst",
+  "reden": "0.95 liggend; staat goed (79 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -456,6 +546,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 520,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -466,6 +558,8 @@
   "kwartslagen": 0,
   "graden": 9.9,
   "punten": 294,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -476,6 +570,8 @@
   "kwartslagen": 0,
   "graden": 0.7,
   "punten": 331,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -483,9 +579,11 @@
   "id": "162345",
   "slot": 2,
   "foto": "IMG20260913162355.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 3.4,
   "punten": 8,
+  "hoe": "tekst",
+  "reden": "0.88 liggend; staat goed (97 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -496,6 +594,8 @@
   "kwartslagen": 0,
   "graden": 2.5,
   "punten": 448,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -506,6 +606,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 411,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -516,6 +618,8 @@
   "kwartslagen": 0,
   "graden": 359.6,
   "punten": 155,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -526,6 +630,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 232,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -536,6 +642,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 118,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -546,6 +654,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 396,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -556,6 +666,8 @@
   "kwartslagen": 0,
   "graden": 359.2,
   "punten": 115,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -566,6 +678,8 @@
   "kwartslagen": null,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (1)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -576,6 +690,8 @@
   "kwartslagen": null,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -586,6 +702,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 335,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -596,6 +714,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 357,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -606,6 +726,8 @@
   "kwartslagen": 0,
   "graden": 0.4,
   "punten": 528,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -616,6 +738,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 479,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -626,6 +750,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 130,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -633,9 +759,11 @@
   "id": "162736",
   "slot": 2,
   "foto": "IMG20260913162742.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (474 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -646,6 +774,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 147,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -656,6 +786,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 285,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -666,6 +798,8 @@
   "kwartslagen": 0,
   "graden": 0.4,
   "punten": 151,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -673,9 +807,11 @@
   "id": "162817",
   "slot": 3,
   "foto": "IMG20260913162836.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 179.4,
   "punten": 9,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (255 tegen 21)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -686,6 +822,8 @@
   "kwartslagen": 0,
   "graden": 358.2,
   "punten": 249,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -696,6 +834,8 @@
   "kwartslagen": 0,
   "graden": 0.9,
   "punten": 35,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -703,9 +843,11 @@
   "id": "162901",
   "slot": 3,
   "foto": "IMG20260913162916.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 331.5,
   "punten": 4,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (183 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -716,6 +858,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 411,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -726,6 +870,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 382,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -736,6 +882,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 421,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -743,9 +891,11 @@
   "id": "162956",
   "slot": 2,
   "foto": "IMG20260913163003.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 283.2,
   "punten": 5,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (177 tegen 15)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -756,6 +906,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 643,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -766,6 +918,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 120,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -776,6 +930,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 434,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -786,6 +942,8 @@
   "kwartslagen": 0,
   "graden": 0.5,
   "punten": 313,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -796,6 +954,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 255,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -806,6 +966,8 @@
   "kwartslagen": 0,
   "graden": 358.7,
   "punten": 484,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -816,6 +978,8 @@
   "kwartslagen": 0,
   "graden": 359.1,
   "punten": 184,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -826,6 +990,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 434,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -836,6 +1002,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 239,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -846,6 +1014,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 278,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -856,6 +1026,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 185,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -866,6 +1038,8 @@
   "kwartslagen": null,
   "graden": 212.7,
   "punten": 5,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (2)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -876,6 +1050,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 605,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -883,9 +1059,11 @@
   "id": "163331",
   "slot": 2,
   "foto": "IMG20260913163337.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 8.5,
   "punten": 6,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (804 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -896,6 +1074,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 342,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -906,6 +1086,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 405,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -916,6 +1098,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 307,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -923,9 +1107,11 @@
   "id": "163409",
   "slot": 2,
   "foto": "IMG20260913163413.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 68.1,
   "punten": 4,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (305 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -936,6 +1122,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 285,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -943,9 +1131,11 @@
   "id": "163424",
   "slot": 2,
   "foto": "IMG20260913163429.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 359.2,
   "punten": 15,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (549 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -956,6 +1146,8 @@
   "kwartslagen": 0,
   "graden": 358.6,
   "punten": 380,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -966,38 +1158,46 @@
   "kwartslagen": 0,
   "graden": 359.1,
   "punten": 146,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
  {
-  "id": "163554",
-  "slot": 1,
+  "id": "163442",
+  "slot": 3,
   "foto": "IMG20260913163554.jpg",
-  "kwartslagen": null,
-  "graden": 59.1,
-  "punten": 5,
+  "kwartslagen": 0,
+  "graden": 56.5,
+  "punten": 3,
+  "hoe": "tekst",
+  "reden": "0.99 liggend; staat goed (414 tegen 0)",
   "gedraaid": false,
-  "voorkant_kwartslagen": null
+  "voorkant_kwartslagen": 0
  },
  {
-  "id": "163554",
-  "slot": 2,
+  "id": "163606",
+  "slot": 1,
   "foto": "IMG20260913163606.jpg",
   "kwartslagen": 0,
   "graden": 359.7,
   "punten": 379,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
-  "voorkant_kwartslagen": null
+  "voorkant_kwartslagen": 0
  },
  {
-  "id": "163554",
-  "slot": 3,
+  "id": "163606",
+  "slot": 2,
   "foto": "IMG20260913163611.jpg",
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 289,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
-  "voorkant_kwartslagen": null
+  "voorkant_kwartslagen": 0
  },
  {
   "id": "163622",
@@ -1006,6 +1206,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 409,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1013,9 +1215,11 @@
   "id": "163622",
   "slot": 2,
   "foto": "IMG20260913163626.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 338.6,
   "punten": 7,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (251 tegen 5)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1026,6 +1230,8 @@
   "kwartslagen": 0,
   "graden": 359.7,
   "punten": 471,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1036,6 +1242,8 @@
   "kwartslagen": 0,
   "graden": 359.2,
   "punten": 488,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1046,6 +1254,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 530,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1056,6 +1266,8 @@
   "kwartslagen": null,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1066,6 +1278,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 307,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1076,6 +1290,8 @@
   "kwartslagen": 0,
   "graden": 0.7,
   "punten": 491,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1086,6 +1302,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 420,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1096,6 +1314,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 282,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1106,6 +1326,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 388,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1116,6 +1338,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 311,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1126,6 +1350,8 @@
   "kwartslagen": 0,
   "graden": 359.4,
   "punten": 194,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1136,6 +1362,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 175,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1146,6 +1374,8 @@
   "kwartslagen": 0,
   "graden": 0.5,
   "punten": 370,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1156,6 +1386,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 262,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1166,6 +1398,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 77,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1176,6 +1410,8 @@
   "kwartslagen": 0,
   "graden": 1.1,
   "punten": 39,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1186,6 +1422,8 @@
   "kwartslagen": null,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (3)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1196,6 +1434,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 435,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1206,6 +1446,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 259,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1216,6 +1458,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 265,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1226,6 +1470,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 84,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1236,6 +1482,8 @@
   "kwartslagen": 0,
   "graden": 358.5,
   "punten": 35,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1246,6 +1494,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 455,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1253,9 +1503,11 @@
   "id": "164117",
   "slot": 2,
   "foto": "IMG20260913164123.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 336.0,
   "punten": 5,
+  "hoe": "tekst",
+  "reden": "0.95 liggend; staat goed (464 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1266,6 +1518,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 279,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1276,6 +1530,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 248,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1283,9 +1539,11 @@
   "id": "164200",
   "slot": 2,
   "foto": "IMG20260913164205.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 198.0,
   "punten": 7,
+  "hoe": "tekst",
+  "reden": "0.81 liggend; staat goed (323 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1296,6 +1554,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 565,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1303,29 +1563,35 @@
   "id": "164219",
   "slot": 2,
   "foto": "IMG20260913164225.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 174.4,
   "punten": 5,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (360 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
  {
-  "id": "164246",
-  "slot": 1,
+  "id": "164219",
+  "slot": 3,
   "foto": "IMG20260913164246.jpg",
   "kwartslagen": 0,
   "graden": 359.4,
   "punten": 499,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
  {
-  "id": "164246",
-  "slot": 2,
+  "id": "164219",
+  "slot": 4,
   "foto": "IMG20260913164259.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 19.4,
   "punten": 4,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (35 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1336,6 +1602,8 @@
   "kwartslagen": 0,
   "graden": 359.6,
   "punten": 182,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1346,6 +1614,8 @@
   "kwartslagen": 0,
   "graden": 359.7,
   "punten": 160,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1356,6 +1626,8 @@
   "kwartslagen": 0,
   "graden": 359.7,
   "punten": 309,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1366,6 +1638,8 @@
   "kwartslagen": 0,
   "graden": 1.2,
   "punten": 188,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1376,6 +1650,8 @@
   "kwartslagen": 0,
   "graden": 359.3,
   "punten": 351,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1386,6 +1662,8 @@
   "kwartslagen": 0,
   "graden": 359.1,
   "punten": 396,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1396,6 +1674,8 @@
   "kwartslagen": 0,
   "graden": 0.4,
   "punten": 517,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1406,6 +1686,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 488,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1416,6 +1698,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 579,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1426,6 +1710,8 @@
   "kwartslagen": 0,
   "graden": 357.3,
   "punten": 330,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1436,6 +1722,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 442,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1446,6 +1734,8 @@
   "kwartslagen": 0,
   "graden": 0.4,
   "punten": 317,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1456,6 +1746,8 @@
   "kwartslagen": 0,
   "graden": 0.6,
   "punten": 507,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1466,6 +1758,8 @@
   "kwartslagen": 0,
   "graden": 359.6,
   "punten": 534,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1476,6 +1770,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 380,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1486,6 +1782,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 501,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1496,6 +1794,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 218,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1506,6 +1806,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 254,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1516,6 +1818,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 69,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1526,6 +1830,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 114,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1536,6 +1842,8 @@
   "kwartslagen": 0,
   "graden": 7.0,
   "punten": 25,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1543,9 +1851,11 @@
   "id": "164838",
   "slot": 2,
   "foto": "IMG20260913164845.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 2.7,
   "punten": 22,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (143 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1556,6 +1866,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 345,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1566,6 +1878,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 345,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1576,6 +1890,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 604,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1586,6 +1902,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 425,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1596,6 +1914,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 558,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1603,9 +1923,11 @@
   "id": "165003",
   "slot": 2,
   "foto": "IMG20260913165006.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 287.8,
   "punten": 5,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (174 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1616,6 +1938,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 321,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1626,6 +1950,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 83,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1636,6 +1962,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 412,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1646,6 +1974,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 419,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1656,6 +1986,8 @@
   "kwartslagen": 0,
   "graden": 359.5,
   "punten": 221,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1666,6 +1998,8 @@
   "kwartslagen": 0,
   "graden": 0.5,
   "punten": 63,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1676,6 +2010,8 @@
   "kwartslagen": 0,
   "graden": 359.4,
   "punten": 167,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1686,6 +2022,8 @@
   "kwartslagen": 0,
   "graden": 359.5,
   "punten": 105,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1696,6 +2034,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 555,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1706,6 +2046,8 @@
   "kwartslagen": 0,
   "graden": 0.4,
   "punten": 553,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1716,6 +2058,8 @@
   "kwartslagen": null,
   "graden": 335.3,
   "punten": 43,
+  "hoe": "tekst",
+  "reden": "tekstvakken wijzen niet een kant op (0.61)",
   "gedraaid": false,
   "voorkant_kwartslagen": null
  },
@@ -1726,6 +2070,8 @@
   "kwartslagen": 0,
   "graden": 357.2,
   "punten": 79,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": null
  },
@@ -1736,6 +2082,8 @@
   "kwartslagen": 0,
   "graden": 357.1,
   "punten": 48,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1746,6 +2094,8 @@
   "kwartslagen": null,
   "graden": 8.8,
   "punten": 17,
+  "hoe": "tekst",
+  "reden": "0.71 liggend, maar kop en staart niet te bepalen (20 tegen 7)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1756,6 +2106,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 348,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1766,6 +2118,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 305,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1776,6 +2130,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 784,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1786,6 +2142,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 746,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1796,6 +2154,8 @@
   "kwartslagen": null,
   "graden": 56.6,
   "punten": 6,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (3)",
   "gedraaid": false,
   "voorkant_kwartslagen": null
  },
@@ -1806,6 +2166,8 @@
   "kwartslagen": 0,
   "graden": 0.5,
   "punten": 36,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": null
  },
@@ -1816,6 +2178,8 @@
   "kwartslagen": 0,
   "graden": 1.8,
   "punten": 98,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1823,9 +2187,11 @@
   "id": "165923",
   "slot": 2,
   "foto": "IMG20260913165927.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 91.3,
   "punten": 5,
+  "hoe": "tekst",
+  "reden": "0.94 liggend; staat goed (433 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1836,6 +2202,8 @@
   "kwartslagen": 0,
   "graden": 360.0,
   "punten": 350,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1846,6 +2214,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 344,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1856,6 +2226,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 633,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1866,6 +2238,8 @@
   "kwartslagen": 0,
   "graden": 0.6,
   "punten": 172,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1876,6 +2250,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 523,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1886,6 +2262,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 219,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1896,6 +2274,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 233,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1906,6 +2286,8 @@
   "kwartslagen": 0,
   "graden": 1.5,
   "punten": 37,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1916,6 +2298,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 560,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1926,6 +2310,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 305,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1933,21 +2319,25 @@
   "id": "170121",
   "slot": 1,
   "foto": "IMG20260913170121.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "0.88 liggend; staat goed (22 tegen 4)",
   "gedraaid": false,
-  "voorkant_kwartslagen": null
+  "voorkant_kwartslagen": 0
  },
  {
   "id": "170121",
   "slot": 2,
   "foto": "IMG20260913170128.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "0.92 liggend; staat goed (27 tegen 4)",
   "gedraaid": false,
-  "voorkant_kwartslagen": null
+  "voorkant_kwartslagen": 0
  },
  {
   "id": "170138",
@@ -1956,6 +2346,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 436,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1966,6 +2358,8 @@
   "kwartslagen": 0,
   "graden": 0.6,
   "punten": 398,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1976,6 +2370,8 @@
   "kwartslagen": 0,
   "graden": 359.9,
   "punten": 535,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1986,6 +2382,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 459,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -1996,6 +2394,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 313,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2006,6 +2406,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 329,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2016,6 +2418,8 @@
   "kwartslagen": 0,
   "graden": 358.6,
   "punten": 389,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2026,6 +2430,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 222,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2036,6 +2442,8 @@
   "kwartslagen": null,
   "graden": 274.6,
   "punten": 14,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (1)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2046,6 +2454,8 @@
   "kwartslagen": 0,
   "graden": 0.1,
   "punten": 466,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2053,9 +2463,11 @@
   "id": "170326",
   "slot": 2,
   "foto": "IMG20260913170331.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 1.5,
   "punten": 10,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (653 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2063,9 +2475,11 @@
   "id": "170326",
   "slot": 3,
   "foto": "IMG20260913170339.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (428 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2073,11 +2487,13 @@
   "id": "170353",
   "slot": 1,
   "foto": "IMG20260913170353.jpg",
-  "kwartslagen": null,
+  "kwartslagen": 0,
   "graden": 273.1,
   "punten": 6,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (188 tegen 0)",
   "gedraaid": false,
-  "voorkant_kwartslagen": null
+  "voorkant_kwartslagen": 0
  },
  {
   "id": "170353",
@@ -2086,8 +2502,10 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 35,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
-  "voorkant_kwartslagen": null
+  "voorkant_kwartslagen": 0
  },
  {
   "id": "170417",
@@ -2096,6 +2514,8 @@
   "kwartslagen": null,
   "graden": 77.8,
   "punten": 5,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (1)",
   "gedraaid": false,
   "voorkant_kwartslagen": null
  },
@@ -2106,6 +2526,8 @@
   "kwartslagen": 0,
   "graden": 1.1,
   "punten": 311,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": null
  },
@@ -2116,6 +2538,8 @@
   "kwartslagen": 0,
   "graden": 359.4,
   "punten": 181,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2126,6 +2550,8 @@
   "kwartslagen": null,
   "graden": null,
   "punten": 0,
+  "hoe": "tekst",
+  "reden": "te weinig tekstvakken (0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2136,6 +2562,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 427,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2146,6 +2574,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 509,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2156,6 +2586,8 @@
   "kwartslagen": 0,
   "graden": 359.7,
   "punten": 464,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2166,6 +2598,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 351,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2176,6 +2610,8 @@
   "kwartslagen": 0,
   "graden": 0.3,
   "punten": 508,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2186,6 +2622,8 @@
   "kwartslagen": 0,
   "graden": 0.8,
   "punten": 246,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2196,6 +2634,8 @@
   "kwartslagen": 0,
   "graden": 1.5,
   "punten": 504,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2206,6 +2646,8 @@
   "kwartslagen": 0,
   "graden": 0.0,
   "punten": 691,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2216,6 +2658,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 112,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2226,6 +2670,8 @@
   "kwartslagen": 0,
   "graden": 359.8,
   "punten": 301,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2236,6 +2682,8 @@
   "kwartslagen": 0,
   "graden": 0.2,
   "punten": 296,
+  "hoe": "discogs",
+  "reden": null,
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  },
@@ -2243,9 +2691,11 @@
   "id": "170738",
   "slot": 3,
   "foto": "IMG20260913170751.jpg",
-  "kwartslagen": null,
-  "graden": 20.9,
-  "punten": 7,
+  "kwartslagen": 0,
+  "graden": null,
+  "punten": 0,
+  "hoe": "tekst",
+  "reden": "1.00 liggend; staat goed (369 tegen 0)",
   "gedraaid": false,
   "voorkant_kwartslagen": 0
  }

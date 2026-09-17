@@ -4,7 +4,7 @@
     {
       "source": "/publiek/duim/(.*)",
       "headers": [
-        { "key": "cache-control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+        { "key": "cache-control", "value": "public, max-age=0, must-revalidate" }
       ]
     },
     {
