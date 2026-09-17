@@ -50,3 +50,6 @@ platen/oud/experimenten/
 # hetzelfde rekent als onnxruntime in Python. Maakt v2/site/motor/ijk.html
 # samen met het scriptje in de opmerking daar zo weer.
 v2/site/motor/ijk/
+# Wat bundel.py neerzet voor Pyodide: kopieen van v2/*.py, v2/browser/*.py en
+# rapidocr_onnxruntime. Uitvoer, geen bron - `py bundel.py` maakt het zo weer.
+v2/site/motor/py/

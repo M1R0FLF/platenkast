@@ -2,6 +2,21 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "headers": [
     {
+      "_waarom": "Zonder deze twee geen SharedArrayBuffer, en zonder gedeeld geheugen draait de keten niet in de browser. Moet gelijk blijven aan ISOLATIE in kast.py.",
+      "source": "/(.*)",
+      "headers": [
+        { "key": "cross-origin-opener-policy", "value": "same-origin" },
+        { "key": "cross-origin-embedder-policy", "value": "require-corp" }
+      ]
+    },
+    {
+      "_waarom": "Modellen en wielen zijn groot en veranderen alleen als hun naam verandert. Een jaar cache scheelt op een telefoon 40 MB per bezoek.",
+      "source": "/motor/modellen/(.*)",
+      "headers": [
+        { "key": "cache-control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
       "source": "/publiek/duim/(.*)",
       "headers": [
         { "key": "cache-control", "value": "public, max-age=31536000, immutable" }

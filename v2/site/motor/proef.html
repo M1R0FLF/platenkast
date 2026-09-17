@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proef - de keten in de browser</title>
+<style>
+  :root { --pap:#141417; --rand:#26262b; --zacht:#9a99a1; --zachter:#6e6d74;
+          --goud:#d8b46a; --goed:#7fc08a; --fout:#d98080 }
+  body { background:#0f0f11; color:#e8e6e3; font:15px/1.55 system-ui, sans-serif;
+         margin:0 auto; padding:20px 16px; max-width:780px }
+  h1 { font-size:20px; margin:0 0 4px }
+  p.sub { color:var(--zachter); margin:0 0 18px }
+  .kaart { background:var(--pap); border:1px solid var(--rand); border-radius:10px;
+           padding:14px 16px; margin:12px 0 }
+  .knop { background:#1d1d21; color:#e8e6e3; border:1px solid var(--rand);
+          border-radius:7px; padding:9px 15px; font:inherit; cursor:pointer }
+  .knop.fel { background:var(--goud); color:#17170f; border-color:var(--goud); font-weight:600 }
+  .knop:disabled { opacity:.45; cursor:default }
+  #log { white-space:pre-wrap; font:12px/1.5 ui-monospace, monospace; color:#8b8a92;
+         background:#0b0b0d; border:1px solid var(--rand); border-radius:8px;
+         padding:11px; max-height:260px; overflow:auto }
+  #tekst { white-space:pre-wrap; font:13px/1.5 ui-monospace, monospace;
+           max-height:320px; overflow:auto }
+  .ok { color:var(--goed) } .nee { color:var(--fout) } .let { color:var(--goud) }
+  table { border-collapse:collapse; width:100% }
+  td { padding:3px 8px 3px 0; vertical-align:top }
+  td:first-child { color:var(--zachter); width:150px }
+</style>
+</head>
+<body>
+<h1>De keten in de browser</h1>
+<p class="sub">Pyodide draait <code>knip.py</code> onveranderd; de OCR eronder is
+onnxruntime-web. Als hier dezelfde tekst uitkomt als op de PC, klopt het plan.</p>
+
+<div class="kaart">
+  <table id="omgeving"></table>
+</div>
+
+<div class="kaart">
+  <button class="knop fel" id="start">Motor starten</button>
+  <input type="file" id="kies" accept="image/*" style="display:none">
+  <button class="knop" id="lees" disabled>Hoes kiezen...</button>
+  <button class="knop" id="ijk" disabled>IJkhoes lezen</button>
+  <span id="stand" style="color:var(--zachter);margin-left:10px"></span>
+</div>
+
+<div class="kaart" id="uitslag" style="display:none">
+  <div id="samenvatting" style="margin-bottom:10px"></div>
+  <div id="tekst"></div>
+</div>
+
+<div class="kaart"><div id="log">nog niet gestart.</div></div>
+
+<script type="module">
+const $ = id => document.getElementById(id);
+const log = $("log");
+const zeg = t => { log.textContent += t + "\n"; log.scrollTop = log.scrollHeight; };
+
+/* Ruim bemeten, maar niet krankzinnig: een detectie op 1600 px is 30 MB in en
+ * 10 MB uit, een rec-partij van 6 regels 1 MB in en 13 MB uit. 64/48 dekt dat
+ * met marge. Groter is op een telefoon niet gratis - dit is geheugen dat
+ * meteen gereserveerd wordt. */
+const p = new URLSearchParams(location.search);
+const IN_MB = +(p.get("in") || 64), UIT_MB = +(p.get("uit") || 48);
+
+const rij = (k, v) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td>${k}</td><td>${v}</td>`;
+  $("omgeving").append(tr);
+};
+
+const geisoleerd = self.crossOriginIsolated;
+const sab = typeof SharedArrayBuffer !== "undefined";
+rij("kernen", navigator.hardwareConcurrency || "?");
+rij("cross-origin geisoleerd", geisoleerd
+  ? '<span class="ok">ja</span>'
+  : '<span class="nee">nee</span> - zonder COOP/COEP geen gedeeld geheugen');
+rij("SharedArrayBuffer", sab ? '<span class="ok">ja</span>' : '<span class="nee">nee</span>');
+rij("draden", p.get("draden") || "auto (?draden=1 om vast te zetten)");
+rij("brug", `${IN_MB} MB in, ${UIT_MB} MB uit `
+  + `<span style="color:var(--zachter)">(?in=..&amp;uit=.. om te wijzigen)</span>`);
+
+let py, ort;
+
+$("start").onclick = async () => {
+  $("start").disabled = true;
+  log.textContent = "";
+  if (!sab) {
+    zeg("SharedArrayBuffer ontbreekt. De server moet deze twee koppen sturen:");
+    zeg("  Cross-Origin-Opener-Policy: same-origin");
+    zeg("  Cross-Origin-Embedder-Policy: require-corp");
+    $("start").disabled = false;
+    return;
+  }
+
+  const ctrl = new SharedArrayBuffer(64);
+  const invoer = new SharedArrayBuffer(IN_MB * 1024 * 1024);
+  const uitvoer = new SharedArrayBuffer(UIT_MB * 1024 * 1024);
+  const lijn = new MessageChannel();
+  // Instelbaar, want dit is een verdachte: meer draden is een andere
+  // opteltvolgorde in de WASM-kernels, en dus andere afrondingen. Of dat de
+  // handvol verschillen met de PC verklaart is een meting, geen mening.
+  const draden = +(p.get("draden") || Math.max(1, Math.min(navigator.hardwareConcurrency || 4, 8)));
+
+  // Absolute URL's: een worker lost relatieve paden op vanaf ZIJN eigen
+  // bestand (/static/motor/), niet vanaf deze pagina (/motor/).
+  const hier = new URL(".", location.href).href.replace(/\/$/, "");
+
+  ort = new Worker("../static/motor/ort-werker.js", { type: "module" });
+  py = new Worker("../static/motor/py-werker.js");          // klassiek: importScripts
+
+  const t0 = performance.now();
+
+  ort.onmessage = e => {
+    if (e.data.soort === "klaar") zeg("rekenwerker staat klaar");
+    if (e.data.soort === "warm-klaar") zeg("modellen voorgeladen");
+    if (e.data.soort === "warm-fout") zeg("voorladen mislukt: " + e.data.fout);
+  };
+  ort.postMessage({ soort: "opzet", wortel: `${hier}/modellen`, ctrl, invoer, uitvoer,
+                    draden, poort: lijn.port2 }, [lijn.port2]);
+  ort.postMessage({ soort: "warm", welke: ["det", "cls", "rec"] });
+
+  py.onmessage = e => {
+    const b = e.data;
+    if (b.soort === "stap")  { $("stand").textContent = b.tekst + "..."; zeg("… " + b.tekst); }
+    if (b.soort === "uit")   zeg("  " + b.tekst);
+    if (b.soort === "fout")  { $("stand").innerHTML = '<span class="nee">mislukt</span>';
+                               zeg("FOUT: " + b.bericht); $("start").disabled = false; }
+    if (b.soort === "klaar") {
+      const s = ((performance.now() - t0) / 1000).toFixed(1);
+      zeg(`\nmotor klaar in ${s}s - Python ${b.versie}, OpenCV ${b.cv2}`);
+      $("stand").innerHTML = `<span class="ok">klaar in ${s}s</span>`;
+      $("lees").disabled = false;
+      $("ijk").disabled = false;
+    }
+    if (b.soort === "gelezen") toonUitslag(b);
+    if (b.soort === "velden")  toonVelden(b.uitslag);
+  };
+  py.postMessage({ soort: "start", wortel: hier, ctrl, invoer, uitvoer,
+                   poort: lijn.port1 }, [lijn.port1]);
+};
+
+/* De ijkhoes: dezelfde JPEG die op de PC door de keten ging, met het antwoord
+ * van toen ernaast. Zonder zo'n vast ijkpunt is "het werkt" een gevoel; hiermee
+ * is het een uitslag die je kunt herhalen. */
+$("ijk").onclick = async () => {
+  $("ijk").disabled = $("lees").disabled = true;
+  $("stand").textContent = "ijkhoes lezen...";
+  verwacht = await (await fetch("ijk/hoes.json")).json();
+  zeg(`
+ijkhoes ${verwacht.naam} (${verwacht.breedte}x${verwacht.hoogte}), `
+    + `${verwacht.regels.length} regels op de PC`);
+  const bytes = await (await fetch("ijk/hoes.jpg")).arrayBuffer();
+  py.postMessage({ soort: "lees", bytes }, [bytes]);
+};
+
+let verwacht = null;
+
+$("lees").onclick = () => { verwacht = null; $("kies").click(); };
+$("kies").onchange = async () => {
+  const f = $("kies").files[0];
+  if (!f) return;
+  $("lees").disabled = true;
+  $("stand").textContent = "lezen...";
+  zeg(`\nlezen: ${f.name} (${(f.size / 1e6).toFixed(1)} MB)`);
+  const bytes = await f.arrayBuffer();
+  py.postMessage({ soort: "lees", bytes }, [bytes]);
+};
+
+/* De velden die match.py gebruikt, naast elkaar. Groen waar ze gelijk zijn,
+ * rood waar niet - en rood betekent hier: deze hoes zou een andere zoekopdracht
+ * opleveren dan op de PC, en dus mogelijk een andere persing. */
+function toonVelden(v) {
+  const kaart = document.createElement("div");
+  kaart.className = "kaart";
+  const zelfde = (x, y) => JSON.stringify(x) === JSON.stringify(y);
+  const toon = x => Array.isArray(x) ? (x.length ? x.join(", ") : "-")
+                                     : (x === null ? "-" : String(x));
+  const velden = ["catno_kandidaten", "land", "land_gedrukt", "jaar", "barcode",
+                  "woordtermen", "tracktermen", "kaal"];
+  let fout = 0;
+  const rijen = velden.map(k => {
+    const a = v.a[k], b = v.b[k], g = zelfde(a, b);
+    if (!g) fout++;
+    const kort = x => { const s = toon(x); return s.length > 110 ? s.slice(0, 110) + "…" : s; };
+    return `<tr><td>${k}</td><td class="${g ? "ok" : "nee"}">`
+         + (g ? kort(a) : `PC&nbsp;&nbsp;&nbsp;&nbsp; ${kort(a)}<br>browser ${kort(b)}`)
+         + `</td></tr>`;
+  }).join("");
+  kaart.innerHTML = `<div style="margin-bottom:8px"><b class="${fout ? "nee" : "ok"}">`
+    + (fout ? `${fout} van de ${velden.length} velden verschillen`
+            : `Alle ${velden.length} velden gelijk`)
+    + `</b> — dit is wat match.py te zien krijgt</div>`
+    + `<table>${rijen}</table>`;
+  $("uitslag").after(kaart);
+  zeg(fout ? `VELDEN: ${fout} verschillen` : "VELDEN: alles gelijk");
+}
+
+function toonUitslag(b) {
+  const u = b.uitslag;
+  $("uitslag").style.display = "";
+  $("samenvatting").innerHTML =
+    `<b>${u.regels.length}</b> tekstregels uit een foto van `
+    + `${u.vorm[1]}x${u.vorm[0]}, in <b>${(b.ms / 1000).toFixed(1)}s</b>`;
+  $("tekst").textContent = u.tekst;
+  $("stand").innerHTML = `<span class="ok">${(b.ms / 1000).toFixed(1)}s</span>`;
+  $("lees").disabled = false;
+  $("ijk").disabled = false;
+  zeg(`${u.regels.length} regels in ${b.ms} ms`);
+
+  if (u.vinger) {
+    zeg(`pixels: som=${u.vinger.som} gem=${u.vinger.gem} `
+      + `hoeken=${JSON.stringify(u.vinger.hoek)}`);
+  }
+  if (verwacht) {
+    const gelijk = u.tekst.trim() === verwacht.tekst.trim();
+    // Niet alleen "gelijk of niet": WELKE regels verschillen is het enige dat
+    // je verder helpt als het niet klopt.
+    const a = new Set(verwacht.regels.map(r => r.trim()));
+    const c = new Set(u.regels.map(r => r.t.trim()));
+    const mist = [...a].filter(x => !c.has(x));
+    const extra = [...c].filter(x => !a.has(x));
+    $("samenvatting").innerHTML = gelijk
+      ? `<b class="ok">Woord voor woord gelijk aan de PC.</b> `
+        + `${u.regels.length} regels, ${(b.ms / 1000).toFixed(1)}s`
+      : `<b class="${mist.length || extra.length ? "nee" : "let"}">`
+        + `${mist.length} regels mist, ${extra.length} extra</b> `
+        + `(PC ${verwacht.regels.length}, browser ${u.regels.length}), `
+        + `${(b.ms / 1000).toFixed(1)}s`;
+    zeg(gelijk ? "GELIJK aan de PC" : `verschil: ${mist.length} mist, ${extra.length} extra`);
+    mist.slice(0, 8).forEach(x => zeg(`  mist : ${JSON.stringify(x)}`));
+    extra.slice(0, 8).forEach(x => zeg(`  extra: ${JSON.stringify(x)}`));
+
+    // En dan de vraag die er werkelijk toe doet.
+    py.postMessage({ soort: "velden", a: verwacht.tekst, b: u.tekst });
+  }
+}
+</script>
+</body>
+</html>

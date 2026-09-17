@@ -30,6 +30,24 @@ sys.path.insert(0, HIER)
 
 POORT = 7385
 
+# Zonder deze twee koppen geen SharedArrayBuffer, en zonder SharedArrayBuffer
+# draait de keten niet in de browser: Pyodide roept de OCR synchroon aan en
+# onnxruntime-web antwoordt asynchroon, dus de twee moeten elkaar over gedeeld
+# geheugen vinden. Zie site/static/motor/ort-werker.js.
+#
+# Dezelfde isolatie zet ook WASM-threads aan. Dat is geen bijvangst maar de
+# reden dat het op een telefoon te doen is: zonder threads rekent onnxruntime
+# op een kern.
+#
+# Prijs: alles van een ander domein moet CORP of CORS meesturen. jsdelivr doet
+# dat (`cross-origin-resource-policy: cross-origin` op elk bestand), en verder
+# haalt deze site niets van buiten. Vercel stuurt dezelfde koppen; zie
+# site/vercel.json, want die twee moeten gelijk blijven.
+ISOLATIE = [
+    ("cross-origin-opener-policy", "same-origin"),
+    ("cross-origin-embedder-policy", "require-corp"),
+]
+
 
 class Motor:
     """Eén run tegelijk, met een rij abonnees die de voortgang meelezen."""
@@ -362,6 +380,8 @@ class Beheerder(SimpleHTTPRequestHandler):
         """
         if not self.path.startswith("/publiek/duim/"):
             self.send_header("cache-control", "no-store, must-revalidate")
+        for k, v in ISOLATIE:
+            self.send_header(k, v)
         super().end_headers()
 
     # ------------------------------------------------------------ helpers --
