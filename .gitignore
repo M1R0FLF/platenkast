@@ -53,3 +53,6 @@ v2/site/motor/ijk/
 # Wat bundel.py neerzet voor Pyodide: kopieen van v2/*.py, v2/browser/*.py en
 # rapidocr_onnxruntime. Uitvoer, geen bron - `py bundel.py` maakt het zo weer.
 v2/site/motor/py/
+# Het ijkpunt voor match.herken: 7,8 MB platen + Discogs-antwoorden.
+# `py browser/ijkmatch.py` maakt het zo weer.
+v2/uit/_geen_hoezen/

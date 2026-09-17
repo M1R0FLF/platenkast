@@ -69,7 +69,12 @@ async function start(b) {
 
   zeg("stap", { tekst: "numpy, OpenCV, shapely, pyclipper" });
   await pyodide.loadPackage(
-    ["numpy", "opencv-python", "pyclipper", "shapely", "pyyaml", "six", "pillow"],
+    // sqlite3 staat erbij omdat Pyodide het uit de standaardbibliotheek heeft
+    // gehaald: `import sqlite3` werkt pas na loadPackage. discogs.py bewaart
+    // zijn cache erin, en zonder cache is elke run opnieuw wachten op 60
+    // aanroepen per minuut.
+    ["numpy", "opencv-python", "pyclipper", "shapely", "pyyaml", "six", "pillow",
+     "sqlite3", "requests", "pyodide-http"],
     { messageCallback: () => {} });
 
   // De brug op de globale JS-scope; Python haalt ze op met `import js`.
@@ -165,12 +170,67 @@ json.dumps({"a": uit(_tekst_a), "b": uit(_tekst_b)})
   zeg("velden", { uitslag: JSON.parse(uit) });
 }
 
+/** `match.herken` over een stel platen, met de cache van de PC erbij.
+ *
+ *  De proef die telt. Zelfde invoer (uit/groepen.json), zelfde Discogs-
+ *  antwoorden (meegeleverd, dus nul netwerk), zelfde code - komt er dezelfde
+ *  persing uit? Alles wat afwijkt is dan Pyodide tegenover CPython op x86, en
+ *  niets anders.
+ *
+ *  De beeldronde staat uit aan beide kanten: een lege hoezenmap. Twee dingen
+ *  tegelijk veranderen maakt een verschil onverklaarbaar.
+ */
+async function match(b) {
+  pyodide.FS.writeFile("/ijkmatch.json", new Uint8Array(b.bytes));
+  const t0 = performance.now();
+  const uit = await pyodide.runPythonAsync(`
+import json, os, sys, time
+
+# pyodide-http laat requests over XHR lopen (geen backticks in dit blok: het
+# staat in een JS template literal en die zou erdoor afbreken). Als de cache
+# compleet is wordt er niets opgehaald - en dat is meteen de controle: staat
+# de misserteller op nul, dan is er echt niets over de lijn gegaan.
+import pyodide_http
+pyodide_http.patch_all()
+
+import match as _match
+from discogs import Discogs
+
+_d = json.load(open("/ijkmatch.json", encoding="utf-8"))
+os.makedirs("/werk/cache", exist_ok=True)
+os.makedirs("/werk/geen_hoezen", exist_ok=True)
+
+dc = Discogs(None, cache="/werk/cache/discogs.db")
+with dc.dblock:
+    dc.db.executemany("INSERT OR REPLACE INTO cache VALUES (?,?)",
+                      [(k, json.dumps(v, ensure_ascii=False))
+                       for k, v in _d["cache"].items()])
+    dc.db.commit()
+
+uit = []
+t0 = time.time()
+for rec in _d["records"]:
+    rid, reden = None, None
+    try:
+        plaat, reden = _match.herken(dc, rec, "/werk/geen_hoezen")
+        rid = plaat.get("release_id_auto") if plaat else None
+    except Exception as e:
+        reden = f"fout: {type(e).__name__}: {e}"
+    uit.append({"id": rec["id"], "release": rid, "reden": reden})
+
+json.dumps({"uit": uit, "treffers": dc.treffers, "missers": dc.missers,
+            "seconden": round(time.time() - t0, 1)})
+`);
+  zeg("match", { uitslag: JSON.parse(uit), ms: Math.round(performance.now() - t0) });
+}
+
 self.onmessage = async ev => {
   const b = ev.data;
   try {
     if (b.soort === "start") return await start(b);
     if (b.soort === "lees") return await lees(b);
     if (b.soort === "velden") return await velden(b);
+    if (b.soort === "match")  return await match(b);
   } catch (e) {
     zeg("fout", { bericht: e && e.message ? e.message : String(e) });
   }
