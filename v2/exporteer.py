@@ -119,6 +119,63 @@ def duimnagels(records, hoezendir, doeldir, opnieuw=False):
     return gemaakt, overgeslagen, gemist
 
 
+def naar_plaat(r, niveau, redenen, beeldpunten=None):
+    """Een rij uit prijs.prijzen -> een plaat zoals de site hem kent.
+
+    Staat los van `bouw` omdat de browser dezelfde afbeelding nodig heeft voor
+    EEN plaat, zonder CSV ertussen. Twee versies van deze afbeelding zou
+    betekenen dat de kast op je telefoon andere velden toont dan die op je pc,
+    en dat merk je pas als je ze naast elkaar legt.
+    """
+    rid = (r.get("id") or "").strip()
+
+    # str() eromheen omdat deze functie twee soorten rijen krijgt. Uit een CSV
+    # is alles tekst; komt de rij rechtstreeks uit prijs.prijzen - zoals in de
+    # browser, waar geen CSV tussen zit - dan staan er ints, floats en None in.
+    # Zonder dit viel hij om op `'int' object has no attribute 'strip'`, en dat
+    # zag er van buiten uit als "plaat niet herkend".
+    def kies(*namen):
+        for n in namen:
+            v = "" if r.get(n) is None else str(r.get(n)).strip()
+            if v and v != "0":
+                return v
+        return None
+
+    return {
+        "id": rid,
+        "artiest": kies("artiest_discogs", "gelezen_artist"),
+        "titel": kies("titel_discogs", "gelezen_title"),
+        "soort": kies("gelezen_soort") or "LP",
+        "jaar": _getal(kies("jaar_discogs", "gelezen_year")),
+        "label": kies("label_discogs", "gelezen_label"),
+        "catno": kies("catno_discogs", "gelezen_catno"),
+        "land": kies("land_discogs", "gelezen_country"),
+        "genres": _lijst(r.get("genres"), ","),
+        "formaat": kies("formats"),
+        "tracks": _tracks(r.get("tracklist")),
+        "prijs": _getal(r.get("vraagprijs")),
+        "advies": kies("advies"),
+        "markt": {
+            "laagste": _getal(r.get("lowest_eur")),
+            "vgplus": _getal(r.get("sug_vgplus")),
+            "te_koop": _getal(r.get("num_for_sale")),
+            "have": _getal(r.get("have")),
+            "want": _getal(r.get("want")),
+        },
+        "discogs": kies("discogs_url"),
+        "release_id": _getal(r.get("release_id")),
+        "oordeel": niveau,
+        "oordeel_reden": redenen,
+        # hoeveel punten de eigen foto samenviel met de hoes op Discogs.
+        # None = niet te toetsen (geen hoesfoto daar), en dat is iets anders
+        # dan nul.
+        "beeld_punten": beeldpunten,
+        "herkend_op": kies("gelezen_bron"),
+        "advertentie": {"titel": kies("titel"), "tekst": kies("beschrijving")},
+        "fotos": _lijst(r.get("fotos")),
+    }
+
+
 def bouw(csvpad, jsonpad, groepenpad, handmatigpad):
     with open(csvpad, encoding="utf-8-sig", newline="") as fh:
         rijen = list(csv.DictReader(fh))
@@ -136,51 +193,10 @@ def bouw(csvpad, jsonpad, groepenpad, handmatigpad):
     except (OSError, ImportError, KeyError) as e:
         print(f"  (geen oordeel beschikbaar: {e})")
 
-    uit = []
-    for r in rijen:
-        rid = (r.get("id") or "").strip()
-        niveau, redenen = oordelen.get(rid, ("onbekend", []))
-
-        def kies(*namen):
-            for n in namen:
-                v = (r.get(n) or "").strip()
-                if v and v != "0":
-                    return v
-            return None
-
-        uit.append({
-            "id": rid,
-            "artiest": kies("artiest_discogs", "gelezen_artist"),
-            "titel": kies("titel_discogs", "gelezen_title"),
-            "soort": kies("gelezen_soort") or "LP",
-            "jaar": _getal(kies("jaar_discogs", "gelezen_year")),
-            "label": kies("label_discogs", "gelezen_label"),
-            "catno": kies("catno_discogs", "gelezen_catno"),
-            "land": kies("land_discogs", "gelezen_country"),
-            "genres": _lijst(r.get("genres"), ","),
-            "formaat": kies("formats"),
-            "tracks": _tracks(r.get("tracklist")),
-            "prijs": _getal(r.get("vraagprijs")),
-            "advies": kies("advies"),
-            "markt": {
-                "laagste": _getal(r.get("lowest_eur")),
-                "vgplus": _getal(r.get("sug_vgplus")),
-                "te_koop": _getal(r.get("num_for_sale")),
-                "have": _getal(r.get("have")),
-                "want": _getal(r.get("want")),
-            },
-            "discogs": kies("discogs_url"),
-            "release_id": _getal(r.get("release_id")),
-            "oordeel": niveau,
-            "oordeel_reden": redenen,
-            # hoeveel punten de eigen foto samenviel met de hoes op Discogs.
-            # None = niet te toetsen (geen hoesfoto daar), en dat is iets anders
-            # dan nul.
-            "beeld_punten": beeldpunten.get(rid),
-            "herkend_op": kies("gelezen_bron"),
-            "advertentie": {"titel": kies("titel"), "tekst": kies("beschrijving")},
-            "fotos": _lijst(r.get("fotos")),
-        })
+    uit = [naar_plaat(r, *oordelen.get((r.get("id") or "").strip(),
+                                       ("onbekend", [])),
+                      beeldpunten.get((r.get("id") or "").strip()))
+           for r in rijen]
     uit.sort(key=lambda p: ((p["artiest"] or "~").lower(), (p["titel"] or "").lower()))
 
     # De onherkende platen zijn GROEPSrecords, geen plaatrecords: er is nooit

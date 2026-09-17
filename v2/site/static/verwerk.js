@@ -1,281 +1,441 @@
-/* verwerk.js - foto's erin, platen eruit, terwijl je kijkt.
+/* verwerk.js - foto's erin, platen eruit. Op je telefoon net zo goed als op je pc.
  *
- * Het rekenwerk gebeurt NIET hier. Het uitsnijden en de OCR kosten samen zo'n
- * negen seconden per foto en dat is werk voor een echte machine, niet voor een
- * webserver die per aanroep afrekent. Dit scherm praat met `kast.py`, dat op je
- * eigen computer draait en zijn voortgang doorgeeft via een event-stream.
+ * Wat hier vroeger stond
+ * ----------------------
+ * Een scherm dat om een MAPPAD vroeg. De browser mag geen pad geven, dus daar
+ * zat een knop achter die de server een Windows-mapkiezer liet openen - en die
+ * server draaide alleen op 127.0.0.1. Op een telefoon werd dit scherm dus een
+ * bladzijde met opdrachten die je daar niet kunt uitvoeren.
  *
- * Staat die niet aan, dan is dit scherm de uitleg hoe je hem start. Dat is geen
- * foutmelding: op de gepubliceerde site is dat de normale toestand.
+ * Nu is het een WACHTRIJ, en dat is geen andere vormgeving maar een ander
+ * model. Een map met tweehonderd foto's bestaat niet op een telefoon; een
+ * plaat in je hand wel. Je maakt twee foto's, die plaat staat in de rij, en de
+ * motor werkt hem af terwijl jij de volgende pakt.
+ *
+ * Waarom er zoveel voortgang op het scherm staat
+ * ---------------------------------------------
+ * Een plaat kost in de browser tientallen seconden: snijden, lezen, opzoeken,
+ * prijzen. Zonder zichtbaar teken van leven is "traag" niet te onderscheiden
+ * van "vastgelopen" - dat overkwam mij tijdens het bouwen ook, en ik wist waar
+ * ik naar keek. Dus: een balk die zegt hoe ver, de hoes die rechtop verschijnt
+ * zodra hij gesneden is, en de seconden erbij. Wie kan zien dat er iets
+ * gebeurt, wacht rustig; wie dat niet kan, laadt de pagina opnieuw en gooit
+ * het werk weg.
+ *
+ * De rij staat in IndexedDB, met de foto's erin. Je kunt de app dus wegleggen
+ * en morgen verdergaan, en - dat is de andere reden - er zit nergens de aanname
+ * in dat de foto's "op een schijf staan". Dat is de vorm die straks naar een
+ * account te tillen is.
  */
 import { el, euro, getal, toon } from "./ui.js";
 import * as opslag from "./opslag.js";
+import * as motor from "./motor.js";
 
-const MOTOR = "/api";
+/* Op een telefoon opent `capture` meteen de camera in plaats van de fotorol.
+ * Op een pc doet het attribuut niets, dus het staat er altijd - maar de knop
+ * heet daar anders, want "Foto maken" met een webcam is niet wat je wilt. */
+const TELEFOON = matchMedia("(pointer: coarse)").matches;
 
-async function motorStatus() {
-  try {
-    const r = await fetch(`${MOTOR}/status`, { signal: AbortSignal.timeout(1200) });
-    return r.ok ? await r.json() : null;
-  } catch {
-    return null;                       // geen lokale motor, en dat mag
+let draait = false;
+let herteken = async () => {};
+
+/* ------------------------------------------------------------ foto's erin -- */
+
+function kies({ meerdere = false, camera = false }) {
+  return new Promise(op => {
+    const invoer = el("input", { type: "file", accept: "image/*" });
+    if (meerdere) invoer.multiple = true;
+    if (camera) invoer.capture = "environment";
+    invoer.addEventListener("change", () => op([...invoer.files]));
+    invoer.click();
+  });
+}
+
+/** Losse foto's -> platen, twee aan twee.
+ *
+ *  Voorkant, achterkant, voorkant, achterkant - dat is de volgorde waarin er
+ *  gefotografeerd wordt en die is betrouwbaarder dan wat dan ook uit het beeld.
+ *  Een oneven laatste foto wordt een plaat met alleen een voorkant; dat mag,
+ *  `groep.maak_plaat` kan daarmee om. */
+async function voegToe(bestanden) {
+  if (!bestanden.length) return 0;
+  const op = [...bestanden].sort((a, b) =>
+    a.name.localeCompare(b.name, "nl", { numeric: true }));
+  let n = 0;
+  for (let i = 0; i < op.length; i += 2) {
+    await opslag.zetInWachtrij(op.slice(i, i + 2).map(f => ({ naam: f.name, blob: f })));
+    n++;
+  }
+  await herteken();
+  return n;
+}
+
+/* ------------------------------------------------------------- voortgang -- */
+
+/* Hoeveel procent klaar is bij elke stap. Grof, en dat mag: het gaat er niet om
+ * dat de balk klopt op de seconde, het gaat erom dat hij BEWEEGT. Een balk die
+ * blijft staan is erger dan geen balk - dan denk je dat het vastzit.
+ *
+ * De verhouding komt uit de meting: lezen is verreweg het duurst, opzoeken
+ * kost een paar seconden, de prijs een enkele aanroep. */
+function procent(b, aantalFotos) {
+  const perFoto = 70 / Math.max(aantalFotos, 1);
+  switch (b.stap) {
+    case "foto":      return (b.n - 1) * perFoto;
+    case "hoes":      return b.n * perFoto;
+    case "zoeken":    return 70;
+    case "gevonden":  return 90;
+    case "onherkend": return 100;
+    case "prijs":     return 95;
+    case "klaar":     return 100;
+    default:          return 0;
   }
 }
 
-/* ------------------------------------------------------------------ uitleg -- */
+function stapTekst(b) {
+  switch (b.stap) {
+    case "foto":   return `foto ${b.n} van ${b.totaal} uitsnijden en lezen`;
+    case "hoes":   return `foto ${b.n} gelezen — ${b.regels} tekstregels`;
+    case "zoeken": return b.catno && b.catno.length
+      ? `persing zoeken op ${b.catno.join(", ")}`
+      : "persing zoeken";
+    case "gevonden":  return `${b.artiest || "?"} — ${b.titel || "?"}`;
+    case "prijs":     return "marktprijs opzoeken";
+    case "klaar":     return "klaar";
+    case "onherkend": return b.reden || "niet herkend";
+    default:          return "";
+  }
+}
 
-function opdracht(tekst) {
-  return el("div", {
-    style: "display:flex;gap:8px;align-items:center;background:var(--pap);"
-         + "border:1px solid var(--rand);border-radius:8px;padding:9px 12px;margin:8px 0",
-  }, [
-    el("code", { style: "flex:1;font-size:13px;color:var(--tekst)", tekst }),
+/** Het paneel dat laat zien wat er NU gebeurt. */
+function maakBezigPaneel() {
+  const beeld = el("div", { class: "bezigbeeld" });
+  const balk = el("i");
+  const titel = el("div", { class: "bezigtitel", tekst: "Bezig..." });
+  const stap = el("div", { class: "bezigstap" });
+  const klok = el("span", { class: "bezigklok" });
+
+  const paneel = el("section", { class: "kaart bezig", style: "display:none" }, [
+    beeld,
+    el("div", { style: "flex:1;min-width:0" }, [
+      titel, stap,
+      el("div", { class: "voortgang", style: "margin:10px 0 6px" }, [balk]),
+      klok,
+    ]),
+  ]);
+
+  let t0 = 0, tikker = null, aantalFotos = 2;
+
+  return {
+    knoop: paneel,
+    begin(rij) {
+      aantalFotos = rij.fotos.length || 2;
+      t0 = Date.now();
+      paneel.style.display = "";
+      balk.style.width = "2%";
+      titel.textContent = `${aantalFotos} foto's`;
+      stap.textContent = "de motor pakt hem op";
+      beeld.replaceChildren();
+      // De foto zoals jij hem maakte, tot de uitsnede er is.
+      if (rij.fotos[0] && rij.fotos[0].blob) toonBeeld(beeld, rij.fotos[0].blob);
+      clearInterval(tikker);
+      tikker = setInterval(() => {
+        klok.textContent = `${Math.round((Date.now() - t0) / 1000)}s`;
+      }, 500);
+    },
+    melding(b) {
+      balk.style.width = `${Math.max(2, procent(b, aantalFotos))}%`;
+      stap.textContent = stapTekst(b);
+      if (b.stap === "gevonden" || b.stap === "klaar") {
+        titel.textContent = `${b.artiest || "?"} — ${b.titel || "?"}`;
+      }
+      // De verse uitsnede, rechtop. Dit is het moment waarop je ziet dat het
+      // werkt, nog voor er een naam bij staat.
+      if (b.stap === "hoes" && b.blob) toonBeeld(beeld, b.blob);
+    },
+    eind() {
+      clearInterval(tikker);
+      paneel.style.display = "none";
+    },
+  };
+}
+
+function toonBeeld(houder, blob) {
+  const u = URL.createObjectURL(blob);
+  const img = el("img", { src: u, alt: "" });
+  img.addEventListener("load", () => URL.revokeObjectURL(u));
+  houder.replaceChildren(img);
+}
+
+/* ------------------------------------------------------------ het scorebord -- */
+
+function scorebord(rijen) {
+  const klaar = rijen.filter(r => r.staat === "klaar");
+  const waarde = klaar.reduce((t, r) => t + ((r.plaat && r.plaat.prijs) || 0), 0);
+  const seconden = rijen.reduce(
+    (t, r) => t + (r.tijden ? Object.values(r.tijden).reduce((a, b) => a + b, 0) : 0), 0);
+  const gedaan = rijen.filter(r => r.staat === "klaar" || r.staat === "onherkend").length;
+
+  const cijfer = (waarde_, label, titel) =>
+    el("div", { class: "kerncijfer", title: titel || "" },
+       [el("b", { tekst: waarde_ }), el("span", { tekst: label })]);
+
+  return el("div", { class: "kerncijfers" }, [
+    cijfer(getal(klaar.length), "in de kast"),
+    cijfer(euro(waarde), "samen waard"),
+    cijfer(gedaan ? `${Math.round(seconden / gedaan)}s` : "-", "per plaat",
+           "gemiddelde verwerkingstijd op dit apparaat"),
+  ]);
+}
+
+/* ------------------------------------------------------------- de afwerklus -- */
+
+async function werkAf(zetStand, bezig) {
+  if (draait) return;
+  draait = true;
+  await herteken();
+  try {
+    if (!motor.isKlaar()) {
+      zetStand("De motor start op. De eerste keer haalt hij ongeveer 40 MB op; "
+             + "daarna staat hij in je browser en gaat het meteen.");
+      await motor.start(m => {
+        if (m.soort === "stap") zetStand(`Motor starten — ${m.tekst}...`);
+      });
+    }
+    zetStand("");
+
+    for (;;) {
+      const wacht = (await opslag.wachtrij()).filter(r => r.staat === "wacht");
+      if (!wacht.length) break;
+      const rij = wacht[0];
+
+      await opslag.wijzig(rij.id, { staat: "bezig" });
+      bezig.begin(rij);
+      await herteken();
+
+      try {
+        const uit = await motor.verwerk(rij.fotos, {
+          token: token(), opVoortgang: b => bezig.melding(b),
+        });
+        await bewaarUitslag(rij, uit);
+      } catch (e) {
+        await opslag.wijzig(rij.id, { staat: "mislukt", reden: e.message });
+      }
+      bezig.eind();
+      await herteken();
+    }
+  } catch (e) {
+    zetStand(`De motor kwam niet op gang: ${e.message}`);
+    await opslag.hervat();
+  } finally {
+    bezig.eind();
+    draait = false;
+    await herteken();
+  }
+}
+
+async function bewaarUitslag(rij, uit) {
+  const k = uit.kern || {};
+  const hoezen = uit.hoezen || [];
+
+  // Een gevonden persing die alleen geen PRIJS kreeg is geen mislukking. Dat
+  // onderscheid stond er eerst niet in, en dan verdwijnt een correct herkende
+  // plaat in de bak "zelf opzoeken" omdat de marktprijs niet opgehaald kon
+  // worden - precies andersom als wat je wilt.
+  if (k.ok && !k.kastplaat) {
+    await opslag.wijzig(rij.id, {
+      staat: "mislukt",
+      reden: "persing gevonden, maar de prijs mislukte: "
+           + (k.prijsfout || "onbekende fout").trim().split("\n").pop(),
+      koptekst: (k.rec && k.rec.koptekst) || [],
+      tijden: k.tijden, hoezen, ruwe: k.plaat || null,
+    });
+    return;
+  }
+
+  if (!k.ok || !k.kastplaat) {
+    // Niet herkend is geen fout maar precies wat "liever niets dan iets
+    // verkeerds" betekent. De plaat blijft staan met de reden erbij en met de
+    // grootst gedrukte regels van de voorkant, want dááraan herken jij hem als
+    // je hem zelf gaat opzoeken.
+    await opslag.wijzig(rij.id, {
+      staat: "onherkend",
+      reden: k.reden || "niet herkend",
+      koptekst: (k.rec && k.rec.koptekst) || [],
+      catno: (k.rec && k.rec.catno_kandidaten) || [],
+      tijden: k.tijden, hoezen,
+    });
+    return;
+  }
+
+  const plaat = k.kastplaat;
+  await opslag.vulAan({ platen: [plaat] });
+  await opslag.wijzig(rij.id, {
+    staat: "klaar", plaat, hoezen, reden: null, tijden: k.tijden,
+  });
+}
+
+/* Het token staat in localStorage en niet in de code: het is van jou, het geeft
+ * toegang tot jouw Discogs-account, en het hoort niet in een repository of in
+ * een gepubliceerde site te staan. Zonder token werkt alles behalve prijzen,
+ * en gaat het van 60 naar 25 aanroepen per minuut. */
+const token = () => {
+  try { return localStorage.getItem("discogs_token") || null; } catch { return null; }
+};
+
+/* Zonder token werkt alles behalve de PRIJS, en gaat Discogs van 60 naar 25
+ * aanroepen per minuut. Dat hoort op het scherm te staan en niet als raadsel:
+ * een plaat die netjes herkend wordt maar geen bedrag krijgt, is anders een
+ * fout die je gaat zoeken. */
+function tokenregel() {
+  const zetten = async () => {
+    const t = prompt("Plak je Discogs-token.\n\nGratis via discogs.com > "
+                   + "Settings > Developers > Generate token. Hij blijft in "
+                   + "deze browser en gaat nergens anders heen.", token() || "");
+    if (t === null) return;
+    try { localStorage.setItem("discogs_token", t.trim()); } catch {}
+    await herteken();
+  };
+  return token()
+    ? el("p", { class: "sleeptekst", style: "text-align:left" }, [
+        "Discogs-token staat klaar. ",
+        el("a", { href: "#", onclick: e => { e.preventDefault(); zetten(); },
+                  tekst: "wijzigen" }),
+      ])
+    : el("p", { class: "sleeptekst", style: "text-align:left;color:var(--twijfel)" }, [
+        "Zonder Discogs-token krijg je geen prijzen, en gaat het opzoeken van "
+        + "60 naar 25 aanroepen per minuut. ",
+        el("a", { href: "#", onclick: e => { e.preventDefault(); zetten(); },
+                  tekst: "token instellen" }),
+      ]);
+}
+
+/* ------------------------------------------------------------------ scherm -- */
+
+const STAAT = {
+  wacht: { tekst: "wacht", klasse: "" },
+  bezig: { tekst: "bezig", klasse: "twijfel" },
+  klaar: { tekst: "in de kast", klasse: "goed" },
+  onherkend: { tekst: "zelf opzoeken", klasse: "twijfel" },
+  mislukt: { tekst: "mislukt", klasse: "fout" },
+};
+
+function tegel(rij) {
+  const duim = el("div", { class: "rijduim" });
+  const bron = (rij.hoezen && rij.hoezen[0] && rij.hoezen[0].blob)
+            || (rij.fotos && rij.fotos[0] && rij.fotos[0].blob);
+  if (bron) toonBeeld(duim, bron);
+
+  const s = STAAT[rij.staat] || STAAT.wacht;
+  const kop = rij.plaat
+    ? `${rij.plaat.artiest || "?"} — ${rij.plaat.titel || "?"}`
+    : (rij.koptekst && rij.koptekst[0])
+      || `${rij.fotos.length} foto${rij.fotos.length === 1 ? "" : "'s"}`;
+
+  const onder = [];
+  if (rij.plaat) {
+    const p = rij.plaat;
+    onder.push([p.label, p.catno, p.land, p.jaar].filter(Boolean).join(" · "));
+  } else if (rij.reden) {
+    onder.push(rij.reden);
+  }
+  if (rij.tijden) {
+    onder.push(`${Object.values(rij.tijden).reduce((a, b) => a + b, 0).toFixed(0)}s`);
+  }
+
+  return el("div", { class: "rijkaart" }, [
+    duim,
+    el("div", { style: "flex:1;min-width:0" }, [
+      el("div", { class: "rijkop", tekst: kop }),
+      el("div", { class: "rijonder", tekst: onder.filter(Boolean).join("  ·  ") }),
+    ]),
+    rij.plaat && rij.plaat.prijs
+      ? el("b", { class: "rijprijs", tekst: euro(rij.plaat.prijs) }) : null,
+    el("span", { class: `stempel ${s.klasse}`, tekst: s.tekst }),
     el("button", {
-      class: "knop", style: "padding:4px 9px;font-size:12px",
-      onclick: e => {
-        navigator.clipboard.writeText(tekst);
-        e.target.textContent = "gekopieerd";
-        setTimeout(() => (e.target.textContent = "kopieer"), 1300);
-      },
-      tekst: "kopieer",
+      class: "knop klein", tekst: "×", title: "uit de rij halen",
+      onclick: async () => { await opslag.uitWachtrij(rij.id); await herteken(); },
     }),
   ]);
 }
 
-function geenMotor() {
-  return el("div", {}, [
-    el("section", { class: "kaart" }, [
-      el("h3", { tekst: "Het verwerken draait op je eigen computer" }),
-      el("p", { style: "color:var(--zacht);margin-top:0" },
-        ["Een hoes uitsnijden en lezen kost ongeveer negen seconden. Voor "
-       + "tweehonderd foto's is dat een half uur rekenwerk - te veel voor een "
-       + "website, en je foto's hoeven er ook helemaal niet heen. Start de motor "
-       + "in de map van het project:"]),
-      opdracht("py kast.py"),
-      el("p", { style: "color:var(--zacht)" },
-        ["Die opent dit scherm opnieuw, maar dan met een knop om te beginnen. "
-       + "Je hebt Python nodig en eenmalig:"]),
-      opdracht("pip install -r vereisten.txt"),
-      el("p", { style: "color:var(--zachter);font-size:13px" },
-        ["Voor prijzen is een gratis Discogs-token nodig: discogs.com > Settings "
-       + "> Developers > Generate token. Daarna eenmalig, in PowerShell:"]),
-      opdracht('[Environment]::SetEnvironmentVariable("DISCOGS_TOKEN","jouw-token","User")'),
-    ]),
-    el("section", { class: "kaart" }, [
-      el("h3", { tekst: "Al een kast ergens anders?" }),
-      el("p", { style: "color:var(--zacht);margin-top:0",
-        tekst: "Sla hem daar op als bestand en laad hem hier via het menu rechtsboven." }),
-    ]),
+export async function scherm(data, herlaad) {
+  // Een plaat kan alleen "bezig" zijn zolang er een motor loopt. Is de pagina
+  // opnieuw geladen, dan is dat niet zo - dus dit is geen herstel maar het
+  // rechtzetten van een onwaarheid.
+  await opslag.hervat();
+
+  const stand = el("p", { class: "stand" });
+  const lijst = el("div", { class: "rijlijst" });
+  const cijfers = el("div");
+  const bezig = maakBezigPaneel();
+  const zetStand = t => { stand.textContent = t; stand.style.display = t ? "" : "none"; };
+
+  const knop = el("button", { class: "knop fel",
+                              onclick: () => werkAf(zetStand, bezig) });
+
+  herteken = async () => {
+    const rijen = await opslag.wachtrij();
+    lijst.replaceChildren(...(rijen.length
+      ? rijen.map(tegel)
+      : [el("p", { class: "leegrij", tekst: "Nog niets in de rij." })]));
+    cijfers.replaceChildren(rijen.some(r => r.staat === "klaar")
+      ? scorebord(rijen) : el("span"));
+    const wacht = rijen.filter(r => r.staat === "wacht").length;
+    knop.disabled = !wacht || draait;
+    knop.textContent = draait ? "Bezig..."
+      : wacht ? `${wacht} plaat${wacht === 1 ? "" : "en"} verwerken`
+              : "Niets te doen";
+    if (rijen.some(r => r.staat === "klaar")) herlaad(false);
+  };
+
+  const camera = el("button", {
+    class: "knop fel", tekst: TELEFOON ? "Foto maken" : "Foto's kiezen",
+    onclick: async () => voegToe(await kies({ camera: TELEFOON, meerdere: !TELEFOON })),
+  });
+  const rol = TELEFOON ? el("button", {
+    class: "knop", tekst: "Uit je fotorol",
+    onclick: async () => voegToe(await kies({ meerdere: true })),
+  }) : null;
+
+  const zone = el("div", { class: "sleepzone" }, [
+    el("div", { class: "veldrij" }, [camera, rol].filter(Boolean)),
+    el("p", { class: "sleeptekst",
+      tekst: TELEFOON
+        ? "Voorkant, dan achterkant. Elke twee foto's zijn één plaat."
+        : "Of sleep je foto's hierheen. Voorkant, dan achterkant: "
+        + "elke twee foto's zijn één plaat." }),
   ]);
-}
-
-/* -------------------------------------------------------------------- run -- */
-
-/** Naar de gepubliceerde site duwen.
- *
- *  Er is geen server die je kast ontvangt - dat was de afspraak: geen account,
- *  geen kosten, je foto's blijven van jou. Wat er wel is: dit project staat in
- *  git en Vercel bouwt bij elke push opnieuw. Dus "uploaden" is hier gewoon
- *  site/publiek committen en pushen, en een minuut later staat het erop.
- *
- *  Met opzet een knop en geen automatische stap na elke run: publiceren zet je
- *  platen en je foto's openbaar, en dat hoort een besluit te zijn.
- */
-function publiceerknop(schrijf) {
-  const uitleg = el("span", { style: "color:var(--zachter);font-size:12px" });
-  const knop = el("button", {
-    class: "knop", tekst: "Publiceer naar de website",
-    onclick: async e => {
-      if (!confirm("De kast zoals hij nu is naar de website zetten?\n\n"
-                 + "Je platen, prijzen en hoesfoto's worden daarmee openbaar.")) return;
-      e.target.disabled = true;
-      uitleg.textContent = "bezig...";
-      try {
-        const r = await fetch(`${MOTOR}/publiceer`, { method: "POST" });
-        const b = await r.json();
-        uitleg.textContent = b.ok ? b.bericht : `mislukt: ${b.fout}`;
-        if (!b.ok) schrijf(`publiceren mislukt: ${b.fout}`, "nee");
-      } catch (err) {
-        uitleg.textContent = `mislukt: ${err.message}`;
-      } finally {
-        e.target.disabled = false;
-      }
-    },
-  });
-  return el("div", { class: "veldrij", style: "margin-top:14px;align-items:center" },
-            [knop, uitleg]);
-}
-
-function scherm_motor(status, herlaad) {
-  const balk = el("i");
-  const teller = {
-    foto: el("b", { tekst: "0" }), plaat: el("b", { tekst: "0" }),
-    waarde: el("b", { tekst: euro(0) }), zeker: el("b", { tekst: "0" }),
-  };
-  const log = el("div", { class: "log" });
-  const stand = el("p", { style: "color:var(--zacht);margin:10px 0 0", tekst: "Nog niet begonnen." });
-  let bezig = false, gestopt = false;
-
-  const schrijf = (tekst, klasse = "") => {
-    const onder = log.scrollTop + log.clientHeight >= log.scrollHeight - 30;
-    log.append(el("div", { class: klasse, tekst }));
-    if (onder) log.scrollTop = log.scrollHeight;
-  };
-
-  const start = el("button", { class: "knop fel", tekst: "Beginnen" });
-  const stop = el("button", { class: "knop", disabled: true, tekst: "Stoppen" });
-  const map = el("input", {
-    type: "text", value: status.fotomap || "",
-    placeholder: "volledig pad naar je map met foto's",
-    style: "flex:1 1 320px",
+  zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("over"); });
+  zone.addEventListener("dragleave", () => zone.classList.remove("over"));
+  zone.addEventListener("drop", async e => {
+    e.preventDefault();
+    zone.classList.remove("over");
+    const b = [...e.dataTransfer.files].filter(f => f.type.startsWith("image/"));
+    if (b.length) await voegToe(b);
   });
 
-  // Een pad overtypen uit de verkenner was de onvriendelijkste stap die er
-  // was. De browser mag ons geen pad geven, maar de motor draait op deze
-  // machine en mag Windows wel om een mapkiezer vragen.
-  const kiezer = el("button", {
-    class: "knop", tekst: "Map kiezen...",
-    onclick: async e => {
-      e.target.disabled = true;
-      try {
-        const r = await fetch(`${MOTOR}/kies-map`, { method: "POST" });
-        const b = await r.json();
-        if (b.map) map.value = b.map;
-        else if (b.fout) schrijf(`mapkiezer werkte niet (${b.fout}) - typ het pad`, "nee");
-      } catch (err) {
-        schrijf(`mapkiezer niet bereikbaar: ${err.message}`, "nee");
-      } finally {
-        e.target.disabled = false;
-      }
-    },
-  });
-
-  let gevonden = 0, waarde = 0, zeker = 0;
-
-  stop.addEventListener("click", () => { gestopt = true; fetch(`${MOTOR}/stop`, { method: "POST" }); });
-
-  start.addEventListener("click", async () => {
-    if (bezig) return;
-    bezig = true; gestopt = false;
-    gevonden = 0; waarde = 0; zeker = 0;
-    start.disabled = true; stop.disabled = false;
-    log.replaceChildren();
-    balk.style.width = "0%";
-    stand.textContent = "Bezig met starten...";
-
-    let bron;
-    try {
-      const r = await fetch(`${MOTOR}/start`, {
-        method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ map: map.value.trim() }),
-      });
-      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).fout || `fout ${r.status}`);
-    } catch (e) {
-      schrijf(`kan niet starten: ${e.message}`, "nee");
-      stand.textContent = "Niet gestart.";
-      bezig = false; start.disabled = false; stop.disabled = true;
-      return;
-    }
-
-    const FASE = {
-      lezen: "foto's uitsnijden en lezen",
-      prijzen: "persing en prijs opzoeken",
-      samenstellen: "kast samenstellen",
-    };
-    let fase = "lezen";
-
-    bron = new EventSource(`${MOTOR}/stroom`);
-    bron.onmessage = async ev => {
-      const b = JSON.parse(ev.data);
-      if (b.soort === "start") {
-        schrijf(`${b.totaal} foto's in ${b.map}`);
-      } else if (b.soort === "fase") {
-        fase = b.naam;
-        balk.style.width = "0%";
-        stand.textContent = `${FASE[b.naam] || b.naam}...`;
-        schrijf(`— ${FASE[b.naam] || b.naam} —`);
-      } else if (b.soort === "voortgang") {
-        teller.foto.textContent = getal(b.klaar);
-        balk.style.width = `${(100 * b.klaar) / Math.max(b.totaal, 1)}%`;
-        stand.textContent = `${b.klaar} van ${b.totaal} foto's gelezen`
-          + (b.resterend ? ` — nog ongeveer ${b.resterend}` : "");
-      } else if (b.soort === "herkend") {
-        teller.plaat.textContent = getal(++gevonden);
-        schrijf(`${b.artiest || "?"} — ${b.titel || "?"}`, "ok");
-      } else if (b.soort === "bekend") {
-        // stond al in de kast: geen werk, maar wel een plaat
-        teller.plaat.textContent = getal(++gevonden);
-      } else if (b.soort === "prijs") {
-        waarde = b.waarde || waarde;
-        if (b.prijs) zeker++;
-        teller.waarde.textContent = euro(waarde);
-        teller.zeker.textContent = getal(zeker);
-        balk.style.width = `${(100 * b.klaar) / Math.max(b.totaal, 1)}%`;
-        stand.textContent = `${b.klaar} van ${b.totaal} opgezocht`
-          + (b.resterend ? ` — nog ongeveer ${b.resterend}` : "");
-      } else if (b.soort === "onherkend") {
-        schrijf(`niet herkend: ${b.id} — ${b.reden || "geen match"}`, "nee");
-      } else if (b.soort === "melding") {
-        schrijf(b.tekst);
-      } else if (b.soort === "fout") {
-        schrijf(b.bericht, "nee");
-      } else if (b.soort === "klaar") {
-        bron.close();
-        bezig = false; start.disabled = false; stop.disabled = true;
-        balk.style.width = "100%";
-        stand.textContent = gestopt ? "Gestopt." : "Klaar.";
-        schrijf(`klaar: ${b.platen} platen, samen ${euro(b.waarde || 0)}`);
-        try {
-          const r = await fetch(`${MOTOR}/collectie`);
-          const doc = await r.json();
-          await opslag.vulAan(doc);
-          await herlaad(false);        // kop bijwerken, dit scherm laten staan
-          schrijf(`${doc.platen.length} platen staan nu in je kast`, "ok");
-        } catch (e) {
-          schrijf(`resultaat kon niet opgeslagen worden: ${e.message}`, "nee");
-        }
-      }
-    };
-    bron.onerror = () => {
-      if (!bezig) return;
-      schrijf("verbinding met de motor verbroken", "nee");
-      bron.close();
-      bezig = false; start.disabled = false; stop.disabled = true;
-    };
-  });
-
-  const cijfer = (knoop, label) =>
-    el("div", { class: "kerncijfer" }, [knoop, el("span", { tekst: label })]);
-
-  return el("div", {}, [
+  toon(el("div", {}, [
     el("section", { class: "kaart" }, [
       el("h3", { tekst: "Foto's verwerken" }),
-      el("p", { style: "color:var(--zacht);margin-top:0",
-        tekst: "Voorkant, dan achterkant, per plaat. Wat al eerder gelezen is "
-             + "wordt overgeslagen, dus een tweede keer draaien is goedkoop." }),
-      el("div", { class: "veldrij" }, [map, kiezer, start, stop]),
-      el("div", { style: "margin:16px 0 6px" }, [el("div", { class: "voortgang" }, [balk])]),
-      stand,
-      status.token ? null : el("p", {
-        style: "color:var(--twijfel);font-size:13px;margin:8px 0 0",
-        tekst: "Geen DISCOGS_TOKEN gevonden: je krijgt geen prijzen en het gaat "
-             + "ruim twee keer trager." }),
-      status.kan_publiceren ? publiceerknop(schrijf) : null,
+      el("p", { class: "toelichting",
+        tekst: "Het herkennen gebeurt in deze browser: je foto's gaan nergens "
+             + "heen. Alleen om de persing en de prijs op te zoeken wordt "
+             + "Discogs geraadpleegd." }),
+      zone,
+      tokenregel(),
     ]),
+    bezig.knoop,
     el("section", { class: "kaart" }, [
-      el("div", { class: "kerncijfers", style: "margin-bottom:14px" }, [
-        cijfer(teller.foto, "foto's gelezen"),
-        cijfer(teller.plaat, "platen herkend"),
-        cijfer(teller.zeker, "met een prijs"),
-        cijfer(teller.waarde, "waarde tot nu toe"),
+      el("div", { class: "veldrij", style: "align-items:center" }, [
+        el("h3", { style: "flex:1;margin:0", tekst: "In de rij" }), knop,
       ]),
-      log,
+      stand,
+      cijfers,
+      lijst,
     ]),
-  ]);
-}
+  ]));
 
-export async function scherm(data, herlaad) {
-  toon(el("div", {}, [el("p", { style: "color:var(--zachter)", tekst: "Kijken of de motor draait..." })]));
-  const status = await motorStatus();
-  toon(status ? scherm_motor(status, herlaad) : geenMotor());
+  zetStand("");
+  await herteken();
 }

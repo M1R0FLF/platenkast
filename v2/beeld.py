@@ -24,6 +24,21 @@ CACHE = "cache/hoezen"
 _sessie = None
 _orb = None
 
+# Leeg op de PC: daar gaat het rechtstreeks naar i.discogs.com. In de browser
+# kan dat niet - i.discogs.com stuurt geen Access-Control-Allow-Origin, dus een
+# fetch daarheen wordt geweigerd. Zet dit dan op een pad op je eigen herkomst
+# dat doorstuurt (kast.py doet dat, en site/vercel.json ook). Zonder die omweg
+# is er geen hoesbeeld en dus geen beeldronde, en juist die ving vijf van de 97
+# platen af waar de tekst naar de verkeerde persing wees.
+PROXY = ""
+BRON = "https://i.discogs.com/"
+
+
+def _via(url):
+    if PROXY and url.startswith(BRON):
+        return PROXY + url[len(BRON):]
+    return url
+
 
 def _ses():
     global _sessie
@@ -44,7 +59,7 @@ def haal(url):
         if im is not None:
             return im
     try:
-        r = _ses().get(url, timeout=25)
+        r = _ses().get(_via(url), timeout=25)
         if not r.ok:
             return None
         open(pad, "wb").write(r.content)

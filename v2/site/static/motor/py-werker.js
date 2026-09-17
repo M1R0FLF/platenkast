@@ -272,6 +272,109 @@ json.dumps({"uit": uit, "missers": dc.missers,
   zeg("drift", { uitslag: JSON.parse(uit), ms: Math.round(performance.now() - t0) });
 }
 
+/** Een plaat: foto's erin, een herkende persing met prijs eruit.
+ *
+ *  Dit is wat het scherm gebruikt; de rest van dit bestand is proefwerk. Het
+ *  zware werk staat in plaat.py, zodat het dezelfde ketenbestanden aanroept als
+ *  run.py op de PC en er niet stiekem een tweede versie ontstaat.
+ */
+async function plaat(b) {
+  const FS = pyodide.FS;
+  FS.mkdirTree("/werk/in");
+  const namen = [];
+  for (const [naam, bytes] of b.fotos) {
+    const veilig = naam.replace(/[^A-Za-z0-9._-]/g, "_").slice(-60) || "foto.jpg";
+    FS.writeFile("/werk/in/" + veilig, new Uint8Array(bytes));
+    namen.push(veilig);
+  }
+  // De voortgangsmelder. Python roept dit synchroon aan; wij sturen het als
+  // bericht door en gaan meteen terug, zodat de keten er niet op wacht.
+  self.meldStap = (soort, velden) => {
+    // `velden` komt hier al als gewoon JS-object binnen: de Python-kant doet
+    // `to_js(..., dict_converter=Object.fromEntries)`. Nog een keer converteren
+    // is precies de fout die dit eerst deed omvallen.
+    // `stap` staat ACHTER de spread, niet ervoor: anders overschrijft een veld
+    // dat toevallig ook "stap" heet de soort van de melding, en dan valt de
+    // hele voortgang stilletjes terug op niets.
+    const b = { ...(velden || {}), stap: soort };
+    // Bij een verse uitsnede sturen we de JPEG mee: dan zie je op het scherm
+    // de hoes rechtop verschijnen terwijl de volgende foto nog gelezen wordt.
+    if (soort === "hoes" && b.bestand) {
+      try {
+        const rauw = pyodide.FS.readFile(`/werk/hoezen/${b.bestand}`);
+        b.blob = new Blob([rauw.slice()], { type: "image/jpeg" });
+      } catch (e) { /* nog niet weggeschreven; geen ramp */ }
+    }
+    zeg("voortgang", b);
+  };
+
+  pyodide.globals.set("_namen", namen);
+  pyodide.globals.set("_token", b.token);
+  pyodide.globals.set("_leespx", b.leespx);
+  pyodide.globals.set("_prijzen", b.prijzen);
+  // De hoesafbeeldingen lopen via onze eigen herkomst; zie beeld.PROXY.
+  pyodide.globals.set("_herkomst", self.location.origin);
+
+  const uit = await pyodide.runPythonAsync(`
+import json, os, sys
+sys.path.insert(0, "/keten")
+
+import pyodide_http
+pyodide_http.patch_all()
+
+import plaat as _plaat
+from discogs import Discogs
+
+os.makedirs("/werk/cache", exist_ok=True)
+_dc = globals().get("_dc")
+if _dc is None or getattr(_dc, "_token", None) != _token:
+    # Eén client per tabblad: zijn snelheidsrem en zijn cache moeten over
+    # platen heen blijven bestaan, anders begint elke plaat weer koud tegen
+    # het plafond van 60 aanroepen per minuut.
+    _dc = Discogs(_token or None, cache="/werk/cache/discogs.db")
+    _dc._token = _token
+    globals()["_dc"] = _dc
+
+_paden = [("/werk/in/" + n, n) for n in _namen.to_py()]
+import js
+from pyodide.ffi import to_js
+
+def _melden(soort, **velden):
+    js.meldStap(soort, to_js(velden, dict_converter=js.Object.fromEntries))
+
+_u = _plaat.verwerk(_paden, _dc, "/werk", leespx=int(_leespx),
+                    prijzen=bool(_prijzen), melden=_melden,
+                    herkomst=str(_herkomst))
+
+# De hoezen gaan apart terug: bytes horen niet in JSON.
+_hoezen = _u.pop("hoezen", [])
+json.dumps({"kern": _u, "hoezen": [{"bestand": h["bestand"],
+                                    "gesneden": h["gesneden"],
+                                    "rechtop": h["rechtop"]} for h in _hoezen]},
+           default=str)
+`);
+  const doc = JSON.parse(uit);
+
+  // De JPEG's zelf uit het Pyodide-bestandssysteem halen, niet door JSON heen.
+  doc.hoezen.forEach(h => {
+    const rauw = pyodide.FS.readFile(`/werk/hoezen/${h.bestand}`);
+    h.blob = new Blob([rauw.slice()], { type: "image/jpeg" });
+  });
+
+  // Opruimen: de volgende plaat moet niet de uitsnedes van deze vinden. De
+  // OCR-sleutel in foto.py hangt aan de bestandsnaam, en twee foto's met
+  // dezelfde naam zijn op een telefoon geen uitzondering (IMG_0001.jpg).
+  for (const map of ["/werk/in", "/werk/hoezen"]) {
+    try {
+      for (const f of pyodide.FS.readdir(map)) {
+        if (f !== "." && f !== "..") pyodide.FS.unlink(`${map}/${f}`);
+      }
+    } catch (e) { /* map bestond nog niet */ }
+  }
+
+  zeg("plaat", { uitslag: doc });
+}
+
 self.onmessage = async ev => {
   const b = ev.data;
   try {
@@ -280,6 +383,7 @@ self.onmessage = async ev => {
     if (b.soort === "velden") return await velden(b);
     if (b.soort === "match")  return await match(b);
     if (b.soort === "drift")  return await drift(b);
+    if (b.soort === "plaat")  return await plaat(b);
   } catch (e) {
     zeg("fout", { bericht: e && e.message ? e.message : String(e) });
   }

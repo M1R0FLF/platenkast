@@ -214,3 +214,95 @@ table.feiten td:first-child { color: var(--zachter); width: 130px; }
   .top .binnen { gap: 10px; }
   .kerncijfers { gap: 14px; width: 100%; order: 3; }
 }
+
+/* ---------------------------------------------------------- de wachtrij -- */
+/* Het verwerkscherm is een rij platen, geen logboek. Vandaar tegels met een
+ * duimnagel: op een telefoon herken je je eigen plaat aan de hoes en niet aan
+ * een bestandsnaam. */
+
+.sleepzone {
+  border: 1px dashed var(--rand-fel);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  text-align: center;
+  transition: border-color .12s, background .12s;
+}
+.sleepzone.over { border-color: var(--accent); background: rgba(216, 180, 106, .06); }
+.sleepzone .veldrij { justify-content: center; }
+.sleeptekst { color: var(--zachter); font-size: 13px; margin: 12px 0 0; }
+.toelichting { color: var(--zacht); margin-top: 0; }
+
+.stand {
+  color: var(--zacht);
+  font-size: 14px;
+  margin: 10px 0 0;
+  /* De motor kan minutenlang bezig zijn zonder dat er iets zichtbaar gebeurt.
+     Deze regel is het enige dat dan zegt dat hij nog leeft. */
+}
+
+.rijlijst { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.leegrij { color: var(--zachter); margin: 6px 0; }
+
+.rijkaart {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--paneel);
+  border: 1px solid var(--rand);
+  border-radius: var(--radius);
+  padding: 9px 12px 9px 9px;
+}
+.rijduim {
+  width: 54px; height: 54px;
+  flex: 0 0 54px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #0b0b0d;
+}
+.rijduim img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rijkop {
+  font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rijonder {
+  color: var(--zachter); font-size: 13px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.knop.klein { padding: 3px 9px; font-size: 15px; line-height: 1.2; }
+
+/* Op een telefoon is de breedte op; dan mag de stempel onder de tekst. */
+@media (max-width: 520px) {
+  .rijkaart { flex-wrap: wrap; }
+  .rijkaart > div:nth-child(2) { flex-basis: calc(100% - 120px); }
+}
+
+/* --------------------------------------------------------- wat er nu gebeurt -- */
+/* Groot, met de hoes erbij. Een plaat kost hier tientallen seconden, en in die
+   tijd moet het scherm laten zien dat er iets gebeurt - anders laadt iemand de
+   pagina opnieuw en is het werk weg. */
+
+.kaart.bezig { display: flex; gap: 14px; align-items: center; }
+.bezigbeeld {
+  width: 92px; height: 92px; flex: 0 0 92px;
+  border-radius: 8px; overflow: hidden; background: #0b0b0d;
+  border: 1px solid var(--rand);
+}
+.bezigbeeld img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  animation: opkomen .25s ease-out;
+}
+@keyframes opkomen { from { opacity: 0 } to { opacity: 1 } }
+
+.bezigtitel {
+  font-weight: 600; font-size: 16px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.bezigstap { color: var(--zacht); font-size: 13px; margin-top: 2px; }
+.bezigklok { color: var(--zachter); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+.rijprijs { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+@media (max-width: 520px) {
+  .kaart.bezig { flex-wrap: wrap; }
+  .bezigbeeld { width: 64px; height: 64px; flex-basis: 64px; }
+}

@@ -344,6 +344,43 @@ catalogusnummers werd hij wel herkend, maar als "Je M'appelle Barbra" - een
 advertentie op de achterkant. Fout is erger dan niets, dus die staat nu weer op
 de handmatige lijst.
 
+### OPEN EN BLOKKEREND: de browser koos een andere persing
+
+Het verwerkscherm werkt end-to-end, maar op de ijkplaat kiest de browser een
+ANDERE persing dan de PC. Dat is precies wat dit project niet mag.
+
+    IMG20260913160630 (Gloria Gaynor - Never Can Say Goodbye)
+
+    PC      466488   MGM, 2315 321, Germany 1975   515 beeldpunten
+    browser 1768598  MGM, 2315-321, UK             187 beeldpunten, op tracklist
+
+Op de hoes staat "Printed in Germany by Gerhard Kaiser GmbH, Essen", en
+`land_gedrukt` is Germany. De Duitse is dus de juiste, en dat is ook de persing
+die de README als voorbeeld noemt.
+
+Het ligt NIET aan de hint en niet aan toeval:
+
+- twee keer gedraaid met een verse Pyodide: allebei 1768598, dus reproduceerbaar
+- op de PC dezelfde weg nagebouwd (verse OCR, beeldronde AAN, geen hint):
+  466488, met 515 punten
+
+Beide kanten krijgen dezelfde catalogusnummerkandidaat (`2315321`) en beide
+vinden Germany als gedrukt land. Toch komt de browser op de UK-persing uit, via
+strategie 1 (tracklist) - en die tracklist is voor beide persingen gelijk, dus
+die kan ze per definitie niet uit elkaar houden.
+
+Vermoedelijk werkt hier de OCR-drift door (28 van de 35 regels gelijk, zeven
+die in een spatie verschillen; zie hierboven), maar dat is een vermoeden en
+geen meting. **Zolang dit niet uitgezocht is, hoort het verwerkscherm geen
+persing als "zeker" te presenteren.**
+
+Na te lopen, in deze volgorde:
+
+1. de rec die de browser bouwt naast die van de PC leggen, veld voor veld -
+   `velden.tracktermen` en `woordtermen` eerst, want daar zat het verschil
+2. de kandidatenlijst uit `match.op_tekst` van beide kanten vergelijken
+3. pas daarna aan drempels denken
+
 ### Een verkeerde plaat in de collectie: 163930
 
 Gevonden door de drift-proef, maar het is geen drift - dit zat er al in.

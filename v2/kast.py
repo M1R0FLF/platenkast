@@ -414,7 +414,42 @@ class Beheerder(SimpleHTTPRequestHandler):
                 return self._json(200, json.load(fh))
         if self.path.startswith("/api/stroom"):
             return self._stroom()
+        if self.path.startswith("/hoesbeeld/"):
+            return self._hoesbeeld(self.path[len("/hoesbeeld/"):])
         return super().do_GET()
+
+    def _hoesbeeld(self, staart):
+        """Een hoesafbeelding van Discogs doorgeven.
+
+        i.discogs.com stuurt geen Access-Control-Allow-Origin, dus de browser
+        weigert hem rechtstreeks op te halen. Zonder deze omweg is er in de
+        browser geen beeldronde, en dat is precies de toets die vijf van de 97
+        platen afving waar de tekst naar de verkeerde persing wees.
+
+        Alleen i.discogs.com, en alleen GET. Dit is geen open doorgeefluik: een
+        server die alles doorgeeft wat je hem vraagt is een open proxy, en die
+        wordt gevonden.
+        """
+        import urllib.request, urllib.error
+        if not staart or ".." in staart:
+            return self._json(400, {"fout": "geen geldig pad"})
+        url = "https://i.discogs.com/" + staart
+        try:
+            vraag = urllib.request.Request(url, headers={"User-Agent": "VinylLister/3.0"})
+            with urllib.request.urlopen(vraag, timeout=25) as a:
+                rauw = a.read()
+                soort = a.headers.get("content-type", "image/jpeg")
+        except (urllib.error.URLError, OSError) as e:
+            return self._json(502, {"fout": str(e)})
+        self.send_response(200)
+        self.send_header("content-type", soort)
+        self.send_header("content-length", str(len(rauw)))
+        # De afbeelding verandert niet als de URL niet verandert: die bevat een
+        # hash van de inhoud.
+        self.send_header("cache-control", "public, max-age=604800")
+        self.send_header("cross-origin-resource-policy", "same-origin")
+        self.end_headers()
+        self.wfile.write(rauw)
 
     def _stroom(self):
         self.send_response(200)

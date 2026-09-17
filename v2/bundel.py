@@ -45,6 +45,8 @@ KETEN = [
     "beeld.py",     # hoesfoto vergelijken met Discogs
     "discogs.py",   # API, snelheidsrem en cache
     "prijs.py",     # marktprijs en advertentietekst
+    "nauwkeurig.py",  # het oordeel: zeker, aannemelijk, onbevestigd
+    "exporteer.py",   # naar_plaat: een rij -> een plaat zoals de site hem kent
 ]
 
 

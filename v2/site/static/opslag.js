@@ -16,7 +16,7 @@
  */
 
 const NAAM = "platenkast";
-const VERSIE = 1;
+const VERSIE = 2;                      // 2: wachtrij erbij
 
 let _db = null;
 
@@ -32,6 +32,12 @@ function open() {
         db.createObjectStore("eigen", { keyPath: "id" });
       if (!db.objectStoreNames.contains("meta"))
         db.createObjectStore("meta", { keyPath: "sleutel" });
+      // De wachtrij: platen die nog verwerkt moeten worden, met hun foto's er
+      // IN. Niet als los bestand ernaast, want dan raakt het een keer uit
+      // elkaar; en niet in geheugen, want de hele reden dat dit een wachtrij is
+      // is dat je de app kunt wegleggen en morgen verder kunt.
+      if (!db.objectStoreNames.contains("wachtrij"))
+        db.createObjectStore("wachtrij", { keyPath: "id" });
     };
     v.onsuccess = () => klaar(v.result);
     v.onerror = () => fout(v.error);
@@ -122,6 +128,67 @@ export async function wisAlles() {
   await tx("collectie", "readwrite", s => s.clear());
   await tx("eigen", "readwrite", s => s.clear());
   await tx("meta", "readwrite", s => s.clear());
+}
+
+/* -------------------------------------------------------------- wachtrij -- */
+
+/* Een plaat die nog verwerkt moet worden:
+ *
+ *   { id, gemaakt, staat, fotos: [{naam, blob}], plaat, reden, hoezen }
+ *
+ * `staat` is "wacht" | "bezig" | "klaar" | "mislukt". Hij staat in het record
+ * en niet in het geheugen van het scherm, want anders is een plaat die stond
+ * te verwerken toen je het tabblad sloot voor altijd "bezig".
+ *
+ * De id is een tijdstempel plus toeval, en die verandert nooit meer. Dat is
+ * met het oog op straks: zodra hier een account achter komt te staan is dit de
+ * sleutel waarop twee apparaten elkaar kunnen vinden, en een id die van de
+ * inhoud of van de volgorde afhangt kan dat niet.
+ */
+
+export function nieuweId() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+export async function zetInWachtrij(fotos, velden = {}) {
+  const rij = {
+    id: velden.id || nieuweId(),
+    gemaakt: new Date().toISOString(),
+    staat: "wacht",
+    fotos,                                  // [{naam, blob}], voorkant eerst
+    ...velden,
+  };
+  await tx("wachtrij", "readwrite", s => s.put(rij));
+  return rij;
+}
+
+export async function wachtrij() {
+  const alles = await tx("wachtrij", "readonly", s => s.getAll());
+  return alles.sort((a, b) => (a.gemaakt || "").localeCompare(b.gemaakt || ""));
+}
+
+export async function wijzig(id, velden) {
+  const nu = await tx("wachtrij", "readonly", s => s.get(id));
+  if (!nu) return null;
+  const nieuw = { ...nu, ...velden };
+  await tx("wachtrij", "readwrite", s => s.put(nieuw));
+  return nieuw;
+}
+
+export async function uitWachtrij(id) {
+  await tx("wachtrij", "readwrite", s => s.delete(id));
+}
+
+/** Alles wat "bezig" stond terugzetten naar "wacht".
+ *
+ *  Draait bij het openen van het scherm. Een plaat kan alleen "bezig" zijn
+ *  zolang er een motor loopt, en die loopt niet meer als de pagina opnieuw
+ *  geladen is - dus dit is geen herstel maar een correctie van een leugen. */
+export async function hervat() {
+  const rijen = await wachtrij();
+  const vast = rijen.filter(r => r.staat === "bezig");
+  for (const r of vast) await wijzig(r.id, { staat: "wacht" });
+  return vast.length;
 }
 
 /* ------------------------------------------------------- mee kunnen nemen -- */
