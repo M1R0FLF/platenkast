@@ -170,6 +170,12 @@ Geen enkele afwijking. Ook niet tussen onnxruntime 1.30.0 en 1.24.4, en dat
 moest apart nagekeken worden omdat `onnxruntime-directml` die oudere versie
 meebrengt. `py meten/ijkgpu.py` draait die vergelijking opnieuw.
 
+Die oudere versie kost ook geen snelheid op het CPU-pad. Afwisselend gemeten,
+want deze laptop klokt terug en achter elkaar meten geeft onzin: 1.30.0 tegen
+1.24.4 gaf 2,12/2,12 en 2,04/2,09 seconde per foto. Een eerste meting suggereerde
+20% verlies; dat was de temperatuur, niet de versie. Overstappen kost dus niets,
+ook niet als je `--gpu` een keer niet gebruikt.
+
 Daarmee is dit ook **niet** hetzelfde probleem als de telefoon: als de kaart
 exact geeft wat de processor geeft, dan is kaart-tegenover-telefoon precies
 kaart-tegenover-processor plus processor-tegenover-telefoon. De GPU maakt dat

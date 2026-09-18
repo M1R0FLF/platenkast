@@ -17,3 +17,25 @@ numpy>=2.0
 rapidocr-onnxruntime>=1.2.3
 onnxruntime>=1.17
 requests>=2.31
+
+# Wil je `py run.py --gpu`, dan moet onnxruntime hierboven WEG en hier iets
+# anders voor in de plaats:
+#
+#     pip uninstall onnxruntime
+#     pip install onnxruntime-directml
+#
+# Die twee pakketten leveren allebei de module `onnxruntime` en kunnen niet
+# naast elkaar staan; daarom kan dit geen regel in deze lijst zijn.
+#
+# Het is DirectML en niet CUDA omdat CUDA een apart te installeren toolkit
+# vraagt (en er voor Python 3.14 geen wheels voor zijn), terwijl DirectML met
+# elke DirectX 12-kaart praat - NVIDIA, AMD en de ingebouwde Intel.
+#
+# Gemeten: de kaart geeft over alle 225 uitsnedes exact dezelfde tekst als de
+# processor, en is anderhalf keer sneller met een vijfde van de kernen. Zie
+# LEESMIJ en `py meten/ijkgpu.py`.
+#
+# onnxruntime-directml loopt achter (1.24 tegen 1.30), dus dit is ook nagemeten:
+# zonder --gpu is 1.24.4 even snel als 1.30.0 (afwisselend gemeten, 2,12/2,12 en
+# 2,04/2,09 seconde per foto) en leest hij letterlijk dezelfde tekst. Het kost
+# dus niets om over te stappen, ook niet als je --gpu een keer niet gebruikt.
