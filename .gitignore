@@ -50,9 +50,14 @@ platen/oud/experimenten/
 # hetzelfde rekent als onnxruntime in Python. Maakt v2/site/motor/ijk.html
 # samen met het scriptje in de opmerking daar zo weer.
 v2/site/motor/ijk/
-# Wat bundel.py neerzet voor Pyodide: kopieen van v2/*.py, v2/browser/*.py en
-# rapidocr_onnxruntime. Uitvoer, geen bron - `py bundel.py` maakt het zo weer.
-v2/site/motor/py/
+# v2/site/motor/py/ staat hier NIET in, en dat is een bewuste uitzondering.
+# Het is uitvoer van bundel.py, dus eigenlijk hoort het hier - maar Vercel
+# serveert `site/` zonder bouwstap, en de browser haalt de keten daar op met
+# fetch. Zou het genegeerd worden, dan staat de motor lokaal wel klaar en op de
+# gepubliceerde site niet, en dat merk je pas op je telefoon.
+#
+# Dus: na een wijziging in de keten `py bundel.py` draaien en de kopie
+# meecommitten. 240 kB, en het houdt de site zonder bouwstap.
 # Het ijkpunt voor match.herken: 7,8 MB platen + Discogs-antwoorden.
 # `py browser/ijkmatch.py` maakt het zo weer.
 v2/uit/_geen_hoezen/
