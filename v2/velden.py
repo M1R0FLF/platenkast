@@ -17,7 +17,18 @@ LANDEN = [("west germany", "West Germany"), ("germany", "Germany"),
 
 CATNO = re.compile(r"""(?x)
     \b(
-        [A-Z]{2,6}[ .\-]?\d{3,6}(?:[ \-/]\d{1,4})?     # SHVL 804, WB SOUND 5034
+        \d{1,3}[A-Z]\d{5,6}                            # 21P303566
+                                                       # Een prefix dat de OCR
+                                                       # aan het nummer heeft
+                                                       # geplakt. Zie PLAKPREFIX
+                                                       # hieronder; zonder dit
+                                                       # alternatief is het
+                                                       # nummer van de PLAAT
+                                                       # onzichtbaar terwijl dat
+                                                       # van de cd en de
+                                                       # cassette ernaast wel
+                                                       # doorkomt.
+      | [A-Z]{2,6}[ .\-]?\d{3,6}(?:[ \-/]\d{1,4})?     # SHVL 804, WB SOUND 5034
       | [A-Z][ .\-]?\d{5,6}                            # S 63151, S70044
                                                        # (een letter mag, maar
                                                        # dan minstens vijf
@@ -37,6 +48,26 @@ CATNO = re.compile(r"""(?x)
 # - het struikelde over die letter - en bleef de plaat op de handmatige lijst
 # staan terwijl hij gewoon op Discogs stond.
 KANTLETTER = re.compile(r"^([A-Z]{1,6}[ .\-]?\d{3,6})[AB]$")
+
+# Op "Ciao Italia '89" staat het nummer van de plaat als "21P303566", met de cd
+# en de cassette van dezelfde uitgave ernaast:
+#
+#     21P303566        de LP
+#     Q-2CD:353.566    de cd
+#     2MC:503.566      de cassette
+#
+# Het patroon begint met \b en tussen de "1" en de "P" staat geen woordgrens,
+# dus het nummer van de PLAAT werd niet gezien terwijl de twee andere dragers
+# er netjes uit kwamen. Die twee stuurden de zoekopdracht naar het verkeerde
+# deel van dezelfde reeks: de kast had "Ciao Italia" (1988) staan terwijl er
+# "Ciao Italia '89" in de hoes zit - 1 van de 28 tracktitels klopte tegen 23
+# van de 29.
+#
+# Net als KANTLETTER haalt dit er alleen iets AF; het patroon wordt er niet
+# ruimer van. Gemeten over alle honderd platen (browser/ijkcatno.py): een
+# kandidaat erbij op een plaat, nul verdwenen, en die ene plaat gaat van de
+# verkeerde persing naar de juiste.
+PLAKPREFIX = re.compile(r"^\d{1,3}[A-Z](\d{5,6})$")
 
 # Nummers uit een muziekcatalogus zijn geen bestelnummers. BWV1068 is het
 # Bach-Werke-Verzeichnis, KV een Köchelnummer. Ze staan op elke klassieke hoes
@@ -116,6 +147,9 @@ def uit_tekst(t):
         k = KANTLETTER.match(v.upper())
         if k:
             v = k.group(1)
+        pp = PLAKPREFIX.match(v.upper())
+        if pp:
+            v = pp.group(1)
         if v.upper() not in gezien:
             gezien.add(v.upper())
             kand.append(v)

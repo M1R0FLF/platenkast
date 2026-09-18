@@ -450,7 +450,7 @@ Na te lopen, in deze volgorde:
 2. de kandidatenlijst uit `match.op_tekst` van beide kanten vergelijken
 3. pas daarna aan drempels denken
 
-### Een verkeerde plaat in de collectie: 163930
+### OPGELOST: een verkeerde plaat in de collectie (163930)
 
 Gevonden door de drift-proef, maar het is geen drift - dit zat er al in.
 
@@ -481,9 +481,29 @@ geen woordgrens. Dus het nummer van de plaat zelf is onzichtbaar terwijl dat
 van twee andere dragers netjes doorkomt, en `catno_kandidaten` werd
 `['353.566', '503.566', 'LA103', '24166']` - geen daarvan is deze plaat.
 
-Bewust nog niet gerepareerd: het patroon oprekken raakt alle honderd platen, en
-een ruimer catalogusnummerpatroon is in dit project al eerder averechts
-uitgepakt (zie Streisand hierboven). Dat hoort eerst gemeten.
+**Gerepareerd**, en niet door het patroon op te rekken. Er is EEN alternatief
+bijgekomen dat precies deze vorm vangt (`\d{1,3}[A-Z]\d{5,6}`), plus
+`velden.PLAKPREFIX` dat het prefix eraf haalt - net zoals `KANTLETTER` de
+kantletter eraf haalt. Het patroon begint nog steeds op een woordgrens, dus
+middenin een woord kan er niets beginnen.
+
+De eerste poging deed dat wel, en die is op de meetlat gesneuveld: hij
+verplaatste de buitenste `` naar "woordgrens of vlak achter een prefix".
+Gemeten: hij repareerde 163930 niet (de `` zit ook BINNEN het alternatief
+`\d{5,8}`) en hij brak 165216, waar "PY.12124" ineens ook "Y.12124"
+opleverde. Erger dan de kwaal.
+
+`browser/ijkcatno.py` is de meetlat, en blijft staan als regressietoets - hij
+bouwt het OUDE patroon uit het huidige, zodat hij ook over een jaar nog iets
+meet in plaats van stilletjes niets:
+
+    100 platen, 1 met andere kandidaten
+    1 kandidaat erbij, 0 verdwenen
+    163930  was 1858663  wordt 3838522
+
+Let op: `uit/platen.json`, `uit/platen.csv` en `site/publiek/collectie.json` zijn
+NIET opnieuw gebouwd. De code klopt; de gepubliceerde kast heeft die plaat nog
+verkeerd staan tot de keten opnieuw draait.
 
 Open punten:
 
