@@ -61,3 +61,7 @@ v2/site/motor/ijk/
 # Het ijkpunt voor match.herken: 7,8 MB platen + Discogs-antwoorden.
 # `py browser/ijkmatch.py` maakt het zo weer.
 v2/uit/_geen_hoezen/
+
+# Kopieen die browser/herstel163930.py naast de bestanden zet voor het ze
+# wijzigt. Handig om terug te kijken, maar geen bron.
+*.voor-163930
