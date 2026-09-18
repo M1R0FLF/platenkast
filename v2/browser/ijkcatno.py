@@ -18,17 +18,27 @@ verklaarbaar is heeft het zin om naar de gekozen PERSING te kijken.
 
 De te repareren zaak
 --------------------
-Op "Ciao Italia '89" staat het nummer van de plaat als "21P303566", met de cd
-en de cassette van dezelfde uitgave ernaast:
+Rechtsboven op de achterkant van "Ciao Italia '89" staat een blokje met de drie
+dragers van dezelfde uitgave. Op de hoes staat er gedrukt:
 
-    21P303566        de LP        -> CATNO vindt NIETS
-    Q-2CD:353.566    de cd        -> 353.566
+    2LP : 303.566    de plaat
+    2MC : 503.566    de cassette
+    2CD : 353.566    de cd
+
+Door het plastic hoesje, met de glans er dwars overheen, leest de OCR dat als:
+
+    21P303566        de plaat     -> CATNO vindt NIETS
     2MC:503.566      de cassette  -> 503.566
+    Q-2CD:353.566    de cd        -> 353.566
 
-Het patroon begint met \\b, en tussen de "1" en de "P" staat geen woordgrens.
-Het nummer van de PLAAT is dus onzichtbaar terwijl dat van twee andere dragers
-netjes doorkomt - en die sturen de zoekopdracht naar de verkeerde plaat in
-dezelfde reeks.
+De schade zit dus niet in het patroon maar in EEN letter: de "L" van 2LP werd
+een "1", en de spatie met dubbelepunt ertussen viel weg. Het patroon begint met
+\\b, en tussen die "1" en die "P" staat geen woordgrens - dus het nummer van de
+PLAAT is onzichtbaar terwijl dat van de twee andere dragers netjes doorkomt. En
+die sturen de zoekopdracht naar de verkeerde plaat in dezelfde reeks.
+
+Wat hieronder staat repareert de OCR niet - dat kan van hieruit niet - maar
+herkent de VORM die een misgelezen prefix maakt, en haalt het nummer eruit.
 """
 import os, re, sys, json, argparse
 
