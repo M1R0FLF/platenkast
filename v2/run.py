@@ -80,6 +80,18 @@ def main():
     # en niet de kernen meer - maar het wordt ook niet slechter.
     ap.add_argument("--werkers", type=int, default=0,
                     help="0 = zoveel als er kernen zijn, tot 12")
+    # De OCR is 88% van de tijd, en die kan naar de videokaart. Gemeten over
+    # alle 225 uitsnedes gaf dat 6539 identieke tekstregels - hetzelfde
+    # antwoord, sneller. Wel een ander pakket: zie knip._op_gpu.
+    #
+    # Met --gpu zijn er MINDER werkers, en dat is geen zuinigheid: er is een
+    # kaart, dus werkers staan bij elkaar in de rij. Het snijwerk en de
+    # Discogs-vragen lopen er wel naast door, en daarvoor zijn er een paar
+    # nodig. Zie LEESMIJ voor de meting.
+    ap.add_argument("--gpu", nargs="?", const="0", default=None, metavar="APPARAAT",
+                    help="de OCR op de videokaart (DirectML). --gpu 1 kiest de "
+                         "tweede kaart; `py -c \"import onnxruntime\"` toont ze niet, "
+                         "maar Taakbeheer wel")
     ap.add_argument("--zoekers", type=int, default=2,
                     help="draden die Discogs bevragen; de snelheidsrem is gedeeld")
     ap.add_argument("--zijde", type=int, default=3200)
@@ -162,7 +174,14 @@ def keten(a, melden=None, stop=None):
     if not paden:
         raise SystemExit(f"Geen foto's in {a.fotos}")
 
-    werkers = a.werkers or min(12, os.cpu_count() or 1)
+    # getattr en niet a.gpu: kast.py bouwt zijn eigen Namespace en kent deze
+    # vlag niet. Een nieuwe optie in `keten` mag de knop Verwerken niet slopen.
+    gpu = getattr(a, "gpu", None)
+    if gpu is not None:
+        # Moet VOOR de pool gezet worden: op Windows begint een werker met een
+        # lege interpreter en erft alleen de omgeving. Zie knip._rekenaar.
+        os.environ["PLATENKAST_REKENAAR"] = f"gpu{gpu}"
+    werkers = a.werkers or (3 if gpu is not None else min(12, os.cpu_count() or 1))
     zeg("begin", totaal=len(paden), werkers=werkers, zoekers=a.zoekers,
         gedaan=len(gedaan), cache=dc.aantal(), map=os.path.abspath(a.fotos))
 

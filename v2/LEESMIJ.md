@@ -129,6 +129,71 @@ plaat tegen 1,5s. Dat is pure Python in WASM, met geen numpy die het opvangt.
 Voor één plaat tegelijk is dat prima; voor tweehonderd in één keer niet, en dat
 hoort in het ontwerp van het scherm terug te komen.
 
+## De OCR op de videokaart
+
+```bash
+pip uninstall onnxruntime && pip install onnxruntime-directml
+py run.py --gpu
+```
+
+**Waarom juist daar en nergens anders.** Een volle foto geprofileerd, 16,3s:
+
+| | | |
+|---|---|---|
+| **14,37s** | **88,3%** | `onnxruntime.run` — het OCR-netwerk |
+| 0,52s | 3,2% | `grabCut` |
+| 0,21s | 1,3% | `cvtColor` |
+| 0,20s | 1,2% | `warpPerspective` |
+| **0,09s** | **1,0%** | **onze eigen Python** |
+
+Onze code is één procent, en dat is nog een overschatting omdat cProfile
+Python-aanroepen extra belast. Herschrijven in een snellere taal levert dus
+hooguit één procent op. Alles daarboven is al C++ met SIMD.
+
+**Rekent een kaart hetzelfde?** Niet bit voor bit — andere volgorde van
+optellen, andere kernels, afwijkingen rond 1e-5. En deze keten heeft drie
+plekken waar zo'n afwijking een *beslissing* kan omklappen: de CTC-decodering
+(teken of niets), de detectiedrempel (telt dit vak nog mee) en de
+hoekclassificatie (staat het op zijn kop). Tussen WASM en x86 klapt dat op
+ongeveer een vijfde van de regels om, dus dit was een echte vraag en geen
+formaliteit.
+
+Gemeten op 2026-09-19 over alle 225 uitsnedes, 6539 tekstregels:
+
+```
+tekst identiek      225/225
+velden identiek     225/225
+catalogusnummer     225/225
+```
+
+Geen enkele afwijking. Ook niet tussen onnxruntime 1.30.0 en 1.24.4, en dat
+moest apart nagekeken worden omdat `onnxruntime-directml` die oudere versie
+meebrengt. `py meten/ijkgpu.py` draait die vergelijking opnieuw.
+
+Daarmee is dit ook **niet** hetzelfde probleem als de telefoon: als de kaart
+exact geeft wat de processor geeft, dan is kaart-tegenover-telefoon precies
+kaart-tegenover-processor plus processor-tegenover-telefoon. De GPU maakt dat
+gat niet groter.
+
+**Wat het oplevert.** Niet wat je van "drie keer sneller per aanroep" zou
+verwachten, want de CPU draait al zestien werkers naast elkaar terwijl er maar
+één kaart is. 48 foto's, RTX A2000 8GB naast 20 kernen:
+
+| | per foto | 225 foto's | kernen bezet |
+|---|---|---|---|
+| cpu, 16 werkers | 2,01s | 7,5 min | 16 |
+| **gpu, 3 werkers** | **1,34s** | **5,0 min** | **3** |
+| gpu, 6 werkers | 2,01s | 7,5 min | 6 |
+
+Anderhalf keer sneller met een vijfde van de kernen — die blijven vrij voor het
+snijwerk, de Discogs-vragen en de rest van je machine. Zes werkers is precies
+zo traag als de hele processor: die staan bij één kaart in de rij. Daarom zet
+`--gpu` het aantal werkers standaard op **3**.
+
+**Let op bij het meten.** Deze laptop klokt terug. Dezelfde OCR-aanroep, drie
+keer achter elkaar: snelste 6,23s, traagste 32,60s. Alles fijner dan een factor
+twee is hier niet te meten zonder tientallen herhalingen.
+
 ## site/vercel.json
 
 Geen commentaar in dat bestand, ook niet als "_waarom"-sleutel: Vercel keurt

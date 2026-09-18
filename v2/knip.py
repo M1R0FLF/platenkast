@@ -588,11 +588,75 @@ def _een_draad_per_sessie():
     ru._draden_vastgezet = True
 
 
+def _rekenaar():
+    """Waar de OCR moet rekenen: "cpu", of "gpu" met een apparaatnummer erachter.
+
+    Via de omgeving en niet via een argument, en dat is geen slordigheid:
+    `motor` is de initializer van een processenpool, en op Windows begint zo'n
+    proces met een lege interpreter (spawn, geen fork). Globals uit de ouder
+    komen dus niet mee. De omgeving wel.
+    """
+    return os.environ.get("PLATENKAST_REKENAAR", "cpu").strip().lower()
+
+
+def _op_gpu(apparaat=0):
+    """De OCR door de videokaart laten doen, via DirectML.
+
+    RapidOCR kent alleen CUDA (zie `OrtInferSession.__init__`), en CUDA vraagt
+    een toolkit die je apart moet installeren. DirectML praat met elke kaart die
+    DirectX 12 spreekt - NVIDIA, AMD, en ook de ingebouwde Intel - en zit in
+    een pip-pakket. Dus schuiven we de provider eronder, net zoals
+    `_een_draad_per_sessie` hierboven de draadinstelling eronder schuift.
+
+    Rekent een GPU hetzelfde als een CPU? Niet bit voor bit - andere volgorde
+    van optellen, andere kernels. Maar wel hetzelfde ANTWOORD: over alle 225
+    uitsnedes gemeten gaven CPU en GPU 6539 identieke tekstregels, geen enkele
+    afwijking, en dus ook dezelfde catalogusnummers. Zie LEESMIJ.
+    """
+    import onnxruntime as ort
+    if "DmlExecutionProvider" not in ort.get_available_providers():
+        raise RuntimeError(
+            "deze onnxruntime kent DirectML niet. Nodig:\n"
+            "    pip uninstall onnxruntime\n"
+            "    pip install onnxruntime-directml\n"
+            "Die twee pakketten leveren dezelfde module en kunnen niet naast "
+            "elkaar staan.")
+    from rapidocr_onnxruntime import utils as ru
+    if getattr(ru, "_gpu_ingeschakeld", False):
+        return
+    echt_opties, echt_sessie = ru.SessionOptions, ru.InferenceSession
+
+    def opties():
+        o = echt_opties()
+        o.enable_mem_pattern = False       # DirectML wil dit uit
+        return o
+
+    def sessie(model, sess_options=None, providers=None, **kw):
+        return echt_sessie(model, sess_options=sess_options,
+                           providers=[("DmlExecutionProvider", {"device_id": apparaat}),
+                                      "CPUExecutionProvider"], **kw)
+
+    ru.SessionOptions = opties
+    ru.InferenceSession = sessie
+    ru._gpu_ingeschakeld = True
+    # De draadpatch hierboven hoort nu NIET meer te draaien: die zet het
+    # rekenwerk op een kern vast, en dat is precies goed als je zestien werkers
+    # naast elkaar hebt en precies verkeerd als het rekenwerk op de kaart
+    # gebeurt en de kern alleen nog data heen en weer schuift.
+    ru._draden_vastgezet = True
+
+
 def motor():
     global MOTOR
     if MOTOR is None:
-        cv2.setNumThreads(1)
-        _een_draad_per_sessie()
+        r = _rekenaar()
+        if r.startswith("gpu"):
+            # Minder werkers, dus elk van hen mag meer kernen voor het snijwerk.
+            cv2.setNumThreads(2)
+            _op_gpu(int(r[3:] or 0))
+        else:
+            cv2.setNumThreads(1)
+            _een_draad_per_sessie()
         from rapidocr_onnxruntime import RapidOCR
         MOTOR = RapidOCR()
     return MOTOR

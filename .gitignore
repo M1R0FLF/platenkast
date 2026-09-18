@@ -74,3 +74,7 @@ v2/uit/_geen_hoezen/
 v2/server/kast.db
 v2/server/kast.db-wal
 v2/server/kast.db-shm
+
+# Tussenuitvoer van meten/ijkgpu.py: de tekst van twee leesrondes, om te
+# vergelijken. Maakt het script zo weer.
+v2/uit/_ijkgpu-*.json
