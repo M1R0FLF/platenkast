@@ -10,6 +10,11 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='%230f0f11'/><circle cx='12' cy='12' r='9' fill='none' stroke='%23d8b46a' stroke-width='1.2'/><circle cx='12' cy='12' r='3' fill='none' stroke='%23d8b46a' stroke-width='1.2'/></svg>">
 </head>
 <body>
+<!-- Zet de pagina cross-origin geisoleerd als de server dat niet doet. Moet
+     VOOR app.js staan en mag geen module zijn: hij registreert een service
+     worker en herlaadt eenmalig, en dat hoort te gebeuren voor er iets anders
+     op gang komt. Zonder isolatie geen SharedArrayBuffer en dus geen motor. -->
+<script src="isolatie.js"></script>
 <header class="top"></header>
 <main><p style="color:#6e6d74">Bezig met laden...</p></main>
 <noscript>
