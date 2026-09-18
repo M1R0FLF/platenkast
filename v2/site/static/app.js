@@ -82,6 +82,7 @@ function menu() {
       const w = e.target.value;
       e.target.value = "";
       if (w === "discogs") await uitDiscogs();
+      if (w === "sync") await naarSync();
       if (w === "uit") await bewaarBestand();
       if (w === "in") kiesBestand();
       if (w === "csv") await naarCsv();
@@ -95,6 +96,7 @@ function menu() {
   }, [
     el("option", { value: "", tekst: "⋯" }),
     el("option", { value: "discogs", tekst: "Uit je Discogs-collectie halen" }),
+    el("option", { value: "sync", tekst: "Synchroniseren met je eigen server" }),
     el("option", { value: "uit", tekst: "Kast opslaan als bestand" }),
     el("option", { value: "in", tekst: "Kast uit bestand laden" }),
     el("option", { value: "csv", tekst: "Verkooplijst als CSV" }),
@@ -163,6 +165,32 @@ async function naarCsv() {
 async function uitDiscogs() {
   const scherm = await import("./invoerscherm.js");
   await scherm.scherm(herlaad);
+}
+
+/* ---------------------------------------------------------- eigen server -- */
+
+async function naarSync() {
+  const scherm = await import("./syncscherm.js");
+  await scherm.scherm(herlaad);
+}
+
+/** Bij het openen stilletjes bijwerken, als deze browser gekoppeld is.
+ *
+ *  Stilletjes, want dit is de hele belofte van een server: je pakt je telefoon
+ *  en de kast klopt. Een knop die je eerst moet vinden maakt van die belofte
+ *  een klusje. Dus ook: geen foutmelding als het niet lukt - de server staat
+ *  bij iemand thuis en mag gewoon uit staan. Het scherm onder "Synchroniseren"
+ *  vertelt wel wat er aan de hand is, en dat is de plek waar je het vraagt. */
+async function syncStil() {
+  try {
+    const opslag = await import("./opslag.js");
+    if (!(await opslag.syncStand()).gebruiker) return false;
+    const sync = await import("./sync.js");
+    const r = await sync.synchroniseer();
+    return r.omlaag.platen + r.omlaag.eigen + r.omlaag.verwijderd > 0;
+  } catch (e) {
+    return false;
+  }
 }
 
 /* -------------------------------------------------------------- eerste keer -- */
@@ -258,4 +286,5 @@ window.addEventListener("hashchange", () => {
 
 herlaad().then(async () => {
   if (await ververs()) await herlaad();
+  if (await syncStil()) await herlaad();
 });

@@ -170,6 +170,32 @@ uitgesneden, rechtgezet en op naam van de oorspronkelijke foto. Welke foto's bij
 welke plaat horen staat in de kolom `foto's` van de verkooplijst, voorkant
 eerst.
 
+## Je eigen server: dezelfde kast op twee apparaten
+
+`py server/kastserver.py` is een DERDE plek waar `site/` vandaan kan komen, en
+de enige die ook onthoudt. Hij rekent niets uit - de keten draait in de browser
+van de gebruiker - en bewaart alleen JSON in een SQLite-bestand. Honderd platen
+zijn 172 kB, dus een oude desktop is hier ruim voldoende.
+
+Volledige uitleg staat in [`server/LEESMIJ.md`](server/LEESMIJ.md). De twee
+dingen die je moet weten voor je eraan begint:
+
+**`kast.py` mag nooit naar buiten.** Die heeft geen authenticatie, opent met
+`/api/kies-map` een echt venster op je bureaublad en kan met `/api/publiceer`
+een `git push` doen. Hij is voor 127.0.0.1 geschreven en hoort daar te blijven.
+De kastserver is daarom een apart programma, niet een uitbreiding.
+
+**Niets hangt aan de uitnodigingssleutel, alles aan `gebruiker.id`.** Er zijn nu
+geen wachtwoorden: een uitnodiging maak je op de opdrachtregel van de machine
+zelf, dus er is geen weg van buitenaf om een account te maken. Maar de
+uitnodiging is een RIJ in `login`, naast de rijen die er later bij kunnen komen.
+Zou de sleutel zelf de identiteit zijn, dan is echte accounts aanzetten een
+datamigratie van andermans platen. `py server/proef.py` bewaakt dat, samen met
+de samenvoegregels.
+
+Foto's gaan nog niet mee. Dat is de volgende stap en een andere orde van
+grootte: ~5 MB per foto tegenover ~1,7 kB per plaat aan gegevens.
+
 ## Wat er anders is dan in v1
 
 **Rekenwerk en netwerk lopen naast elkaar.** De twee knelpunten gebruiken

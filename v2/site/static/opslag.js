@@ -85,12 +85,25 @@ export async function isGevuld() {
 
 /* --------------------------------------------------------------- schrijven -- */
 
+/* Elk record draagt een `gewijzigd`, en dat is er voor het synchroniseren.
+ *
+ * Een tijdstempel uit `toISOString()`: UTC, met milliseconden. Zo mag je ze als
+ * TEKST vergelijken - ISO 8601 in UTC sorteert gelijk aan de tijd zelf - en dat
+ * doen de server en deze kant allebei. Milliseconden en niet seconden, want
+ * twee keer iets intikken binnen een seconde is doodnormaal en de tweede
+ * wijziging hoort dan niet als "niet nieuwer" te sneuvelen.
+ *
+ * Staat er al een stempel op (een record uit een bestand of van de server), dan
+ * blijft die staan. Anders zou binnenhalen hetzelfde zijn als wijzigen. */
+const stempel = () => new Date().toISOString();
+
 /** Vervangt de uitgerekende laag. `eigen` blijft onaangeroerd. */
 export async function zetCollectie(doc, basis = "") {
   const platen = doc.platen || [];
+  const nu = stempel();
   await tx("collectie", "readwrite", s => {
     s.clear();
-    platen.forEach(p => s.put(p));
+    platen.forEach(p => s.put({ gewijzigd: nu, ...p }));
   });
   await tx("meta", "readwrite", s => s.put({
     sleutel: "doc",
@@ -108,7 +121,8 @@ export async function zetCollectie(doc, basis = "") {
 /** Voegt platen toe zonder de rest weg te gooien - voor een tweede stapel. */
 export async function vulAan(doc) {
   const platen = doc.platen || [];
-  await tx("collectie", "readwrite", s => platen.forEach(p => s.put(p)));
+  const nu = stempel();
+  await tx("collectie", "readwrite", s => platen.forEach(p => s.put({ gewijzigd: nu, ...p })));
   return platen.length;
 }
 
@@ -120,6 +134,7 @@ export async function zetEigen(id, velden) {
     if (nieuw[k] === "" || nieuw[k] === null || nieuw[k] === undefined) delete nieuw[k];
   });
   nieuw.id = id;
+  nieuw.gewijzigd = stempel();       // NA het opschonen: dit veld hoort er altijd op
   await tx("eigen", "readwrite", s => s.put(nieuw));
   return nieuw;
 }
@@ -189,6 +204,82 @@ export async function hervat() {
   const vast = rijen.filter(r => r.staat === "bezig");
   for (const r of vast) await wijzig(r.id, { staat: "wacht" });
   return vast.length;
+}
+
+/* ---------------------------------------------------------- synchroniseren -- */
+
+/* Deze drie functies weten NIETS van HTTP - dat staat in sync.js. Hier staat
+ * alleen wat er lokaal in en uit moet, want dat is het deel dat je fout kunt
+ * doen op een manier die je pas maanden later merkt. */
+
+/** De naam van de kast, met wanneer hij voor het laatst veranderde. */
+export async function kastNaam() {
+  const m = await tx("meta", "readonly", s => s.get("doc"));
+  const w = (m && m.waarde) || {};
+  return { naam: w.naam || "", gewijzigd: w.bijgewerkt || stempel() };
+}
+
+export async function syncStand() {
+  const r = await tx("meta", "readonly", s => s.get("sync"));
+  return (r && r.waarde) || { basis: "", gebruiker: null, laatst: "" };
+}
+
+export async function zetSyncStand(velden) {
+  const nu = await syncStand();
+  const waarde = { ...nu, ...velden };
+  await tx("meta", "readwrite", s => s.put({ sleutel: "sync", waarde }));
+  return waarde;
+}
+
+/** Alles wat hier veranderde sinds de vorige keer.
+ *
+ *  Records zonder stempel gaan MEE, met de tijd van nu. Dat is de kast zoals
+ *  hij was voordat dit bestand stempels kende: die gegevens zijn echt en horen
+ *  omhoog, niet overschreven te worden door een lege server. */
+export async function teDuwen(sinds = "") {
+  const nu = stempel();
+  const pak = rijen => rijen
+    .filter(r => (r.gewijzigd || nu) > sinds)
+    .map(({ gewijzigd, ...doc }) => ({ id: doc.id, gewijzigd: gewijzigd || nu, doc }));
+  return {
+    platen: pak(await tx("collectie", "readonly", s => s.getAll())),
+    eigen: pak(await tx("eigen", "readonly", s => s.getAll())),
+  };
+}
+
+/** Wat de server terugstuurt hier binnenzetten.
+ *
+ *  Dezelfde regel als aan de serverkant, en met opzet ook HIER: tussen het
+ *  moment dat we duwden en het moment dat het antwoord binnenkomt kun je
+ *  gewoon iets ingetikt hebben. Klakkeloos overnemen zou dat wissen. */
+export async function neemOver(antwoord) {
+  const tel = { platen: 0, eigen: 0, behouden: 0, verwijderd: 0 };
+
+  for (const [naam, winkel] of [["platen", "collectie"], ["eigen", "eigen"]]) {
+    for (const r of antwoord[naam] || []) {
+      const hier = await tx(winkel, "readonly", s => s.get(r.id));
+      if (hier && (hier.gewijzigd || "") > r.gewijzigd) {
+        tel.behouden++;                 // wat hier staat is nieuwer
+        continue;
+      }
+      if (r.weg) {
+        if (hier) tel.verwijderd++;
+        await tx(winkel, "readwrite", s => s.delete(r.id));
+        continue;
+      }
+      await tx(winkel, "readwrite",
+               s => s.put({ ...r.doc, id: r.id, gewijzigd: r.gewijzigd }));
+      tel[naam]++;
+    }
+  }
+
+  if (antwoord.naam) {
+    const m = await tx("meta", "readonly", s => s.get("doc"));
+    const w = (m && m.waarde) || {};
+    await tx("meta", "readwrite",
+             s => s.put({ sleutel: "doc", waarde: { ...w, naam: antwoord.naam } }));
+  }
+  return tel;
 }
 
 /* ------------------------------------------------------- mee kunnen nemen -- */

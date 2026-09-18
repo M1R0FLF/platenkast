@@ -65,3 +65,12 @@ v2/uit/_geen_hoezen/
 # Kopieen die browser/herstel163930.py naast de bestanden zet voor het ze
 # wijzigt. Handig om terug te kijken, maar geen bron.
 *.voor-163930
+
+# --- eigen server ---
+# De database van de kastserver: platen, aantekeningen, en de afdrukken van
+# uitnodigingssleutels en sessies. Andermans gegevens, geen broncode. Die hoort
+# nergens in git, en al helemaal niet in een repo die naar een publieke host
+# gaat. Zet hem wel in je back-up - dit is het enige exemplaar.
+v2/server/kast.db
+v2/server/kast.db-wal
+v2/server/kast.db-shm

@@ -65,18 +65,38 @@ def kopieer_keten():
     return n
 
 
-def kopieer_browserkant():
-    """Wat er alleen in de browser is: de brug naar onnxruntime-web.
+# Wat er alleen in de browser is. Staat in `v2/browser/` en niet hiernaast,
+# want het is broncode en `py/` is uitvoer.
+#
+# Hier stond eerst "alles in die map gaat mee", met als reden dat er dan niet
+# nog een lijst is die kan gaan afwijken. Die reden was goed zolang er in die
+# map alleen browserkant stond. Inmiddels staan er ook meetscripts (`ijk*.py`)
+# en een eenmalige reparatie (`herstel163930.py`), en die gingen dus mee: elke
+# telefoon die de site opent haalde een script op dat bestanden op EEN schijf
+# ergens wil bijwerken. Niet gevaarlijk, wel onzin.
+#
+# Dus toch een lijst. Wijkt hij af, dan valt dat meteen op, want dan ontbreekt
+# er een module en start de motor niet.
+BROWSERKANT = [
+    "ocr_brug.py",      # vervangt OrtInferSession door onnxruntime-web
+    "plaat.py",         # de keten voor EEN plaat, zoals de motor hem aanroept
+]
 
-    Staat in `v2/browser/` en niet hiernaast, want het is broncode en `py/`
-    is uitvoer. Alles in die map gaat mee, zodat er niet nog een lijst is die
-    kan gaan afwijken.
-    """
+
+def kopieer_browserkant():
     n = 0
-    for naam in sorted(os.listdir(BROWSER)):
-        if naam.endswith(".py"):
-            shutil.copy2(os.path.join(BROWSER, naam), os.path.join(DOEL, naam))
-            n += 1
+    for naam in BROWSERKANT:
+        bron = os.path.join(BROWSER, naam)
+        if not os.path.exists(bron):
+            sys.exit(f"ontbreekt: browser/{naam}")
+        shutil.copy2(bron, os.path.join(DOEL, naam))
+        n += 1
+    # Wat er ooit wel in stond hoort er ook weer uit, anders blijft het op de
+    # gepubliceerde site staan tot iemand het toevallig ziet.
+    for naam in sorted(os.listdir(DOEL)):
+        if naam.endswith(".py") and naam not in BROWSERKANT and naam not in KETEN:
+            os.remove(os.path.join(DOEL, naam))
+            print(f"  opgeruimd: {naam}")
     return n
 
 
