@@ -129,6 +129,18 @@ plaat tegen 1,5s. Dat is pure Python in WASM, met geen numpy die het opvangt.
 Voor één plaat tegelijk is dat prima; voor tweehonderd in één keer niet, en dat
 hoort in het ontwerp van het scherm terug te komen.
 
+## site/vercel.json
+
+Geen commentaar in dat bestand, ook niet als "_waarom"-sleutel: Vercel keurt
+onbekende velden af en dan FAALT de bouw, waarna de oude versie blijft staan.
+Dat kostte een testronde op de telefoon. De uitleg staat daarom hier:
+
+| | |
+|---|---|
+| `rewrites: /hoesbeeld/*` | i.discogs.com stuurt geen Access-Control-Allow-Origin, dus de browser weigert de hoesafbeelding op te halen. Via ons eigen pad is het same-origin. Zonder dit geen beeldronde. Moet gelijk blijven aan `_hoesbeeld` in kast.py. |
+| COOP + COEP op `/(.*)` | Zonder deze twee geen SharedArrayBuffer, en zonder gedeeld geheugen draait de keten niet. Moet gelijk blijven aan `ISOLATIE` in kast.py. |
+| een jaar cache op `motor/modellen/` | 14 MB modellen die alleen veranderen als hun naam verandert. |
+
 ## De site
 
 `site/` is een gewone statische site: geen bouwstap, geen npm, geen framework.

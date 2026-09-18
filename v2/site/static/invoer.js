@@ -77,6 +77,110 @@ export function naarPlaat(item) {
   };
 }
 
+/* ------------------------------------------------------ zonder token: CSV -- */
+
+/** Een CSV-regel opsplitsen met respect voor aanhalingstekens.
+ *
+ *  Niet `regel.split(",")`: in de Discogs-export staat "Gaynor, Gloria" en
+ *  "LP, Album, Reissue", en dat zijn geen kolomgrenzen. Een dubbele quote
+ *  binnen een veld schrijft Discogs als "".
+ */
+function velden(regel) {
+  const uit = [];
+  let veld = "", inQuote = false;
+  for (let i = 0; i < regel.length; i++) {
+    const c = regel[i];
+    if (inQuote) {
+      if (c === '"' && regel[i + 1] === '"') { veld += '"'; i++; }
+      else if (c === '"') inQuote = false;
+      else veld += c;
+    } else if (c === '"') inQuote = true;
+    else if (c === ",") { uit.push(veld); veld = ""; }
+    else veld += c;
+  }
+  uit.push(veld);
+  return uit;
+}
+
+/** De Discogs-collectie-export omzetten. Geen token, geen API, geen wachten.
+ *
+ *  discogs.com > Collection > Export levert een CSV met hier het belangrijkste
+ *  veld: `release_id`. Daarmee ligt de PERSING vast - niet alleen de plaat -
+ *  en dat is precies waar deze hele kast om draait.
+ *
+ *  De kolomnamen worden op naam gezocht en niet op positie: Discogs heeft die
+ *  volgorde in de loop der jaren veranderd, en een export van vorig jaar hoort
+ *  ook gewoon te werken.
+ */
+export function uitCsv(tekst) {
+  // Een export kan met BOM komen, en regeleindes verschillen per besturingssysteem.
+  const regels = tekst.replace(/^﻿/, "").split(/\r\n|\n|\r/).filter(r => r.trim());
+  if (!regels.length) throw new Error("dit bestand is leeg");
+
+  const kop = velden(regels[0]).map(k => k.trim().toLowerCase());
+  const kolom = naam => kop.indexOf(naam);
+  const iRelease = ["release_id", "release id", "id"].map(kolom).find(i => i >= 0);
+  if (iRelease === undefined) {
+    throw new Error("geen kolom release_id gevonden. Is dit de collectie-export "
+                  + "van Discogs? (Collection > Export)");
+  }
+  const i = {
+    artiest: ["artist", "artiest"].map(kolom).find(x => x >= 0),
+    titel: ["title", "titel"].map(kolom).find(x => x >= 0),
+    label: ["label"].map(kolom).find(x => x >= 0),
+    catno: ["catalog#", "catalog #", "catno"].map(kolom).find(x => x >= 0),
+    jaar: ["released", "year"].map(kolom).find(x => x >= 0),
+    formaat: ["format"].map(kolom).find(x => x >= 0),
+    staat_vinyl: ["collection media condition"].map(kolom).find(x => x >= 0),
+    staat_hoes: ["collection sleeve condition"].map(kolom).find(x => x >= 0),
+    notitie: ["collection notes"].map(kolom).find(x => x >= 0),
+  };
+
+  const pak = (v, idx) => (idx === undefined ? null : (v[idx] || "").trim() || null);
+  const platen = [], eigen = [];
+  for (const regel of regels.slice(1)) {
+    const v = velden(regel);
+    const rid = parseInt((v[iRelease] || "").trim(), 10);
+    if (!rid) continue;
+
+    const formaat = pak(v, i.formaat);
+    const jaarRuw = pak(v, i.jaar);
+    platen.push({
+      id: `dc${rid}`,
+      artiest: (pak(v, i.artiest) || "").replace(/\s*\(\d+\)$/, "") || null,
+      titel: pak(v, i.titel),
+      soort: soortVan(formaat ? [{ name: formaat, descriptions: formaat.split(/\s*,\s*/) }] : []),
+      jaar: jaarRuw ? parseInt(jaarRuw, 10) || null : null,
+      label: pak(v, i.label),
+      catno: pak(v, i.catno),
+      land: null,
+      genres: [],
+      formaat,
+      tracks: [],
+      prijs: null,
+      markt: {},
+      discogs: `https://www.discogs.com/release/${rid}`,
+      release_id: rid,
+      oordeel: "overgenomen",
+      oordeel_reden: ["uit je Discogs-export; door jou gekozen"],
+      beeld_punten: null,
+      herkend_op: "discogs-export",
+      duim: null,                      // staat niet in de CSV
+      fotos: [],
+    });
+
+    // Staat en notitie horen bij JOUW laag, niet bij de uitgerekende. Zo
+    // overleven ze een nieuwe import, net als bij de rest van de kast.
+    const mijn = { staat_vinyl: pak(v, i.staat_vinyl), staat_hoes: pak(v, i.staat_hoes),
+                   notitie: pak(v, i.notitie) };
+    if (Object.values(mijn).some(Boolean)) eigen.push({ id: `dc${rid}`, ...mijn });
+  }
+  if (!platen.length) throw new Error("geen regels met een release_id gevonden");
+  return { platen, eigen };
+}
+
+/* ---------------------------------------------------------- met een token -- */
+
 async function vraag(pad, token, params = {}) {
   const u = new URL(API + pad);
   Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, v));

@@ -1,12 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "_rewrites_waarom": "i.discogs.com stuurt geen Access-Control-Allow-Origin, dus de browser weigert de hoesafbeelding op te halen. Via ons eigen pad is het same-origin. Zonder dit is er geen beeldronde, en juist die ving vijf van de 97 platen af waar de tekst naar de verkeerde persing wees. Moet gelijk blijven aan _hoesbeeld in kast.py.",
   "rewrites": [
     { "source": "/hoesbeeld/:pad*", "destination": "https://i.discogs.com/:pad*" }
   ],
   "headers": [
     {
-      "_waarom": "Zonder deze twee geen SharedArrayBuffer, en zonder gedeeld geheugen draait de keten niet in de browser. Moet gelijk blijven aan ISOLATIE in kast.py.",
       "source": "/(.*)",
       "headers": [
         { "key": "cross-origin-opener-policy", "value": "same-origin" },
@@ -14,7 +12,6 @@
       ]
     },
     {
-      "_waarom": "Modellen en wielen zijn groot en veranderen alleen als hun naam verandert. Een jaar cache scheelt op een telefoon 40 MB per bezoek.",
       "source": "/motor/modellen/(.*)",
       "headers": [
         { "key": "cache-control", "value": "public, max-age=31536000, immutable" }
