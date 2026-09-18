@@ -306,3 +306,15 @@ table.feiten td:first-child { color: var(--zachter); width: 130px; }
   .kaart.bezig { flex-wrap: wrap; }
   .bezigbeeld { width: 64px; height: 64px; flex-basis: 64px; }
 }
+
+/* ------------------------------------------------------- uit Discogs halen -- */
+
+.stappen { margin: 4px 0 14px; padding-left: 22px; color: var(--zacht); }
+.stappen .stap { margin: 5px 0; }
+.stappen b { color: var(--tekst); }
+.invoermelding {
+  background: var(--paneel); border: 1px solid var(--rand);
+  border-radius: var(--radius); padding: 11px 14px; color: var(--zacht);
+}
+.invoermelding.goed { color: var(--goed); border-color: var(--goed); }
+.invoermelding.fout { color: var(--fout); border-color: var(--fout); }
