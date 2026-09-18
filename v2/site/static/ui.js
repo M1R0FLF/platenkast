@@ -40,6 +40,12 @@ export const OORDEEL = {
   zeker: { tekst: "zeker", klasse: "goed", uitleg: "het catalogusnummer van deze persing staat op de hoes" },
   aannemelijk: { tekst: "aannemelijk", klasse: "twijfel", uitleg: "titel, artiest of de hoes zelf klopt en niets spreekt het tegen" },
   onbevestigd: { tekst: "onbevestigd", klasse: "", uitleg: "geen leesbare tekst en geen hoesfoto op Discogs om mee te vergelijken" },
+  // Eigen niveau, en met opzet niet "zeker". Zeker betekent hier: de machine
+  // heeft het catalogusnummer op de hoes GELEZEN. Bij een plaat uit je Discogs-
+  // collectie is dat niet gebeurd - die heb jij daar zelf aangewezen, wat
+  // meestal beter is, maar het is een ander soort zekerheid. Ze op een hoop
+  // gooien maakt het stempel betekenisloos.
+  overgenomen: { tekst: "overgenomen", klasse: "goed", uitleg: "uit jouw Discogs-collectie; door jou gekozen, niet door de machine gelezen" },
   tegenspraak: { tekst: "tegenspraak", klasse: "fout", uitleg: "de hoes zegt iets anders dan de gekozen persing" },
   onbekend: { tekst: "onbekend", klasse: "", uitleg: "niet beoordeeld" },
 };

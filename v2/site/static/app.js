@@ -81,6 +81,7 @@ function menu() {
     onchange: async e => {
       const w = e.target.value;
       e.target.value = "";
+      if (w === "discogs") await uitDiscogs();
       if (w === "uit") await bewaarBestand();
       if (w === "in") kiesBestand();
       if (w === "csv") await naarCsv();
@@ -93,6 +94,7 @@ function menu() {
     },
   }, [
     el("option", { value: "", tekst: "⋯" }),
+    el("option", { value: "discogs", tekst: "Uit je Discogs-collectie halen" }),
     el("option", { value: "uit", tekst: "Kast opslaan als bestand" }),
     el("option", { value: "in", tekst: "Kast uit bestand laden" }),
     el("option", { value: "csv", tekst: "Verkooplijst als CSV" }),
@@ -148,6 +150,83 @@ async function naarCsv() {
   // BOM, want anders maakt Excel in Nederland er een kolom van
   download("verkooplijst.csv", "﻿" + [kolommen.join(";"), ...rijen].join("\r\n"),
            "text/csv;charset=utf-8");
+}
+
+/* ------------------------------------------------------------ uit Discogs -- */
+
+/** Je collectie van Discogs overnemen.
+ *
+ *  Wie daar al jaren bijhoudt wat hij heeft, hoeft zijn kast niet opnieuw te
+ *  fotograferen: die platen zijn er al door een mens geidentificeerd, met een
+ *  release-id erbij. De camera is voor wat er NIET vastligt.
+ *
+ *  Het aanvullen (land, tracklist, prijs) is een aparte vraag, want dat is een
+ *  aanroep per plaat tegen zestig per minuut. Bij vijfhonderd platen is dat
+ *  acht minuten, en dat hoort een keuze te zijn en geen verrassing.
+ */
+async function uitDiscogs() {
+  const invoer = await import("./invoer.js");
+  let token = "";
+  try { token = localStorage.getItem("discogs_token") || ""; } catch {}
+  token = prompt(
+    "Je Discogs-token. Gratis via discogs.com > Settings > Developers > "
+    + "Generate token.\n\nHij blijft in deze browser en gaat nergens anders heen.",
+    token);
+  if (!token) return;
+  token = token.trim();
+  try { localStorage.setItem("discogs_token", token); } catch {}
+
+  const melding = el("p", { style: "color:var(--zacht)" , tekst: "Verbinden met Discogs..." });
+  toon(el("div", { class: "leeg" }, [el("h2", { tekst: "Uit je Discogs-collectie" }), melding]));
+
+  try {
+    const { naam, platen } = await invoer.haalCollectie(token, v => {
+      melding.textContent = `${naam || "..."}: ${v.klaar} van de ${v.totaal} platen opgehaald...`;
+    });
+    if (!platen.length) {
+      melding.textContent = `De collectie van ${naam} is leeg, of staat op prive.`;
+      return;
+    }
+
+    const erbij = confirm(
+      `${platen.length} platen gevonden bij ${naam}.\n\n`
+      + "OK: erbij zetten.\nAnnuleren: niets doen.");
+    if (!erbij) return teken();
+
+    await opslag.vulAan({ platen });
+    await herlaad();
+
+    if (confirm(
+      `${platen.length} platen staan in je kast.\n\n`
+      + "Land, tracklist en marktprijs zitten nog niet in deze lijst; die kosten "
+      + `een aanroep per plaat, dus ongeveer ${Math.ceil(platen.length * 2 / 60)} `
+      + "minuten.\n\nNu ophalen?")) {
+      await vulDiscogsAan(platen, token);
+    }
+  } catch (e) {
+    melding.innerHTML = "";
+    melding.append(`Het ophalen ging mis: ${e.message}`);
+  }
+}
+
+async function vulDiscogsAan(platen, token) {
+  const invoer = await import("./invoer.js");
+  let afbreken = false;
+  const melding = el("p", { style: "color:var(--zacht)" });
+  const knop = el("button", { class: "knop", tekst: "Stoppen",
+                              onclick: () => { afbreken = true; } });
+  toon(el("div", { class: "leeg" }, [
+    el("h2", { tekst: "Aanvullen vanaf Discogs" }), melding, knop,
+  ]));
+  await invoer.vulAan(platen, token, async v => {
+    melding.textContent = `${v.klaar} van de ${v.totaal}`
+      + (v.plaat ? ` — ${v.plaat.artiest || "?"} — ${v.plaat.titel || "?"}` : "");
+    // Elke twintig platen wegschrijven: stopt iemand halverwege, dan is het
+    // werk tot dan toe niet weg.
+    if (v.klaar % 20 === 0) await opslag.vulAan({ platen });
+  }, () => afbreken);
+  await opslag.vulAan({ platen });
+  await herlaad();
 }
 
 /* -------------------------------------------------------------- eerste keer -- */
