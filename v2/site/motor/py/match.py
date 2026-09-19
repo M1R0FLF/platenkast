@@ -833,6 +833,95 @@ def _plaat(rec, rel, titels, waarom, hoe):
     }
 
 
+def catsleutel(x):
+    """Catalogusnummers vergelijken zonder punten, spaties en streepjes.
+
+    "303.566", "303 566" en "303566" zijn hetzelfde nummer; labels en Discogs
+    schrijven het door elkaar.
+    """
+    return re.sub(r"[^a-z0-9]", "", kaal(x or ""))
+
+
+def soort_uit_zoekresultaat(formaten):
+    """LP, single, maxi of EP uit de PLATTE formaatlijst van een zoekresultaat.
+
+    Een zoekresultaat stuurt `['Vinyl', 'LP', 'Compilation']` mee in plaats van
+    de formats-structuur die `_plaat` hierboven leest. Zelfde woorden, andere
+    vorm. None als er niets uit te maken valt.
+    """
+    fmt = " ".join(formaten or []).lower()
+    woorden = fmt.split()
+    if "maxi" in fmt:
+        return "maxi12"
+    if '7"' in fmt or "45 rpm" in fmt:
+        return "single7"
+    if "ep" in woorden:
+        return "EP"
+    if "lp" in woorden or "album" in fmt:
+        return "LP"
+    return None
+
+
+def deelt_nummer(dc, plaat):
+    """Hoeveel ANDERE persingen dragen hetzelfde catalogusnummer?
+
+    Geeft (aantal, landen). `(None, [])` als het niet te bepalen was; dat is
+    iets anders dan nul en `nauwkeurig.beoordeel` behandelt het ook anders.
+
+    Waarom dit bestaat
+    ------------------
+    Het stempel "zeker" zegt: het catalogusnummer van deze persing staat op de
+    hoes, en dat nummer is uniek per persing. Dat tweede is vaak niet waar.
+    Labels nummerden per UITGAVE, niet per drager of per fabriek: dezelfde hoes
+    en hetzelfde nummer, geperst in Belgie en in Frankrijk, staan bij Discogs
+    als twee releases. Gemeten over deze honderd platen: van de 77 die "zeker"
+    heetten, hadden er 44 zo'n tweeling. Zie `meten/ijkpersing.py`.
+
+    Drie filters, want de zoekopdracht van Discogs is los - zoeken op "303.566"
+    geeft ook een Canadese plaat met nummer "BDAY139LP" terug:
+
+      1. het genormaliseerde nummer moet ECHT gelijk zijn
+      2. het moet dezelfde uitgave zijn (artiest en titel), want een andere
+         plaat met toevallig hetzelfde nummer was op de hoestekst al uit te
+         sluiten
+      3. het moet hetzelfde formaat zijn - een 7"-single is geen tweeling van
+         een LP, want welke van de twee je in handen hebt zie je zonder te lezen
+
+    Het land op de hoes zou een tweeling nog kunnen uitsluiten, en dat is
+    geprobeerd. Het hielp bij NUL van de 44: waar er een land op stond, paste
+    dat op de gekozen persing en op minstens een tweeling - meestal omdat
+    Discogs de ander "Europe" noemt en een Nederlandse hoes daar netjes bij
+    past. Die afweging is er daarom uitgelaten; hij voegde alleen code toe.
+    """
+    s = catsleutel(plaat.get("catno"))
+    if len(s) < 4:
+        return None, []
+    try:
+        treffers = dc.zoek(catno=plaat.get("catno"), format="Vinyl")
+    except Exception:
+        return None, []
+
+    titel = kaal(plaat.get("title") or "")
+    artiest = kaal((plaat.get("artist") or "").split(",")[0])
+    landen = []
+    for t in treffers:
+        if str(t.get("id")) == str(plaat.get("release_id_auto")):
+            continue
+        if catsleutel(t.get("catno")) != s:
+            continue
+        heel = kaal(t.get("title") or "")
+        if not titel or titel not in heel:
+            continue
+        if artiest and artiest not in ("various", "various artists") \
+                and artiest not in heel:
+            continue
+        ts, ps = soort_uit_zoekresultaat(t.get("format")), plaat.get("soort")
+        if ts and ps and ts != ps:
+            continue
+        landen.append(t.get("country") or "onbekend")
+    return len(landen), sorted(set(landen))
+
+
 def op_release(dc, rec, release_id, hoezendir):
     """De persing is al bekend; alleen nog nameten of de hoes klopt.
 
@@ -862,6 +951,24 @@ def op_release(dc, rec, release_id, hoezendir):
 
 
 def herken(dc, rec, hoezendir, hint=None):
+    """De gekozen persing, met erbij hoe uniek zijn catalogusnummer is.
+
+    Het kiezen zelf staat in `_kies`; hier komt er een meting bovenop. Die
+    hoort niet in `_kies` omdat hij de KEUZE niet beinvloedt - hij zegt alleen
+    hoe hard het bewijs is dat tot die keuze leidde, en dat is wat
+    `nauwkeurig.beoordeel` nodig heeft om niet meer te beloven dan er staat.
+
+    Kost een zoekopdracht per plaat, meestal uit de cache.
+    """
+    plaat, reden = _kies(dc, rec, hoezendir, hint)
+    if plaat:
+        n, landen = deelt_nummer(dc, plaat)
+        plaat["persing_delers"] = n
+        plaat["persing_landen"] = landen
+    return plaat, reden
+
+
+def _kies(dc, rec, hoezendir, hint=None):
     """Alle strategieen op volgorde, en de hoes heeft het laatste woord.
 
     Het beeld was eerst strategie DRIE: het kwam pas aan de beurt als tekst

@@ -22,7 +22,25 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 466488,
-  "beeld_punten": 501
+  "beeld_punten": 501,
+  "persing_delers": 24,
+  "persing_landen": [
+   "Australia",
+   "Austria",
+   "Brazil",
+   "Chile",
+   "Colombia",
+   "France",
+   "Greece",
+   "Israel",
+   "Peru",
+   "Portugal",
+   "Scandinavia",
+   "South Africa",
+   "Spain",
+   "UK",
+   "Uruguay"
+  ]
  },
  {
   "id": "160800",
@@ -47,7 +65,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 6265083,
-  "beeld_punten": 391
+  "beeld_punten": 391,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "160841",
@@ -72,7 +92,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 1386866,
-  "beeld_punten": 211
+  "beeld_punten": 211,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "160904",
@@ -97,7 +119,14 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1903233,
-  "beeld_punten": 584
+  "beeld_punten": 584,
+  "persing_delers": 10,
+  "persing_landen": [
+   "Austria",
+   "Germany",
+   "Israel",
+   "Scandinavia"
+  ]
  },
  {
   "id": "161046",
@@ -123,7 +152,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5149189,
-  "beeld_punten": 250
+  "beeld_punten": 250,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "161133",
@@ -148,7 +179,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 908758,
-  "beeld_punten": 349
+  "beeld_punten": 349,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Netherlands"
+  ]
  },
  {
   "id": "161156",
@@ -173,7 +208,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 843017,
-  "beeld_punten": 467
+  "beeld_punten": 467,
+  "persing_delers": 3,
+  "persing_landen": [
+   "Netherlands"
+  ]
  },
  {
   "id": "161218",
@@ -199,7 +238,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 4724619,
-  "beeld_punten": 515
+  "beeld_punten": 515,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "161310",
@@ -224,7 +265,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1029942,
-  "beeld_punten": 514
+  "beeld_punten": 514,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Europe"
+  ]
  },
  {
   "id": "161415",
@@ -249,7 +294,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 583091,
-  "beeld_punten": 436
+  "beeld_punten": 436,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "161519",
@@ -275,7 +322,11 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 489036,
-  "beeld_punten": 676
+  "beeld_punten": 676,
+  "persing_delers": 2,
+  "persing_landen": [
+   "Europe"
+  ]
  },
  {
   "id": "161700",
@@ -300,7 +351,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2773281,
-  "beeld_punten": 390
+  "beeld_punten": 390,
+  "persing_delers": 1,
+  "persing_landen": [
+   "UK"
+  ]
  },
  {
   "id": "161751",
@@ -325,7 +380,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2364569,
-  "beeld_punten": 86
+  "beeld_punten": 86,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "161816",
@@ -350,7 +407,12 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3053377,
-  "beeld_punten": 248
+  "beeld_punten": 248,
+  "persing_delers": 3,
+  "persing_landen": [
+   "Europe",
+   "UK"
+  ]
  },
  {
   "id": "161839",
@@ -376,7 +438,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7856052,
-  "beeld_punten": 207
+  "beeld_punten": 207,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "161928",
@@ -401,7 +465,23 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 11512170,
-  "beeld_punten": 485
+  "beeld_punten": 485,
+  "persing_delers": 25,
+  "persing_landen": [
+   "Austria",
+   "Europe",
+   "France",
+   "Germany",
+   "Italy",
+   "Netherlands",
+   "Portugal",
+   "Scandinavia",
+   "Singapore",
+   "Sweden",
+   "Turkey",
+   "UK",
+   "US"
+  ]
  },
  {
   "id": "162011",
@@ -426,7 +506,13 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 9082552,
-  "beeld_punten": 228
+  "beeld_punten": 228,
+  "persing_delers": 5,
+  "persing_landen": [
+   "Europe",
+   "France",
+   "Turkey"
+  ]
  },
  {
   "id": "162033",
@@ -451,7 +537,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 850689,
-  "beeld_punten": 230
+  "beeld_punten": 230,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "162056",
@@ -476,7 +564,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 18000364,
-  "beeld_punten": 214
+  "beeld_punten": 214,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "162120",
@@ -502,7 +592,14 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 552918,
-  "beeld_punten": 387
+  "beeld_punten": 387,
+  "persing_delers": 5,
+  "persing_landen": [
+   "Europe",
+   "Israel",
+   "Netherlands",
+   "Portugal"
+  ]
  },
  {
   "id": "162304",
@@ -527,7 +624,13 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7498916,
-  "beeld_punten": 520
+  "beeld_punten": 520,
+  "persing_delers": 3,
+  "persing_landen": [
+   "Europe",
+   "Israel",
+   "Spain"
+  ]
  },
  {
   "id": "162345",
@@ -553,7 +656,11 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 9374494,
-  "beeld_punten": 331
+  "beeld_punten": 331,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Germany"
+  ]
  },
  {
   "id": "162431",
@@ -578,7 +685,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1942885,
-  "beeld_punten": 411
+  "beeld_punten": 411,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "162456",
@@ -603,7 +712,17 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2910327,
-  "beeld_punten": 232
+  "beeld_punten": 232,
+  "persing_delers": 8,
+  "persing_landen": [
+   "Austria",
+   "Chile",
+   "France",
+   "Germany",
+   "Lebanon",
+   "Netherlands",
+   "UK"
+  ]
  },
  {
   "id": "162532",
@@ -630,7 +749,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1557775,
-  "beeld_punten": 396
+  "beeld_punten": 396,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "162647",
@@ -655,7 +776,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 1162070,
-  "beeld_punten": 335
+  "beeld_punten": 335,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "162716",
@@ -680,7 +803,29 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 222189,
-  "beeld_punten": 528
+  "beeld_punten": 528,
+  "persing_delers": 32,
+  "persing_landen": [
+   "Angola",
+   "Australia",
+   "Canada",
+   "Chile",
+   "France",
+   "Germany",
+   "Greece",
+   "India",
+   "Israel",
+   "Italy",
+   "Kenya",
+   "Mozambique",
+   "Netherlands",
+   "New Zealand",
+   "Peru",
+   "Philippines",
+   "Portugal",
+   "South Africa",
+   "Spain"
+  ]
  },
  {
   "id": "162736",
@@ -706,7 +851,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 8012748,
-  "beeld_punten": 130
+  "beeld_punten": 130,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "162817",
@@ -732,7 +879,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 916443,
-  "beeld_punten": 285
+  "beeld_punten": 285,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "162901",
@@ -758,7 +907,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 8960043,
-  "beeld_punten": 249
+  "beeld_punten": 249,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "162933",
@@ -783,7 +934,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3661894,
-  "beeld_punten": 411
+  "beeld_punten": 411,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Germany"
+  ]
  },
  {
   "id": "162956",
@@ -809,7 +964,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2614903,
-  "beeld_punten": 421
+  "beeld_punten": 421,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163032",
@@ -834,7 +991,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3720615,
-  "beeld_punten": 120
+  "beeld_punten": 120,
+  "persing_delers": 2,
+  "persing_landen": [
+   "Germany"
+  ]
  },
  {
   "id": "163057",
@@ -859,7 +1020,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 403740,
-  "beeld_punten": 313
+  "beeld_punten": 313,
+  "persing_delers": 4,
+  "persing_landen": [
+   "Germany"
+  ]
  },
  {
   "id": "163124",
@@ -884,7 +1049,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2725343,
-  "beeld_punten": 484
+  "beeld_punten": 484,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163146",
@@ -909,7 +1076,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 732419,
-  "beeld_punten": 434
+  "beeld_punten": 434,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163229",
@@ -935,7 +1104,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3788224,
-  "beeld_punten": 278
+  "beeld_punten": 278,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163331",
@@ -960,7 +1131,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5407756,
-  "beeld_punten": 605
+  "beeld_punten": 605,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163353",
@@ -985,7 +1158,12 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1253473,
-  "beeld_punten": 342
+  "beeld_punten": 342,
+  "persing_delers": 5,
+  "persing_landen": [
+   "UK",
+   "Unknown"
+  ]
  },
  {
   "id": "163409",
@@ -1010,7 +1188,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 7932006,
-  "beeld_punten": 307
+  "beeld_punten": 307,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163424",
@@ -1035,7 +1215,14 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5475331,
-  "beeld_punten": 285
+  "beeld_punten": 285,
+  "persing_delers": 15,
+  "persing_landen": [
+   "Canada",
+   "India",
+   "South Korea",
+   "US"
+  ]
  },
  {
   "id": "163442",
@@ -1061,7 +1248,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 13589837,
-  "beeld_punten": 380
+  "beeld_punten": 380,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Spain"
+  ]
  },
  {
   "id": "163606",
@@ -1086,7 +1277,13 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7133335,
-  "beeld_punten": 379
+  "beeld_punten": 379,
+  "persing_delers": 3,
+  "persing_landen": [
+   "Europe",
+   "Philippines",
+   "Taiwan"
+  ]
  },
  {
   "id": "163622",
@@ -1112,7 +1309,15 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 903950,
-  "beeld_punten": 409
+  "beeld_punten": 409,
+  "persing_delers": 7,
+  "persing_landen": [
+   "Italy",
+   "Netherlands",
+   "New Zealand",
+   "Philippines",
+   "Spain"
+  ]
  },
  {
   "id": "163646",
@@ -1138,7 +1343,27 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 8411037,
-  "beeld_punten": 488
+  "beeld_punten": 488,
+  "persing_delers": 24,
+  "persing_landen": [
+   "Argentina",
+   "Australia",
+   "Austria",
+   "Brazil",
+   "Chile",
+   "Germany",
+   "Greece",
+   "Italy",
+   "Mexico",
+   "Netherlands",
+   "New Zealand",
+   "Peru",
+   "Portugal",
+   "Scandinavia",
+   "Singapore, Malaysia & Hong Kong",
+   "South Africa",
+   "Spain"
+  ]
  },
  {
   "id": "163713",
@@ -1163,7 +1388,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7756034,
-  "beeld_punten": 307
+  "beeld_punten": 307,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Netherlands"
+  ]
  },
  {
   "id": "163734",
@@ -1188,7 +1417,11 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 10544023,
-  "beeld_punten": 420
+  "beeld_punten": 420,
+  "persing_delers": 2,
+  "persing_landen": [
+   "UK"
+  ]
  },
  {
   "id": "163756",
@@ -1213,7 +1446,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3254418,
-  "beeld_punten": 388
+  "beeld_punten": 388,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163846",
@@ -1238,7 +1473,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 1036200,
-  "beeld_punten": 178
+  "beeld_punten": 178,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163906",
@@ -1263,7 +1500,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 11995442,
-  "beeld_punten": 370
+  "beeld_punten": 370,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163930",
@@ -1289,7 +1528,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3838522,
-  "beeld_punten": 361
+  "beeld_punten": 361,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "163958",
@@ -1314,7 +1555,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 1906340,
-  "beeld_punten": 435
+  "beeld_punten": 435,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164044",
@@ -1340,7 +1583,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1689144,
-  "beeld_punten": 265
+  "beeld_punten": 265,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164117",
@@ -1366,7 +1611,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 615067,
-  "beeld_punten": 455
+  "beeld_punten": 455,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164200",
@@ -1391,7 +1638,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 5446259,
-  "beeld_punten": 248
+  "beeld_punten": 248,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164219",
@@ -1418,7 +1667,15 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 869619,
-  "beeld_punten": 565
+  "beeld_punten": 565,
+  "persing_delers": 6,
+  "persing_landen": [
+   "Australia",
+   "Brazil",
+   "Germany",
+   "Spain",
+   "US"
+  ]
  },
  {
   "id": "164331",
@@ -1443,7 +1700,9 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 25271869,
-  "beeld_punten": 154
+  "beeld_punten": 154,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164352",
@@ -1468,7 +1727,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2578822,
-  "beeld_punten": 309
+  "beeld_punten": 309,
+  "persing_delers": 6,
+  "persing_landen": [
+   "France"
+  ]
  },
  {
   "id": "164408",
@@ -1493,7 +1756,11 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 18675868,
-  "beeld_punten": 396
+  "beeld_punten": 396,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Belgium"
+  ]
  },
  {
   "id": "164445",
@@ -1518,7 +1785,9 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 771594,
-  "beeld_punten": 517
+  "beeld_punten": 517,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164516",
@@ -1543,7 +1812,9 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 4282680,
-  "beeld_punten": 579
+  "beeld_punten": 579,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164627",
@@ -1568,7 +1839,12 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1323515,
-  "beeld_punten": 442
+  "beeld_punten": 442,
+  "persing_delers": 6,
+  "persing_landen": [
+   "Belgium",
+   "France"
+  ]
  },
  {
   "id": "164646",
@@ -1593,7 +1869,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3334398,
-  "beeld_punten": 507
+  "beeld_punten": 507,
+  "persing_delers": 5,
+  "persing_landen": [
+   "France"
+  ]
  },
  {
   "id": "164727",
@@ -1618,7 +1898,16 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 2456550,
-  "beeld_punten": 380
+  "beeld_punten": 380,
+  "persing_delers": 6,
+  "persing_landen": [
+   "Europe",
+   "France",
+   "Greece",
+   "Portugal",
+   "Turkey",
+   "UK"
+  ]
  },
  {
   "id": "164748",
@@ -1643,7 +1932,20 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5780914,
-  "beeld_punten": 218
+  "beeld_punten": 218,
+  "persing_delers": 15,
+  "persing_landen": [
+   "Belgium",
+   "Finland",
+   "France",
+   "Germany",
+   "Greece",
+   "Italy",
+   "Netherlands",
+   "Portugal",
+   "Spain",
+   "Switzerland"
+  ]
  },
  {
   "id": "164800",
@@ -1668,7 +1970,21 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 11251255,
-  "beeld_punten": 69
+  "beeld_punten": 69,
+  "persing_delers": 25,
+  "persing_landen": [
+   "Belgium",
+   "Finland",
+   "France",
+   "Germany",
+   "Israel",
+   "Italy",
+   "Netherlands",
+   "Portugal",
+   "Sweden",
+   "Turkey",
+   "Yugoslavia"
+  ]
  },
  {
   "id": "164838",
@@ -1693,7 +2009,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 6985104,
-  "beeld_punten": 41
+  "beeld_punten": 41,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164923",
@@ -1718,7 +2036,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1295509,
-  "beeld_punten": 345
+  "beeld_punten": 345,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "164943",
@@ -1743,7 +2063,11 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 809997,
-  "beeld_punten": 619
+  "beeld_punten": 619,
+  "persing_delers": 5,
+  "persing_landen": [
+   "France"
+  ]
  },
  {
   "id": "165003",
@@ -1768,7 +2092,11 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 12736697,
-  "beeld_punten": 546
+  "beeld_punten": 546,
+  "persing_delers": 2,
+  "persing_landen": [
+   "Spain"
+  ]
  },
  {
   "id": "165017",
@@ -1793,7 +2121,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 3527284,
-  "beeld_punten": 321
+  "beeld_punten": 321,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "165039",
@@ -1818,7 +2148,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 748538,
-  "beeld_punten": 419
+  "beeld_punten": 419,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "165108",
@@ -1843,7 +2175,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 4035126,
-  "beeld_punten": 221
+  "beeld_punten": 221,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Belgium"
+  ]
  },
  {
   "id": "165153",
@@ -1868,7 +2204,11 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 1622829,
-  "beeld_punten": 167
+  "beeld_punten": 167,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Belgium"
+  ]
  },
  {
   "id": "165216",
@@ -1893,7 +2233,11 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 37711011,
-  "beeld_punten": 569
+  "beeld_punten": 569,
+  "persing_delers": 2,
+  "persing_landen": [
+   "France"
+  ]
  },
  {
   "id": "165310",
@@ -1918,7 +2262,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 10237667,
-  "beeld_punten": 79
+  "beeld_punten": 79,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "165331",
@@ -1943,7 +2289,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5170520,
-  "beeld_punten": 48
+  "beeld_punten": 48,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "165756",
@@ -1968,7 +2316,15 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 539484,
-  "beeld_punten": 348
+  "beeld_punten": 348,
+  "persing_delers": 17,
+  "persing_landen": [
+   "Europe",
+   "France",
+   "Italy",
+   "Spain",
+   "UK"
+  ]
  },
  {
   "id": "165852",
@@ -1993,7 +2349,11 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 1004085,
-  "beeld_punten": 784
+  "beeld_punten": 784,
+  "persing_delers": 1,
+  "persing_landen": [
+   "Netherlands"
+  ]
  },
  {
   "id": "165910",
@@ -2018,7 +2378,15 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 4295735,
-  "beeld_punten": 36
+  "beeld_punten": 36,
+  "persing_delers": 7,
+  "persing_landen": [
+   "Europe",
+   "Greece",
+   "Ireland",
+   "Spain",
+   "UK"
+  ]
  },
  {
   "id": "165923",
@@ -2043,7 +2411,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 450571,
-  "beeld_punten": 98
+  "beeld_punten": 98,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "165937",
@@ -2068,7 +2438,9 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 1171792,
-  "beeld_punten": 350
+  "beeld_punten": 350,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "165949",
@@ -2093,7 +2465,13 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1261452,
-  "beeld_punten": 633
+  "beeld_punten": 633,
+  "persing_delers": 4,
+  "persing_landen": [
+   "Netherlands",
+   "Portugal",
+   "Spain"
+  ]
  },
  {
   "id": "170004",
@@ -2118,7 +2496,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 718468,
-  "beeld_punten": 523
+  "beeld_punten": 523,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "170039",
@@ -2143,7 +2523,14 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 416689,
-  "beeld_punten": 228
+  "beeld_punten": 228,
+  "persing_delers": 4,
+  "persing_landen": [
+   "Austria",
+   "Kenya",
+   "Netherlands",
+   "Portugal"
+  ]
  },
  {
   "id": "170059",
@@ -2168,7 +2555,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 6663513,
-  "beeld_punten": 560
+  "beeld_punten": 560,
+  "persing_delers": 3,
+  "persing_landen": [
+   "France"
+  ]
  },
  {
   "id": "170121",
@@ -2193,7 +2584,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 26668466,
-  "beeld_punten": null
+  "beeld_punten": null,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "170138",
@@ -2218,7 +2611,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 198458,
-  "beeld_punten": 436
+  "beeld_punten": 436,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "170151",
@@ -2243,7 +2638,23 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 3272477,
-  "beeld_punten": 512
+  "beeld_punten": 512,
+  "persing_delers": 20,
+  "persing_landen": [
+   "Angola",
+   "Australia",
+   "Austria",
+   "France",
+   "Germany",
+   "Ireland",
+   "Italy",
+   "Netherlands",
+   "New Zealand",
+   "Scandinavia",
+   "Spain",
+   "Switzerland",
+   "UK"
+  ]
  },
  {
   "id": "170207",
@@ -2268,7 +2679,13 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 2378740,
-  "beeld_punten": 329
+  "beeld_punten": 329,
+  "persing_delers": 4,
+  "persing_landen": [
+   "Germany",
+   "Portugal",
+   "Spain"
+  ]
  },
  {
   "id": "170239",
@@ -2294,7 +2711,11 @@
   "staat_hoes": null,
   "bron": "bevestiging",
   "release_id_auto": 5698637,
-  "beeld_punten": 389
+  "beeld_punten": 389,
+  "persing_delers": 1,
+  "persing_landen": [
+   "France"
+  ]
  },
  {
   "id": "170326",
@@ -2320,7 +2741,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 11742768,
-  "beeld_punten": 466
+  "beeld_punten": 466,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "170353",
@@ -2345,7 +2768,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 1516673,
-  "beeld_punten": 35
+  "beeld_punten": 35,
+  "persing_delers": 1,
+  "persing_landen": [
+   "France"
+  ]
  },
  {
   "id": "170417",
@@ -2370,7 +2797,9 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 4649324,
-  "beeld_punten": 289
+  "beeld_punten": 289,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "170436",
@@ -2395,7 +2824,12 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 7582896,
-  "beeld_punten": 181
+  "beeld_punten": 181,
+  "persing_delers": 3,
+  "persing_landen": [
+   "Canada",
+   "France"
+  ]
  },
  {
   "id": "170601",
@@ -2420,7 +2854,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 8829186,
-  "beeld_punten": 427
+  "beeld_punten": 427,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "170620",
@@ -2445,7 +2881,12 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 5037779,
-  "beeld_punten": 464
+  "beeld_punten": 464,
+  "persing_delers": 2,
+  "persing_landen": [
+   "Austria",
+   "Germany"
+  ]
  },
  {
   "id": "170640",
@@ -2471,7 +2912,9 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 11703825,
-  "beeld_punten": 508
+  "beeld_punten": 508,
+  "persing_delers": 0,
+  "persing_landen": []
  },
  {
   "id": "170711",
@@ -2496,7 +2939,11 @@
   "staat_hoes": null,
   "bron": "tracklist",
   "release_id_auto": 539634,
-  "beeld_punten": 691
+  "beeld_punten": 691,
+  "persing_delers": 2,
+  "persing_landen": [
+   "Germany"
+  ]
  },
  {
   "id": "170738",
@@ -2522,6 +2969,8 @@
   "staat_hoes": null,
   "bron": "hoesbeeld",
   "release_id_auto": 3924718,
-  "beeld_punten": 301
+  "beeld_punten": 301,
+  "persing_delers": 0,
+  "persing_landen": []
  }
 ]

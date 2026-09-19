@@ -38,6 +38,10 @@ function kerncijfers() {
   // gaf 100% op een kop die "persing bevestigd" zegt, en dat is een belofte
   // die de gegevens niet waarmaken.
   const zeker = p.filter(x => x.oordeel === "zeker").length;
+  // "uitgave" telt hier NIET mee, en dat is de hele correctie: bij die platen
+  // is het catalogusnummer wel gelezen, maar dragen meer persingen datzelfde
+  // nummer. De kop zegt "persing bevestigd", en dat is dan niet waar.
+  const uitgave = p.filter(x => x.oordeel === "uitgave").length;
   const ook = p.filter(x => x.oordeel === "aannemelijk").length;
   return el("div", { class: "kerncijfers" }, [
     el("div", { class: "kerncijfer" }, [
@@ -45,8 +49,11 @@ function kerncijfers() {
     el("div", { class: "kerncijfer" }, [
       el("b", { tekst: euro(waarde) }), el("span", { tekst: "geschatte waarde" })]),
     el("div", { class: "kerncijfer",
-                title: `${zeker} met het catalogusnummer op de hoes, `
-                     + `${ook} aannemelijk (titel, artiest of hoes klopt)` }, [
+                title: `${zeker} waarvan het catalogusnummer op de hoes staat én `
+                     + `geen andere persing dat nummer draagt. Bij ${uitgave} staat `
+                     + `het nummer er wel, maar delen meer persingen het: dan staat `
+                     + `de uitgave vast en de persing niet. ${ook} aannemelijk `
+                     + `(titel, artiest of hoes klopt).` }, [
       el("b", { tekst: p.length ? `${Math.round(100 * zeker / p.length)}%` : "-" }),
       el("span", { tekst: "persing bevestigd" })]),
   ]);

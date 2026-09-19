@@ -11,10 +11,16 @@ hoes zelf staat:
   land             spreekt de hoes het land tegen? ("PRINTED IN HOLLAND")
   beeld            valt jouw foto samen met de hoesfoto op Discogs?
 
-Een plaat heet ZEKER als het catalogusnummer op de hoes staat. Dat nummer is
-uniek per persing, dus dat is geen aanwijzing maar bewijs. Zonder nummer maar
-met titel, artiest of een samenvallende hoes, en zonder tegenspraak, heet het
-AANNEMELIJK. Spreekt iets elkaar tegen, dan VERDACHT.
+Een plaat heet ZEKER als het catalogusnummer op de hoes staat EN geen andere
+persing datzelfde nummer draagt. Dat tweede stond hier eerst als aanname - "dat
+nummer is uniek per persing" - en die aanname is nagemeten en onjuist: van de 77
+platen die ZEKER heetten, deelden er 44 hun nummer met een andere persing.
+Labels nummerden per uitgave, niet per fabriek.
+
+Die 44 heten nu UITGAVE: het nummer is gelezen en de uitgave staat vast, maar
+welke persing van die uitgave je in handen hebt zegt de hoes niet. Zonder nummer
+maar met titel, artiest of een samenvallende hoes, en zonder tegenspraak, heet
+het AANNEMELIJK. Spreekt iets elkaar tegen, dan VERDACHT.
 
 Het beeld kan nooit ZEKER opleveren: dezelfde hoes zit op elke persing van
 dezelfde uitgave, dus het bewijst de plaat en niet de persing.
@@ -94,7 +100,31 @@ def beoordeel(p, g):
     if redenen:
         return "tegenspraak", redenen
     if nummer:
-        return "zeker", ["catalogusnummer staat op de hoes"]
+        # Het nummer staat op de hoes. De vraag is wat dat BEWIJST.
+        #
+        # "Zeker" beloofde: dit nummer is uniek per persing, dus de persing
+        # staat vast. Nagemeten klopte dat bij 33 van de 77 platen die het
+        # stempel droegen; bij 44 deelde een andere persing hetzelfde nummer -
+        # dezelfde hoes, hetzelfde nummer, een andere fabriek of een ander land.
+        # Voor die 44 legt het nummer de UITGAVE vast en niet de PERSING.
+        # Zie `match.deelt_nummer` en `meten/ijkpersing.py`.
+        delers = p.get("persing_delers")
+        if delers is None:
+            # Niet nagekeken (oude gegevens, of Discogs gaf geen antwoord).
+            # Dan niet "zeker" zeggen: onwetendheid is geen bewijs van
+            # uniciteit, en dit is de kast die liever niets zegt dan iets
+            # verkeerds.
+            return "uitgave", ["catalogusnummer staat op de hoes; niet nagekeken "
+                               "of andere persingen datzelfde nummer dragen"]
+        if delers:
+            waar = ", ".join(p.get("persing_landen") or [])
+            veel = delers > 1
+            return "uitgave", [
+                f"catalogusnummer staat op de hoes, maar {delers} andere "
+                f"persing{'en' if veel else ''} {'dragen' if veel else 'draagt'} "
+                f"datzelfde nummer" + (f" ({waar})" if waar else "")]
+        return "zeker", ["catalogusnummer staat op de hoes en geen andere "
+                         "persing draagt dat nummer"]
     if titel or artiest:
         return "aannemelijk", ["titel of artiest klopt, niets spreekt tegen"]
 
@@ -147,10 +177,11 @@ def main():
             onbevestigd.append(p)
 
     n = len(platen)
-    goed = tel["zeker"] + tel["aannemelijk"]
+    goed = tel["zeker"] + tel["uitgave"] + tel["aannemelijk"]
     toetsbaar = goed + tel["tegenspraak"]
     print(f"{n} herkende platen\n")
-    print(f"  ZEKER        {tel['zeker']:>3}  catalogusnummer staat op de hoes")
+    print(f"  ZEKER        {tel['zeker']:>3}  nummer op de hoes, en geen andere persing draagt het")
+    print(f"  UITGAVE      {tel['uitgave']:>3}  nummer op de hoes, maar meer persingen delen het")
     print(f"  AANNEMELIJK  {tel['aannemelijk']:>3}  titel, artiest of hoes klopt, niets spreekt tegen")
     print(f"  TEGENSPRAAK  {tel['tegenspraak']:>3}  de hoes zegt iets anders")
     print(f"  ONBEVESTIGD  {tel['onbevestigd']:>3}  geen leesbare tekst en geen hoes om te vergelijken")

@@ -13,6 +13,10 @@
   --accent: #d8b46a;
   --goed: #6fbf8b;
   --twijfel: #d9a441;
+  /* Tussen goed en twijfel in: het nummer is gelezen, maar het legt de
+     uitgave vast en niet de persing. Bleker groen, want het is bijna
+     hetzelfde bewijs - alleen niet helemaal. */
+  --uitgave: #9ec6a0;
   --fout: #d9605b;
   --tegel: 168px;
   --radius: 10px;
@@ -125,6 +129,7 @@ select, .knop {
 .plaat h4, .plaat p { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .v-zeker { background: var(--goed); }
+.v-uitgave { background: var(--uitgave); }
 .v-aannemelijk { background: var(--twijfel); }
 .v-onbevestigd { background: var(--zachter); }
 .v-tegenspraak { background: var(--fout); }
@@ -161,6 +166,7 @@ table.feiten td:first-child { color: var(--zachter); width: 130px; }
 }
 .merkje.goed { color: var(--goed); border-color: rgba(111, 191, 139, .4); }
 .merkje.twijfel { color: var(--twijfel); border-color: rgba(217, 164, 65, .4); }
+.merkje.uitgave { color: var(--uitgave); border-color: rgba(158, 198, 160, .4); }
 .merkje.fout { color: var(--fout); border-color: rgba(217, 96, 91, .4); }
 
 .veldrij { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }

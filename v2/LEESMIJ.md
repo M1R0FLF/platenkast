@@ -435,12 +435,23 @@ lager maar hoger: alles moet kloppen, of anders het catalogusnummer als anker.
 
 ## Waar we gebleven zijn
 
-100 platen uit 225 foto's, waarvan er **97 herkend** zijn. Van die 97 klopt de
-persing aantoonbaar bij 90; de andere 7 hebben te weinig OCR om het te kunnen
-toetsen. **Nul tegenspraken.** CSV: 97 rijen, 83 met vraagprijs, samen 479 euro.
+100 platen uit 225 foto's, **alle 100 herkend**, nul op de handmatige lijst en
+**nul tegenspraken**. 94 met een vraagprijs, samen 579 euro.
 
-De drie die overblijven staan in `uit/handmatig.json` met de reden erbij. Het
-zijn alle drie hetzelfde soort geval: een achterkant zonder tracklist. Bij
+Hoe hard het bewijs is, per plaat:
+
+| | | |
+|---|---|---|
+| **zeker** | 33 | het catalogusnummer staat op de hoes én geen andere persing draagt dat nummer |
+| **uitgave** | 44 | het nummer staat er wel, maar meer persingen delen het: de uitgave staat vast, de persing niet |
+| **aannemelijk** | 23 | titel, artiest of de hoes zelf klopt, en niets spreekt tegen |
+
+Dat middelste stempel is nieuw; waarom het er moest komen staat verderop onder
+["zeker" beloofde meer dan het catalogusnummer waarmaakt](#opgelost-zeker-beloofde-meer-dan-het-catalogusnummer-waarmaakt).
+
+Er was een tijd dat er drie op de handmatige lijst stonden, en dat is leerzaam
+genoeg om te bewaren. Het was alle drie hetzelfde soort geval: een achterkant
+zonder tracklist. Bij
 "A-tom-ic Jones" staat een verhaal over Tom Jones, bij de Bach-plaat de bezetting
 van het orkest, en bij Streisands Greatest Hits een advertentie voor zes andere
 albums - compleet met hun catalogusnummers, die alle drie keer beter aansluiten
@@ -450,8 +461,10 @@ Wat er is geprobeerd en waarom het niet genoeg was, staat in de opmerkingen bij
 `_zelfde_plaat_ander_land`, `fondslijst` in match.py en `tracktermen` in
 velden.py. Streisand is het leerzaamste geval: met een ruimer patroon voor
 catalogusnummers werd hij wel herkend, maar als "Je M'appelle Barbra" - een
-advertentie op de achterkant. Fout is erger dan niets, dus die staat nu weer op
-de handmatige lijst.
+advertentie op de achterkant. Fout is erger dan niets, dus dat ruimere patroon
+ging terug. Alle drie zijn ze later alsnog herkend, langs een andere weg dan
+het oprekken van `CATNO` - en dat patroon is nog steeds het gevaarlijkste
+onderdeel van de keten om aan te komen. Zie `browser/ijkcatno.py`.
 
 ### Waarom de browser ook ronde twee draait
 
@@ -499,16 +512,50 @@ Dat is geen bug om weg te maken: een verse vraag aan Discogs hoort te winnen
 van een oud antwoord. Maar het betekent wel dat "de PC zei X" geen ijkpunt is
 zonder de datum erbij.
 
-### Nog open: 27 platen hebben een tweelingpersing
+### OPGELOST: "zeker" beloofde meer dan het catalogusnummer waarmaakt
 
-Gemeten over de honderd: **51** platen hebben een andere persing met HETZELFDE
-catalogusnummer, en bij **27** daarvan staat er geen land op de hoes. Voor die
-27 is het catalogusnummer dus geen uniek kenmerk, terwijl het oordeel "zeker"
-precies dat belooft ("het catalogusnummer van deze persing staat op de hoes, en
-dat nummer is uniek per persing").
+Het stempel "zeker" zei: *het catalogusnummer van deze persing staat op de hoes,
+en dat nummer is uniek per persing.* Dat tweede was een aanname, en die is nu
+nagemeten (`py meten/ijkpersing.py`, met Discogs):
 
-Ronde twee helpt hier: die leest het land vaker wél, zoals op de ijkplaat. Maar
-waar het land ook na ronde twee ontbreekt, hoort "zeker" niet te vallen.
+```
+100 platen, bij 77 staat het catalogusnummer op de hoes
+
+  uniek            33  het nummer wijst één persing aan
+  land beslist      0  meer persingen, maar de hoes noemt het land
+  DUBBELZINNIG     44  meer persingen, geen land op de hoes
+```
+
+**44 van de 77.** Labels nummerden per UITGAVE en niet per fabriek: dezelfde
+hoes met hetzelfde nummer, geperst in België en in Frankrijk, staat bij Discogs
+als twee releases. Voor die 44 legt het nummer de uitgave vast en niet de
+persing.
+
+Die 44 heten nu **uitgave** in plaats van "zeker" — een eigen stempel, want het
+is sterker bewijs dan "aannemelijk" (daar is alleen een titel of een hoes
+herkend) en zwakker dan "zeker". De kop van de site zegt daardoor **33% persing
+bevestigd** waar eerst 77% stond. Dat is geen achteruitgang maar een correctie.
+
+Drie dingen die bij het meten bleken:
+
+- **Het land op de hoes hielp bij NUL van de 44.** Waar er een land stond, paste
+  dat op de gekozen persing én op minstens één tweeling — meestal omdat Discogs
+  de ander "Europe" noemt en een Nederlandse hoes daar netjes bij past. Die
+  afweging is daarom uit `match.deelt_nummer` gelaten; `meten/ijkpersing.py`
+  rekent hem nog wel na, zodat het opvalt als dat ooit verandert.
+- **Discogs' zoekopdracht op catalogusnummer is los.** Zoeken op "303.566" geeft
+  ook een Canadese plaat met nummer "BDAY139LP" terug. Er wordt dus zelf
+  nagefilterd op het genormaliseerde nummer, op dezelfde uitgave (artiest en
+  titel) én op hetzelfde formaat — een 7"-single is geen tweeling van een LP,
+  want welke van de twee je in handen hebt zie je zonder te lezen.
+- **De toets schakelde zichzelf bijna uit.** `ijkpersing.py` selecteerde eerst
+  de platen die "zeker" heetten. Zodra `beoordeel` was aangepast waren dat er
+  nul, en meldde het script opgewekt dat er niets mis was. Hij selecteert nu op
+  "het nummer is gelezen" (zeker óf uitgave).
+
+Bestaande kasten krijgen het veld met `py vulpersing.py`: die vult alleen
+`persing_delers` aan en bouwt `collectie.json` opnieuw, zonder de marktprijzen
+te verversen. Nieuwe platen krijgen het vanzelf uit `match.herken`.
 
 ### OPGELOST (was blokkerend): de browser koos een andere persing
 

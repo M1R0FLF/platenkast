@@ -109,16 +109,20 @@ export function scherm(data) {
       ]),
 
       kaart("Hoe zeker is de persing", [
-        ...["zeker", "aannemelijk", "onbevestigd", "tegenspraak"].map(k => {
+        ...["zeker", "uitgave", "aannemelijk", "onbevestigd", "tegenspraak"].map(k => {
           const n = platen.filter(p => p.oordeel === k).length;
           return staaf(OORDEEL[k].tekst, n, platen.length);
         }),
         el("p", { style: "color:var(--zachter);font-size:12px;margin:12px 0 0",
-          tekst: "Zeker betekent dat het catalogusnummer van die persing letterlijk "
-               + "op de hoes staat. Aannemelijk betekent dat de titel, de artiest of "
-               + "de hoes zelf klopt - de hoes kan nooit zeker opleveren, want dezelfde "
-               + "hoes zit op elke persing. Onbevestigd is niet fout: er was niets om "
-               + "mee na te kijken." }),
+          tekst: "Zeker betekent dat het catalogusnummer op de hoes staat én dat "
+               + "geen andere persing dat nummer draagt. Uitgave betekent dat het "
+               + "nummer er wel staat, maar dat meer persingen het delen: labels "
+               + "nummerden per uitgave en niet per fabriek, dus dezelfde hoes met "
+               + "hetzelfde nummer bestaat soms in twee landen. Dan staat de uitgave "
+               + "vast en de persing niet. Aannemelijk betekent dat de titel, de "
+               + "artiest of de hoes zelf klopt - de hoes kan nooit zeker opleveren, "
+               + "want dezelfde hoes zit op elke persing. Onbevestigd is niet fout: "
+               + "er was niets om mee na te kijken." }),
       ]),
     ]),
 

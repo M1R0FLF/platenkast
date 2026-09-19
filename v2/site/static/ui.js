@@ -37,7 +37,14 @@ export const kaal = s => (s || "").toString().toLowerCase()
   .normalize("NFD").replace(/[̀-ͯ]/g, "");
 
 export const OORDEEL = {
-  zeker: { tekst: "zeker", klasse: "goed", uitleg: "het catalogusnummer van deze persing staat op de hoes" },
+  zeker: { tekst: "zeker", klasse: "goed", uitleg: "het catalogusnummer staat op de hoes en geen andere persing draagt dat nummer" },
+  // Het nummer is wel gelezen, maar het legt de UITGAVE vast en niet de
+  // PERSING: labels nummerden per uitgave, niet per fabriek, dus dezelfde hoes
+  // met hetzelfde nummer bestaat in twee landen. Nagemeten gold dat voor 44 van
+  // de 77 platen die eerst "zeker" heetten. Sterker bewijs dan "aannemelijk",
+  // zwakker dan "zeker", en dus een eigen stempel in plaats van een van die
+  // twee die dan zou liegen.
+  uitgave: { tekst: "uitgave", klasse: "uitgave", uitleg: "het catalogusnummer staat op de hoes, maar meer persingen delen dat nummer - de uitgave staat vast, de persing niet" },
   aannemelijk: { tekst: "aannemelijk", klasse: "twijfel", uitleg: "titel, artiest of de hoes zelf klopt en niets spreekt het tegen" },
   onbevestigd: { tekst: "onbevestigd", klasse: "", uitleg: "geen leesbare tekst en geen hoesfoto op Discogs om mee te vergelijken" },
   // Eigen niveau, en met opzet niet "zeker". Zeker betekent hier: de machine

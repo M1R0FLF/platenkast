@@ -78,3 +78,6 @@ v2/server/kast.db-shm
 # Tussenuitvoer van meten/ijkgpu.py: de tekst van twee leesrondes, om te
 # vergelijken. Maakt het script zo weer.
 v2/uit/_ijkgpu-*.json
+
+# Kopieen die vulpersing.py naast de bestanden zet voor het ze wijzigt.
+*.voor-persing
