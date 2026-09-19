@@ -236,6 +236,11 @@ async function drift(b) {
   for (const [naam, bytes] of b.fotos) {
     pyodide.FS.writeFile(`/werk/drift/${naam}`, new Uint8Array(bytes));
   }
+  // ijkdrift.py is geen ketenbestand en zit niet in bestanden.json (zie
+  // bundel.py: meetgereedschap gaat niet mee naar elke telefoon). Voor deze
+  // proef alleen komt het uit dezelfde map als drift.json zelf.
+  const modtekst = await (await fetch(`${wortel}/ijk/ijkdrift.py`)).text();
+  pyodide.FS.writeFile("/keten/ijkdrift.py", modtekst);
   const t0 = performance.now();
   const uit = await pyodide.runPythonAsync(`
 import json, os, time, sys

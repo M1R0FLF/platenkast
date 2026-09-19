@@ -35,11 +35,22 @@ def lees_foto(pad, naam, bestand):
 
     Gebruikt `foto._vakken`, dus de vakindeling en de sortering komen uit de
     keten zelf en niet uit een kopie die kan gaan afwijken.
+
+    De hoezen in `hoezen/` liggen al op zijde 2400: groter dan de 1800 px
+    waarop `foto._verwerk` leest voor hij het aan de OCR geeft. Zonder deze
+    schaling leest de PC de volle 2400 (dat kan, onbeperkt geheugen) en de
+    browser niets: `ocr_brug` past de foto in een vaste brug van enkele
+    tientallen MB en weigert wat er niet in past. Dat leek eerst "de browser
+    leest deze hoezen niet", en was gewoon deze stap die miste.
     """
     import cv2, foto
     img = cv2.imread(pad, cv2.IMREAD_COLOR)
     if img is None:
         raise FileNotFoundError(pad)
+    f = 1800 / max(img.shape[:2])
+    if f < 1:
+        img = cv2.resize(img, (int(img.shape[1] * f), int(img.shape[0] * f)),
+                         interpolation=cv2.INTER_AREA)
     vakken = foto._vakken(img)
     return {"naam": naam, "bestand": bestand, "vakken": vakken,
             "t": "\n".join(v["t"] for v in vakken),
@@ -140,6 +151,13 @@ def main():
               f"{(r.get('reden') or '')[:46]}", flush=True)
 
     uit = draai(platen, dc, leeg, melden)
+
+    # De browser roept straks `import ijkdrift` aan (zie py-werker.js), en
+    # bundel.py stuurt dit bestand met opzet NIET mee naar de gewone bundel -
+    # het is meetgereedschap, geen ketencode. Dus komt het hier, naast de
+    # data die het nodig heeft, in een map die alleen de proefpagina leest.
+    shutil.copy2(os.path.abspath(__file__),
+                 os.path.join(HIER, "site", "motor", "ijk", "ijkdrift.py"))
 
     doel = os.path.join(HIER, "site", "motor", "ijk", "drift.json")
     with open(doel, "w", encoding="utf-8") as fh:
